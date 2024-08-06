@@ -1,0 +1,10 @@
+<?php
+
+namespace StubVendorNamespace\StubPackageNamespace\Tests;
+
+#StubTestUseTestCase
+
+class StubPackageNamespaceServiceProviderTest extends StubTestCaseBase
+{
+	// TODO
+}

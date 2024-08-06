@@ -1,0 +1,30 @@
+<?php
+
+namespace StubVendorNamespace\StubPackageNamespace\Providers;
+
+use Filefabrik\Bootraiser\Raiser;
+use Illuminate\Support\ServiceProvider;
+
+class StubPackageNamespaceServiceProvider extends ServiceProvider
+{
+
+    public function register()
+    {
+        parent::register();
+        Raiser::forProvider($this)->loadConfigs();
+    }
+
+    public function boot(): void
+    {
+        Raiser::forProvider($this)
+                ->publishConfigs()
+                ->migrations()
+                ->routes()
+                ->translations()
+                ->views()
+                ->components()
+                ->commands()
+                ->livewire();
+    }
+
+}

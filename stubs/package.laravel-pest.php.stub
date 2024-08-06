@@ -1,0 +1,8 @@
+/**
+* @link  {{ relativePackageDir }} start
+*/
+# Unittest with Pest Php
+uses(TestCase::class)->in(dirname(__DIR__).'{{ relativePackageDir }}/tests/Unit');
+# Feature Tests with Pest Php
+uses(TestCase::class, RefreshDatabase::class)->in(dirname(__DIR__).'{{ relativePackageDir }}/tests/Feature');
+/* package {{ relativePackageDir }} end*/
