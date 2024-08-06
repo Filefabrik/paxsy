@@ -1,0 +1,102 @@
+{
+    "name": "filefabrik/paxsy",
+    "description": "Software-Packaging your Laravel apps from https://paxsy.filefabrik.com",
+    "version": "v1.0.0",
+    "keywords": [
+        "laravel",
+        "laravel 11",
+        "livewire 3",
+        "laravel package development",
+        "from internachi modular"
+    ],
+    "authors": [
+        {
+            "name": "Filefabrik",
+            "homepage": "https://filefabrik.com"
+        },
+        {
+            "name": "Chris Morrell",
+            "homepage": "http://www.cmorrell.com",
+            "role": "concept adapted from"
+        }
+    ],
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.2",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
+        "composer/composer": "^2.1",
+        "illuminate/support": "^10|^11|12.x-dev|dev-master",
+        "laravel/prompts": "^v0.1"
+    },
+    "require-dev": {
+        "ext-json": "*",
+        "filefabrik/bootraiser": "~v2.0",
+        "friendsofphp/php-cs-fixer": "^3.14",
+        "livewire/livewire": "^v3.4",
+        "mockery/mockery": "^1.5",
+        "orchestra/testbench": "^9.0",
+        "pestphp/pest": "^2.34",
+        "pestphp/pest-plugin-drift": "^2.6",
+        "pestphp/pest-plugin-laravel": "^2.3",
+        "phpunit/phpunit": "^9.5|^10.5",
+        "phpstan/phpstan": "@stable"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Filefabrik\\Paxsy\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "files": [
+            "tests/testing_helper.php"
+        ],
+        "psr-4": {
+            "Filefabrik\\Paxsy\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "fix-style": "vendor/bin/php-cs-fixer fix",
+        "check-style": "vendor/bin/php-cs-fixer fix --diff --dry-run",
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "lint": [
+            "@php vendor/bin/phpstan analyse"
+        ],
+        "test": [
+            "@php vendor/bin/pest"
+        ],
+        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon.dist"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Filefabrik\\Paxsy\\Providers\\PaxsyServiceProvider",
+                "Filefabrik\\Paxsy\\Providers\\PaxsyCommandsServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
