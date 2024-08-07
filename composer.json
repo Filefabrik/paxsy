@@ -1,7 +1,7 @@
 {
     "name": "filefabrik/paxsy",
     "description": "Software-Packaging your Laravel apps from https://paxsy.filefabrik.com",
-    "version": "v1.0.2",
+    "version": "v1.0.3",
     "keywords": [
         "laravel",
         "laravel 11",
@@ -28,11 +28,12 @@
         "ext-simplexml": "*",
         "composer/composer": "^2.1",
         "illuminate/support": "^10|^11|12.x-dev|dev-master",
-        "laravel/prompts": "^v0.1"
+        "laravel/prompts": "^v0.1",
+        "filefabrik/bootraiser": "~v2.0"
     },
     "require-dev": {
         "ext-json": "*",
-        "filefabrik/bootraiser": "~v2.0",
+
         "friendsofphp/php-cs-fixer": "^3.14",
         "livewire/livewire": "^v3.4",
         "mockery/mockery": "^1.5",
