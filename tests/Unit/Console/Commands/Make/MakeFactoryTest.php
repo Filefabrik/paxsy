@@ -56,7 +56,45 @@ it(
 		expect($fc)->toContain(...$expected_substrings);
 	},
 );
+it(
+	'Factory interactions no Params',
+	function() {
+		makePackageByArtisanCommand($this);
+		withGuiInteractions();
 
+		$command                = 'make:factory';
+		$arguments              = [/*'name' => 'MyTestFactory'*/];
+		$expected_relative_path = 'database/factories/MyTestNamedFactory.php';
+
+		$expected_substrings = [
+			'namespace '.DefaultPackageNames::namespacyfy('Database\Factories').';',
+			'use Illuminate\Database\Eloquent\Factories\Factory;',
+
+		];
+		$this->artisan(
+			$command,
+			array_merge(
+				[
+					'--package' => defaultTestPackage()->getPackageName(),
+				],
+				$arguments,
+			),
+		)
+			 ->assertExitCode(0)
+			 ->expectsQuestion('Options for MakeFactory?', ['model'])
+			 ->expectsQuestion('What should the factory be named?', 'MyTestNamedFactory')
+			 ->expectsQuestion('What model should this factory apply to? (Optional)', 'MySuperModel')
+			// todo model option was not asked
+			//   ->expectsQuestion('What is the name of the model?', 'null')
+		;
+		//   makeComponentInPackage($this, $command, $arguments);
+		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+
+		checkComponentFilesAndDirectories($expected_full_path);
+		$fc = file_get_contents($expected_full_path);
+		expect($fc)->toContain(...$expected_substrings);
+	},
+);
 it(
 	'create Factory Component via command in Default-Vendor-Package Model Exists',
 	function() {
@@ -105,5 +143,5 @@ it(
 		$expected_full_path = base_path($expected_relative_path);
 
 		checkComponentFilesAndDirectories($expected_full_path);
-	}
+	},
 )->todo();

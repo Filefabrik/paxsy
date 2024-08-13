@@ -63,6 +63,14 @@ function ensureDirectoryExists(string $dir): void
 	(new Filesystem())->ensureDirectoryExists($dir);
 }
 
+function clearLaravelDirectories(array|string $dirs)
+{
+	foreach ((array) $dirs as $dir) {
+		$fs = new Filesystem();
+		$fs->deleteDirectory($dir, true);
+	}
+}
+
 function clearLaravelFiles()
 {
 	$files = ['tests/Unit/PHPUnit_Unit_Laravel.php',
@@ -70,7 +78,8 @@ function clearLaravelFiles()
 		'database/factories/MyTestFactoryInLaravelFactory.php',
 		'database/seeders/TestingSeederPure.php',
 		'app/Models/TestModelWithoutPackage.php',
-		'app/Models/TestingControllerModels.php', 'app/Http/Controllers/TestController2.php'];
+		'app/Models/TestingControllerModels.php',
+		'app/Http/Controllers/TestController2.php'];
 	foreach ($files as $file) {
 		$testFile = base_path($file);
 		if (is_file($testFile)) {
