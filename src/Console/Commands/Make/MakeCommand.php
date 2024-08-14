@@ -2,12 +2,16 @@
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
 
+use Filefabrik\Paxsy\Console\Commands\Admin\TraitOptions;
 use Filefabrik\Paxsy\Support\Str\StringModifiers;
 use Illuminate\Foundation\Console\ConsoleMakeCommand;
 
 class MakeCommand extends ConsoleMakeCommand
 {
 	use TraitModularize;
+	use TraitOptions;
+	use TraitCreatesMatchingTest;
+	use TraitCallDelegation;
 
 	protected function replaceClass($stub, $name): string
 	{
