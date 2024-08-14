@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 class MakeComponent extends ComponentMakeCommand
 {
 	use TraitModularize;
+	use TraitCallDelegation;
+	use TraitCreatesMatchingTest;
 
 	public function handle()
 	{
@@ -35,7 +37,7 @@ class MakeComponent extends ComponentMakeCommand
 		$viewPart = sprintf(
 			"view('%s')",
 			$this->package()
-				 ->getName().'::'.$componentName
+				 ->getName().'::'.$componentName,
 		);
 
 		// relevant for custom packages

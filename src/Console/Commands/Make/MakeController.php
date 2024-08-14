@@ -11,6 +11,7 @@ class MakeController extends ControllerMakeCommand
 {
 	use TraitModularize;
 	use TraitCallDelegation;
+	use TraitCreatesMatchingTest;
 
 	/**
 	 * Build the model replacement values.
@@ -43,7 +44,9 @@ class MakeController extends ControllerMakeCommand
 		// todo if --requests do it into solved in future but not by model
 		// todo in Model handle the --all option without creating controller.
 		// That should modify the --all option model
-		$packageNamespace           = $this->package()->srcPackageNamespace();
+		$packageNamespace = $this->package()
+										   ->srcPackageNamespace()
+		;
 		$rootAppNamespace           = $this->rootNamespace();
 		$rootAppControllerNamespace = 'App\Http\Controllers';
 
@@ -185,7 +188,7 @@ class MakeController extends ControllerMakeCommand
 				'{{namespacedUpdateRequest}}'   => $namespace.'\\'.$updateRequestClass,
 				'{{ namespacedRequests }}'      => $namespacedRequests,
 				'{{namespacedRequests}}'        => $namespacedRequests,
-			]
+			],
 		);
 	}
 

@@ -68,11 +68,12 @@ it(
 			 ->expectsQuestion('Options for MakeController?', ['model' => 'Something', 'parent' => 'ArticleModel'])
 			 ->expectsQuestion(
 			 	'A MyTestVendor\TheTestPackage\Models\ArticleModel model does not exist. Do you want to generate it?',
-			 	true
-			 )->expectsQuestion('Options for MakeModel?', [])
+			 	true,
+			 )
+			 ->expectsQuestion('Options for MakeModel?', [])
 			 ->expectsQuestion(
 			 	'A MyTestVendor\TheTestPackage\Models\Something model does not exist. Do you want to generate it?',
-			 	true
+			 	true,
 			 )
 			 ->expectsQuestion('Options for MakeModel?', [])
 		;
@@ -131,4 +132,50 @@ it(
 
 		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
 	},
+);
+
+it(
+	'with Pest',
+	function() {
+		makePackageByArtisanCommand($this);
+
+		withGuiInteractions();
+
+		$command                = 'make:controller';
+		$arguments              = ['name' => 'TestController'];
+		$expected_relative_path = 'src/Http/Controllers/TestController.php';
+		$expected_substrings    = [
+			'namespace '.DefaultPackageNames::namespacyfy('Http\Controllers'),
+			'class TestController',
+			// in laravel 11 has changed. perhaps check old controller stubs
+			'use Illuminate\Http\Request;',
+		];
+
+		$packageName = defaultTestPackage()
+			->getPackageName()
+		;
+
+		$this->artisan(
+			$command,
+			array_merge(
+				[
+					'--package' => $packageName,
+				],
+				$arguments,
+			),
+		)
+			 ->assertExitCode(0)
+			 ->expectsQuestion('Options for MakeController?', ['test'])
+			// todo for unit check construction/content
+			 ->expectsQuestion('Options for MakeTest?', ['phpunit'])
+		;
+
+		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+
+		checkComponentFilesAndDirectories($expected_full_path);
+		// check test was rendered right way
+		checkComponentFilesAndDirectories(DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Http/Controllers/TestControllerTest.php'));
+
+		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+	}
 );
