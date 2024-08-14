@@ -2,10 +2,14 @@
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
 
+use Filefabrik\Paxsy\Console\Commands\Admin\TraitOptions;
 use Illuminate\Foundation\Console\NotificationMakeCommand;
 
 // @codeCoverageIgnore
 class MakeNotification extends NotificationMakeCommand
 {
-	use TraitModularize;
+    use TraitModularize;
+    use TraitOptions;
+    use TraitCreatesMatchingTest;
+    use TraitCallDelegation;
 }
