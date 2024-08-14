@@ -9,6 +9,7 @@ class MakeModel extends ModelMakeCommand
 {
 	use TraitModularize;
 	use TraitCallDelegation;
+    use TraitCreatesMatchingTest;
 
 	protected function getDefaultNamespace($rootNamespace): string
 	{
