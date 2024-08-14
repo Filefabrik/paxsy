@@ -11,7 +11,6 @@ class MakePolicy extends PolicyMakeCommand
 	}
 
 	/**
-	 * Todo Policy has in laravel 11 the question for matching Model. That should be also work in Paxsy
 	 * Re-Pathing the Original Path from Laravel Output to the 'the-package' path
 	 *
 	 * @param $name

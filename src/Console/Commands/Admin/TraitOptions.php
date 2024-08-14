@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\suggest;
 use function Laravel\Prompts\text;
-
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

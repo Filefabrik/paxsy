@@ -14,7 +14,7 @@ class MakeController extends ControllerMakeCommand
 
 	/**
 	 * Build the model replacement values.
-	 * Will be called if model-option was set
+	 * Will be called if a model-option was set
 	 *
 	 * @param array $replace
 	 *
