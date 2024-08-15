@@ -9,7 +9,7 @@ use Filefabrik\Paxsy\Support\Helper\OverrideCommands;
 it(
 	'count commands',
 	function() {
-		expect(count(OverrideCommands::commands()))->toBe(22);
+		expect(count(OverrideCommands::commands()))->toBe(23);
 	}
 );
 it(
