@@ -31,5 +31,6 @@ dataset(
 		'make:rule',
 		'make:seeder',
 		'make:test',
+		'make:view',
 	]
 );

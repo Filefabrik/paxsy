@@ -116,49 +116,49 @@ it(
 	},
 );
 it(
-    'with php unit',
-    function() {
-        makePackageByArtisanCommand($this);
-        withGuiInteractions();
+	'with php unit',
+	function() {
+		makePackageByArtisanCommand($this);
+		withGuiInteractions();
 
-        $command                = 'make:model';
-        $arguments              = [/*'name' => 'TestComponent'*/];
-        $expected_relative_path = 'src/Models/Modelmasse.php';
-        $expected_substrings    = [
-            'namespace '.DefaultPackageNames::namespacyfy('Models'),
-            'class Modelmasse',
-        ];
+		$command                = 'make:model';
+		$arguments              = [/*'name' => 'TestComponent'*/];
+		$expected_relative_path = 'src/Models/Modelmasse.php';
+		$expected_substrings    = [
+			'namespace '.DefaultPackageNames::namespacyfy('Models'),
+			'class Modelmasse',
+		];
 
-        //	makeComponentInPackage($this, $command, $arguments);
+		//	makeComponentInPackage($this, $command, $arguments);
 
-        $packageName = defaultTestPackage()
-            ->getPackageName()
-        ;
-        $this->artisan(
-            $command,
-            array_merge(
-                [
-                    '--package' => $packageName,
-                ],
-                $arguments,
-            ),
-        )
-             ->assertExitCode(0)
-             ->expectsQuestion('Options for MakeModel?', ['test'])
-             ->expectsQuestion('What should the model be named?', 'Modelmasse')
-            // todo check class content
-            // todo ...maybe bullshit to render feature test
-             ->expectsQuestion('Options for MakeTest?', ['phpunit'])
-        ;
+		$packageName = defaultTestPackage()
+			->getPackageName()
+		;
+		$this->artisan(
+			$command,
+			array_merge(
+				[
+					'--package' => $packageName,
+				],
+				$arguments,
+			),
+		)
+			 ->assertExitCode(0)
+			 ->expectsQuestion('Options for MakeModel?', ['test'])
+			 ->expectsQuestion('What should the model be named?', 'Modelmasse')
+			// todo check class content
+			// todo ...maybe bullshit to render feature test
+			 ->expectsQuestion('Options for MakeTest?', ['phpunit'])
+		;
 
-        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
 
-        checkComponentFilesAndDirectories($expected_full_path);
-        expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+		checkComponentFilesAndDirectories($expected_full_path);
+		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
 
-        // test output
-        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Models/ModelmasseTest.php');
+		// test output
+		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Models/ModelmasseTest.php');
 
-        checkComponentFilesAndDirectories($expected_full_path);
-    }
+		checkComponentFilesAndDirectories($expected_full_path);
+	}
 );

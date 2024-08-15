@@ -136,7 +136,7 @@ class Inputs
 		);
 	}
 
-	protected static function stubsList()
+	protected static function stubsList(): array
 	{
 		$options = [];
 		foreach (config('paxsy.stub_sets', []) as $name => $data) {

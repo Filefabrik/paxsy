@@ -27,6 +27,7 @@ use Filefabrik\Paxsy\Console\Commands\Make\MakeResource;
 use Filefabrik\Paxsy\Console\Commands\Make\MakeRule;
 use Filefabrik\Paxsy\Console\Commands\Make\MakeSeeder;
 use Filefabrik\Paxsy\Console\Commands\Make\MakeTest;
+use Filefabrik\Paxsy\Console\Commands\Make\MakeView;
 
 dataset(
 	'all override commands',
@@ -53,5 +54,6 @@ dataset(
 		['make:seeder', MakeSeeder::class],
 		['make:test', MakeTest::class],
 		['make:component', MakeComponent::class],
-	]
+		['make:view', MakeView::class],
+	],
 );

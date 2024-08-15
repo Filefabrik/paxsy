@@ -19,7 +19,7 @@ trait TraitCreatesMatchingTest
 	 *
 	 * @return bool
 	 */
-	protected function handleTestCreation($path)
+	protected function handleTestCreation($path): bool
 	{
 		if (! $package = $this->package()) {
 			return parent::handleTestCreation($path);
@@ -41,7 +41,6 @@ trait TraitCreatesMatchingTest
 		return $this->call(
 			'make:test',
 			[
-
 				'name' => $generatedTestName,
 				//'--package' => $package->getName(),
 				'--pest'    => $this->option('pest'),

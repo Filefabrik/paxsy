@@ -11,6 +11,7 @@ class MakeComponent extends ComponentMakeCommand
 	use TraitPackagizer;
 	use TraitCallDelegation;
 	use TraitCreatesMatchingTest;
+	use TraitSharedViewPaths;
 
 	public function handle()
 	{
@@ -72,19 +73,6 @@ class MakeComponent extends ComponentMakeCommand
 
 		return $this->replaceNamespace($stub, $name)
 					->replaceClass($stub, $name)
-		;
-	}
-
-	/**
-	 * @param string $path
-	 *
-	 * @return string
-	 */
-	protected function viewPath($path = ''): string
-	{
-		return $this->package()
-					?->intoPackagePath("resources/views/$path") ??
-			parent::viewPath($path)
 		;
 	}
 }
