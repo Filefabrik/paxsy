@@ -9,8 +9,8 @@ use Illuminate\Support\Str;
 
 class MakeFactory extends FactoryMakeCommand
 {
-	use TraitModularize {
-		TraitModularize::getPath as getPackagePath;
+	use TraitPackagizer {
+		TraitPackagizer::getPath as getPackagePath;
 	}
 
 	/**

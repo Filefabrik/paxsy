@@ -7,7 +7,7 @@ use Illuminate\Foundation\Console\ModelMakeCommand;
 
 class MakeModel extends ModelMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 	use TraitCallDelegation;
     use TraitCreatesMatchingTest;
 

@@ -7,5 +7,5 @@ use Illuminate\Foundation\Console\ObserverMakeCommand;
 // @codeCoverageIgnore
 class MakeObserver extends ObserverMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 }

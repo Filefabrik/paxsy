@@ -8,7 +8,7 @@ use Illuminate\Foundation\Console\ConsoleMakeCommand;
 
 class MakeCommand extends ConsoleMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 	use TraitOptions;
 	use TraitCreatesMatchingTest;
 	use TraitCallDelegation;

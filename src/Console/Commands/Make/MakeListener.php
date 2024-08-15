@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 // todo bug, will not generate the Event and not showing the "Create Event" prompt
 class MakeListener extends ListenerMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 	use TraitOptions;
 	use TraitCreatesMatchingTest;
 	use TraitCallDelegation;

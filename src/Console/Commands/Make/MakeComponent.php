@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class MakeComponent extends ComponentMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 	use TraitCallDelegation;
 	use TraitCreatesMatchingTest;
 

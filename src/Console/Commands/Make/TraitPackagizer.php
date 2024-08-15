@@ -8,7 +8,7 @@ use Filefabrik\Paxsy\Console\Commands\Admin\TraitOptions;
 use Filefabrik\Paxsy\Console\Commands\TraitPackageSupport;
 use Illuminate\Support\Str;
 
-trait TraitModularize
+trait TraitPackagizer
 {
 	use TraitPackageSupport;
 	use TraitOptions;

@@ -8,8 +8,8 @@ use Illuminate\Foundation\Console\TestMakeCommand;
 
 class MakeTest extends TestMakeCommand
 {
-	use TraitModularize {
-		TraitModularize::getPath as getModularPath;
+	use TraitPackagizer {
+		TraitPackagizer::getPath as getModularPath;
 	}
 
 	protected function getPath($name): array|string

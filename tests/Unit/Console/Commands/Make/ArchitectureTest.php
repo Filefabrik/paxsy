@@ -24,7 +24,7 @@ arch(
 	function($commandClass) {
 		expect($commandClass)
 			->traits()
-			->toExtend('\Filefabrik\Paxsy\Console\Commands\Make\TraitModularize')
+			->toExtend('\Filefabrik\Paxsy\Console\Commands\Make\TraitPackagizer')
 		;
 	}
 )->with([[MakeCast::class]]);

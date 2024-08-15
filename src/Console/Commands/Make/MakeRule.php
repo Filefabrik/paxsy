@@ -7,5 +7,5 @@ use Illuminate\Foundation\Console\RuleMakeCommand;
 // @codeCoverageIgnore
 class MakeRule extends RuleMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 }

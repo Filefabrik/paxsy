@@ -8,7 +8,7 @@ use Illuminate\Foundation\Console\NotificationMakeCommand;
 // @codeCoverageIgnore
 class MakeNotification extends NotificationMakeCommand
 {
-    use TraitModularize;
+    use TraitPackagizer;
     use TraitOptions;
     use TraitCreatesMatchingTest;
     use TraitCallDelegation;

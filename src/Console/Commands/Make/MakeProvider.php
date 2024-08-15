@@ -7,5 +7,5 @@ use Illuminate\Foundation\Console\ProviderMakeCommand;
 // @codeCoverageIgnore
 class MakeProvider extends ProviderMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 }

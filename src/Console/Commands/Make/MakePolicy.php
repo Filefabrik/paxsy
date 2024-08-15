@@ -6,8 +6,8 @@ use Illuminate\Foundation\Console\PolicyMakeCommand;
 
 class MakePolicy extends PolicyMakeCommand
 {
-	use TraitCallDelegation, TraitModularize {
-		TraitModularize::getPath as getModularPath;
+	use TraitCallDelegation, TraitPackagizer {
+		TraitPackagizer::getPath as getModularPath;
 	}
 
 	/**

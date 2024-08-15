@@ -9,7 +9,7 @@ use function Laravel\Prompts\confirm;
 
 class MakeController extends ControllerMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 	use TraitCallDelegation;
 	use TraitCreatesMatchingTest;
 

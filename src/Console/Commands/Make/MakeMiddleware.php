@@ -7,5 +7,5 @@ use Illuminate\Routing\Console\MiddlewareMakeCommand;
 // @codeCoverageIgnore
 class MakeMiddleware extends MiddlewareMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 }

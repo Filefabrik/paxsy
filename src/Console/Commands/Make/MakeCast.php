@@ -7,5 +7,5 @@ use Illuminate\Foundation\Console\CastMakeCommand;
 // @codeCoverageIgnore
 class MakeCast extends CastMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 }

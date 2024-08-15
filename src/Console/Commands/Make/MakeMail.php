@@ -8,7 +8,7 @@ use Illuminate\Foundation\Console\MailMakeCommand;
 // @codeCoverageIgnore
 class MakeMail extends MailMakeCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 	use TraitOptions;
 	use TraitCreatesMatchingTest;
 	use TraitCallDelegation;

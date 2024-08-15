@@ -7,8 +7,8 @@ use Illuminate\Support\Str;
 
 class MakeSeeder extends SeederMakeCommand
 {
-	use TraitModularize {
-		TraitModularize::getPath as getModularPath;
+	use TraitPackagizer {
+		TraitPackagizer::getPath as getModularPath;
 	}
 
 	protected function getPath($name): array|string

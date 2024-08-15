@@ -8,7 +8,7 @@ namespace Filefabrik\Paxsy\Components\LaravelRoute;
 
 use Filefabrik\Paxsy\Console\Commands\Admin\Inputs;
 use Filefabrik\Paxsy\Console\Commands\Admin\TraitOptions;
-use Filefabrik\Paxsy\Console\Commands\Make\TraitModularize;
+use Filefabrik\Paxsy\Console\Commands\Make\TraitPackagizer;
 use Filefabrik\Paxsy\Support\Str\ReplaceArray;
 use Filefabrik\Paxsy\Support\Stubs\Facade;
 use Illuminate\Console\GeneratorCommand;
@@ -22,7 +22,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class MakeRoute extends GeneratorCommand
 {
-	use TraitModularize;
+	use TraitPackagizer;
 	use TraitOptions;
 
 	/**
