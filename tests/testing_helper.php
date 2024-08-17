@@ -71,7 +71,7 @@ function clearLaravelDirectories(array|string $dirs)
 	}
 }
 
-function clearLaravelFiles()
+function clearLaravelFiles(): void
 {
 	$files = ['tests/Unit/PHPUnit_Unit_Laravel.php',
 		'tests/Feature/MyPESTFeatureTestingIntoLaravel.php',
