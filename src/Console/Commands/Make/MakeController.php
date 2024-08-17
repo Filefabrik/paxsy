@@ -110,17 +110,16 @@ class MakeController extends ControllerMakeCommand
 		}
 
 		$modelClass = $this->parseModel($relativeModel);
+		$this->makeModelIfNeed($modelClass, $relativeModel);
 
-		if (
-			! class_exists($modelClass) && confirm(
-				"A {$modelClass} model does not exist. Do you want to generate it?",
-				true,
-			)
-		) {
-			$this->call('make:model', ['name' => $relativeModel]);
-		}
 		$replace = $this->buildFormRequestReplacements_package($replace, $modelClass);
 
+		return $this->mergeReplacements($replace, $modelClass);
+		// keep sync with ControllerMakeCommand
+	}
+
+	protected function mergeReplacements(array $replace, string $modelClass)
+	{
 		$cbn   = class_basename($modelClass);
 		$cbLcf = lcfirst($cbn);
 
@@ -139,6 +138,18 @@ class MakeController extends ControllerMakeCommand
 				'{{modelVariable}}'     => $cbLcf,
 			],
 		);
+	}
+
+	protected function makeModelIfNeed(string $modelClass, string $relativeModel): void
+	{
+		if (
+			! class_exists($modelClass) && confirm(
+				"A {$modelClass} model does not exist. Do you want to generate it?",
+				true,
+			)
+		) {
+			$this->call('make:model', ['name' => $relativeModel]);
+		}
 	}
 
 	/**
@@ -174,6 +185,13 @@ class MakeController extends ControllerMakeCommand
 		if ($storeRequestClass !== $updateRequestClass) {
 			$namespacedRequests .= PHP_EOL.'use '.$namespace.'\\'.$updateRequestClass.';';
 		}
+
+		return $this->replaceFormRequests_package([$replace, $namespace, $namespacedRequests, $storeRequestClass, $updateRequestClass]);
+	}
+
+	protected function replaceFormRequests_package(array $vars): array
+	{
+		[$replace,$namespace, $namespacedRequests,$storeRequestClass,$updateRequestClass] = $vars;
 
 		return array_merge(
 			$replace,
