@@ -4,6 +4,7 @@ namespace Filefabrik\Paxsy\Components\Livewire;
 
 use Illuminate\Support\Facades\File;
 use Livewire\Features\SupportConsoleCommands\Commands\MakeCommand;
+use Stringable;
 
 if (class_exists(MakeCommand::class)) {
 	/**
@@ -34,17 +35,12 @@ if (class_exists(MakeCommand::class)) {
 		 */
 		protected function parentHandle(): void
 		{
-			if (! $this->isClassNameValid($name = $this->parser->className())) {
-				$this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
-				$this->line("<fg=red;options=bold>Class is invalid:</> {$name}");
-
+			$name = $this->lineClassNameValid();
+			if (! $name) {
 				return;
 			}
 
-			if ($this->isReservedClassName($name)) {
-				$this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
-				$this->line("<fg=red;options=bold>Class is reserved:</> {$name}");
-
+			if (! $this->lineReservedClassName($name)) {
 				return;
 			}
 
@@ -53,15 +49,17 @@ if (class_exists(MakeCommand::class)) {
 			$test     = $this->option('test') || $this->option('pest');
 			$testType = $this->option('pest') ? 'pest' : 'phpunit';
 
-			$showWelcomeMessage = $this->isFirstTimeMakingAComponent();
-
 			$class = $this->createClass($force, $inline);
 			$view  = $this->createView($force, $inline);
 
 			if ($test) {
 				$test = $this->createTest($force, $testType);
 			}
+			$this->linesClassAndViews($class, $view, $inline, $test);
+		}
 
+		protected function linesClassAndViews($class, $view, $inline, $test): void
+		{
 			if ($class || $view) {
 				$this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
 				$class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
@@ -74,19 +72,53 @@ if (class_exists(MakeCommand::class)) {
 					$this->line("<options=bold;fg=green>TEST:</>  {$this->parser->relativeTestPath()}");
 				}
 
-				if ($showWelcomeMessage && ! app()->runningUnitTests()) {
-					// @codeCoverageIgnoreStart
-					$this->writeWelcomeMessage();
-					// @codeCoverageIgnoreEnd
-				}
-				$bladeTag = StringHelper::tagFromInputName(
-					$this->package()
-						 ->getName(),
-					$this->parser->getInputName(),
-				);
-
-				$this->line("<options=bold;fg=green>TAG:</>  $bladeTag");
+				$this->lineWelcome();
+				$this->lineBladeTag();
 			}
+		}
+
+		protected function lineClassNameValid()
+		{
+			if (! $this->isClassNameValid($name = $this->parser->className())) {
+				$this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
+				$this->line("<fg=red;options=bold>Class is invalid:</> {$name}");
+
+				return null;
+			}
+
+			return $name;
+		}
+
+		protected function lineWelcome()
+		{
+			if ($this->isFirstTimeMakingAComponent() && ! app()->runningUnitTests()) {
+				// @codeCoverageIgnoreStart
+				$this->writeWelcomeMessage();
+				// @codeCoverageIgnoreEnd
+			}
+		}
+
+		protected function lineBladeTag(): void
+		{
+			$bladeTag = StringHelper::tagFromInputName(
+				$this->package()
+					 ->getName(),
+				$this->parser->getInputName(),
+			);
+
+			$this->line("<options=bold;fg=green>TAG:</>  $bladeTag");
+		}
+
+		protected function lineReservedClassName(string|Stringable $name): bool
+		{
+			if ($this->isReservedClassName($name)) {
+				$this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
+				$this->line("<fg=red;options=bold>Class is reserved:</> {$name}");
+
+				return false;
+			}
+
+			return true;
 		}
 
 		protected function handle_package(): void
