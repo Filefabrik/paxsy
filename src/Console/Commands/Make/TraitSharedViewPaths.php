@@ -8,19 +8,19 @@ namespace Filefabrik\Paxsy\Console\Commands\Make;
 
 trait TraitSharedViewPaths
 {
-	/**
-	 * @param string $path
-	 *
-	 * @return string
-	 */
-	protected function viewPath($path = ''): string
-	{
-		if (! $package = $this->package()) {
-			parent::viewPath($path);
-		}
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function viewPath($path = ''): string
+    {
+        if (!$package = $this->package()) {
+            return parent::viewPath($path);
+        }
 
-		return $package
-			->intoPackagePath("resources/views/$path")
-		;
-	}
+        return $package
+            ->intoPackagePath("resources/views/$path")
+        ;
+    }
 }
