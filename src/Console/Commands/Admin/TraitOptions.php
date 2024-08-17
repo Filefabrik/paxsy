@@ -10,7 +10,6 @@ use Filefabrik\Paxsy\Console\Support\SolvedOptions;
 use Illuminate\Support\Str;
 use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\suggest;
-use function Laravel\Prompts\text;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -55,16 +54,13 @@ trait TraitOptions
 
 				$lbl = sprintf('What model should this %s apply to? (Optional)', $command);
 				if (method_exists($this, 'possibleModels')) {
-					// input mask wich modifies the
+					// input mask
 					$model = suggest(
 						$lbl,
 						$this->possibleModels(),
 					);
-				} else {
-					$model = text($lbl);
+					$this->input->setOption($name, $model);
 				}
-
-				$this->input->setOption($name, $model);
 			}
 		}
 	}
