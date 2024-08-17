@@ -21,5 +21,5 @@ jobs:
           ./cc-test-reporter before-build
       - name: Run Tests
         run: |
-          php vendor/bin/pestphp --coverage-clover clover.xml --configuration phpunit.xml tests/Unit
+          php vendor/bin/pest --coverage-clover clover.xml --configuration phpunit.xml tests/Unit
           ./cc-test-reporter after-build -t clover --exit-code $?
