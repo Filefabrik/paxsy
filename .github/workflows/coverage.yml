@@ -1,32 +1,48 @@
-name: PHPUnit Coverage Check
+name: Code Coverage
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  phpunit-coverage-check:
-    name: PHPUnit Coverage Check
+  coverage:
     runs-on: ubuntu-latest
+
+    name: Publish code coverage
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Install PHP ${{ matrix.php }}
-        uses: shivammathur/setup-php@master
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
-          extensions: mbstring,
-          coverage: xdebug, pcov
-          tools: composer:v2
+          php-version: 8.2
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, bcmath, intl, iconv
+          coverage: pcov
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            vendor
+            ${{ steps.composer-cache-files-dir.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        env:
+          COMPOSER_DISCARD_CHANGES: true
+        run: composer require --no-suggest --no-progress --no-interaction --prefer-dist --update-with-all-dependencies "laravel/framework:^11.0" "orchestra/testbench:^9.0"
 
-      - name: Run test suite
-        run: ./vendor/bin/pest --coverage-clover clover.xml
-
-      - name: Coverage Check
-        uses: docker://ghcr.io/ericsizemore/phpunit-coverage-check-action
+      - name: Run and publish code coverage
+        uses: paambaati/codeclimate-action@v5.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          clover_file: 'clover.xml'
-          threshold: 99
-          only_percentage: true
+          coverageCommand: vendor/bin/phpunit --coverage-clover ${{ github.workspace }}/clover.xml
+          debug: true
+          coverageLocations:
+            "${{github.workspace}}/clover.xml:clover"
