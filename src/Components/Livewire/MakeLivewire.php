@@ -44,36 +44,44 @@ if (class_exists(MakeCommand::class)) {
 				return;
 			}
 
-			$force    = $this->option('force');
-			$inline   = $this->option('inline');
-			$test     = $this->option('test') || $this->option('pest');
-			$testType = $this->option('pest') ? 'pest' : 'phpunit';
+			$force  = $this->option('force');
+			$inline = $this->option('inline');
+			$test   = $this->option('test') || $this->option('pest');
 
 			$class = $this->createClass($force, $inline);
 			$view  = $this->createView($force, $inline);
 
-			if ($test) {
-				$test = $this->createTest($force, $testType);
+			$test = $this->handleCreateTest($test, $force);
+
+			if ($class || $view) {
+				$this->linesClassAndViews($class, $view, $inline, $test);
+
+				$this->lineWelcome();
+				$this->lineBladeTag();
 			}
-			$this->linesClassAndViews($class, $view, $inline, $test);
+		}
+
+		protected function handleCreateTest($test, $force)
+		{
+			if ($test) {
+				$testType = $this->option('pest') ? 'pest' : 'phpunit';
+				$test     = $this->createTest($force, $testType);
+			}
+
+			return $test;
 		}
 
 		protected function linesClassAndViews($class, $view, $inline, $test): void
 		{
-			if ($class || $view) {
-				$this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
-				$class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
+			$this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
+			$class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
 
-				if (! $inline) {
-					$view && $this->line("<options=bold;fg=green>VIEW:</>  {$this->parser->relativeViewPath()}");
-				}
+			if (! $inline) {
+				$view && $this->line("<options=bold;fg=green>VIEW:</>  {$this->parser->relativeViewPath()}");
+			}
 
-				if ($test) {
-					$this->line("<options=bold;fg=green>TEST:</>  {$this->parser->relativeTestPath()}");
-				}
-
-				$this->lineWelcome();
-				$this->lineBladeTag();
+			if ($test) {
+				$this->line("<options=bold;fg=green>TEST:</>  {$this->parser->relativeTestPath()}");
 			}
 		}
 
