@@ -13,7 +13,6 @@ jobs:
         with:
           php-version: 8.2
           coverage: xdebug
-      - name: Prepare The Environment
       - name: Install Composer Dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Code Climate Setup
