@@ -1,0 +1,32 @@
+name: PHPUnit Coverage Check
+
+on: [push, pull_request]
+
+jobs:
+  phpunit-coverage-check:
+    name: PHPUnit Coverage Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring,
+          coverage: xdebug, pcov
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run test suite
+        run: ./vendor/bin/pest --coverage-clover clover.xml
+
+      - name: Coverage Check
+        uses: docker://ghcr.io/ericsizemore/phpunit-coverage-check-action
+        with:
+          clover_file: 'clover.xml'
+          threshold: 99
+          only_percentage: true
