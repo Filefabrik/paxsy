@@ -1,7 +1,7 @@
 exclude_patterns:
   - ".github/"
   - ".idea/"
-  - "stubs/"
+  - "stubs/**"
   - "tests/"
   - "**/vendor/"
   - "**/node_modules/"

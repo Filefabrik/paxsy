@@ -38,6 +38,6 @@ jobs:
       - name: PHP CS Fixer
         run: ./vendor/bin/php-cs-fixer fix --diff --allow-risky=yes
       - name: Commit Changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@master
         with:
           commit_message: Fix styling changes
