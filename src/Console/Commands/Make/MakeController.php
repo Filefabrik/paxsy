@@ -44,11 +44,6 @@ class MakeController extends ControllerMakeCommand
 		// todo if --requests do it into solved in future but not by model
 		// todo in Model handle the --all option without creating controller.
 		// That should modify the --all option model
-		$packageNamespace = $this->package()
-										   ->srcPackageNamespace()
-		;
-		$rootAppNamespace           = $this->rootNamespace();
-		$rootAppControllerNamespace = 'App\Http\Controllers';
 
 		$replace = [];
 
@@ -67,6 +62,17 @@ class MakeController extends ControllerMakeCommand
 			$replace['abort(404);'] = '//';
 		}
 
+		return $this->classReplacements($replace, $name);
+	}
+
+	protected function classReplacements(array $replace, string $name)
+	{
+		$packageNamespace = $this->package()
+										   ->srcPackageNamespace()
+		;
+		$rootAppNamespace           = $this->rootNamespace();
+		$rootAppControllerNamespace = 'App\Http\Controllers';
+
 		$baseControllerExists = file_exists($this->getPath("{$packageNamespace}Http\Controllers\Controller"));
 
 		if ($baseControllerExists) {
@@ -79,12 +85,12 @@ class MakeController extends ControllerMakeCommand
 		return str_replace(
 			array_keys($replace),
 			array_values($replace),
-			// has to be the parent parent class
+			// has to be the parent class
 			$this->replaceControllerStub($name),
 		);
 	}
 
-	protected function replaceControllerStub(string $name)
+	protected function replaceControllerStub(string $name): string
 	{
 		$stub = $this->files->get($this->getStub());
 
@@ -115,7 +121,6 @@ class MakeController extends ControllerMakeCommand
 		$replace = $this->buildFormRequestReplacements_package($replace, $modelClass);
 
 		return $this->mergeReplacements($replace, $modelClass);
-		// keep sync with ControllerMakeCommand
 	}
 
 	protected function mergeReplacements(array $replace, string $modelClass)
@@ -186,12 +191,16 @@ class MakeController extends ControllerMakeCommand
 			$namespacedRequests .= PHP_EOL.'use '.$namespace.'\\'.$updateRequestClass.';';
 		}
 
-		return $this->replaceFormRequests_package([$replace, $namespace, $namespacedRequests, $storeRequestClass, $updateRequestClass]);
+		return $this->replaceFormRequests_package([$replace,
+			$namespace,
+			$namespacedRequests,
+			$storeRequestClass,
+			$updateRequestClass]);
 	}
 
 	protected function replaceFormRequests_package(array $vars): array
 	{
-		[$replace,$namespace, $namespacedRequests,$storeRequestClass,$updateRequestClass] = $vars;
+		[$replace, $namespace, $namespacedRequests, $storeRequestClass, $updateRequestClass] = $vars;
 
 		return array_merge(
 			$replace,
