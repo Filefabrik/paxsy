@@ -38,7 +38,12 @@ class MakePackage extends Command
 
 		[$vendor, $package, $selectedStubsSet] = $this->inputArguments();
 		if (! $vendor || ! $package || ! $selectedStubsSet) {
-			$this->error('missing a part vendor:'.$vendor.' or package:'.$package.' or stubs:'.$selectedStubsSet);
+			$this->error(sprintf(
+				'missing a part vendor:"%s" or package:"%s" or stubs:"%s"',
+				$vendor,
+				$package,
+				$selectedStubsSet
+			));
 
 			return self::FAILURE;
 		}
@@ -53,7 +58,11 @@ class MakePackage extends Command
 		$newPackage->setStackName($packageStack->getStackName());
 		// check package exists
 		if (is_dir($newPackage->packageBasePath())) {
-			$this->error('Package:"'.$newPackage->getPackageName().'" already exists under:"'.$newPackage->packageBasePath().'"!');
+			$this->error(sprintf(
+				'Package:"%s" already exists under:"%s"!',
+				$newPackage->getPackageName(),
+				$newPackage->packageBasePath()
+			));
 
 			return self::FAILURE;
 		}
@@ -72,7 +81,12 @@ class MakePackage extends Command
 		$stubs = $stubsConfig->stubs();
 
 		if (! $stubs) {
-			$message = 'Missing Stubs in /config/paxsy.php on selected stubs: "'.$stubsConfig->getSelectedStubs().'" in: '.$stubsConfig->stubsLocator();
+			$message = sprintf(
+				'Missing Stubs in /config/paxsy.php on selected stubs: "%s" in: %s',
+				$stubsConfig->getSelectedStubs(),
+				$stubsConfig->stubsLocator()
+			);
+
 			Log::error($message);
 			$this->error($message);
 
@@ -82,7 +96,7 @@ class MakePackage extends Command
 		$stubsDirectory = $stubsConfig->directory();
 
 		if (! $stubsDirectory) {
-			$message = 'Missing Stub-Directory in /config/paxsy.php '.$stubsConfig->directoryLocator();
+			$message = sprintf('Missing Stub-Directory in /config/paxsy.php %s', $stubsConfig->directoryLocator());
 			Log::error($message);
 			$this->error($message);
 
@@ -127,7 +141,7 @@ class MakePackage extends Command
 		if (! $packageStack->exists()) {
 			$this->info('Stack does not exist!');
 			$packageStack->ensureStackDirectoryExists();
-			$this->info('And was created under:'.$packageStack->getStackName());
+			$this->info(sprintf('And was created under:"%s"', $packageStack->getStackName()));
 		}
 	}
 

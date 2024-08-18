@@ -24,7 +24,7 @@ it(
 	function() {
 		$this->artisan('paxsy:package', ['vendor' => '', 'package' => '', 'stubs' => ''])
 			 ->assertExitCode(1)
-			 ->expectsOutputToContain('missing a part vendor: or package: or stubs:')
+			 ->expectsOutputToContain('missing a part vendor:"" or package:"" or stubs:""')
 		;
 	},
 );
