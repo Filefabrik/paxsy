@@ -93,20 +93,22 @@ trait TraitOptions
 		// todo, chained options make:controller -> make:model, the make model must not create a controller
 
 		foreach ($selected as $option => $value) {
-			$useKey = (is_string($option)) ? $option : $value;
-
-			if ($options[$useKey]->acceptValue()) {
-				// todo ugly
-				if (is_int($option) && $useKey === 'model') {
-					$this->input->setOption($useKey, '__handleByInputMask__');
-				} else {
-					$this->input->setOption($useKey, $value);
-				}
-			} else {
-				// set what was given via console command
-				$this->input->setOption($useKey, true);
-			}
+			$useKey      = (is_string($option)) ? $option : $value;
+			$acceptValue = $options[$useKey]->acceptValue();
+			$this->configureOptionValue($option, $value, $useKey, $acceptValue);
 		}
+	}
+
+	protected function configureOptionValue($option, $value, $useKey, $acceptValue): void
+	{
+		if ($acceptValue) {
+			// todo ugly
+			$setValue = (is_int($option) && $useKey === 'model') ? '__handleByInputMask__' : $value;
+		} else {
+			// set what was given via console command
+			$setValue = true;
+		}
+		$this->input->setOption($useKey, $setValue);
 	}
 
 	/**

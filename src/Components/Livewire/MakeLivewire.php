@@ -36,17 +36,11 @@ if (class_exists(MakeCommand::class)) {
 		protected function parentHandle(): void
 		{
 			$name = $this->lineClassNameValid();
-			if (! $name) {
+			if (! $name || ! $this->lineReservedClassName($name)) {
 				return;
 			}
 
-			if (! $this->lineReservedClassName($name)) {
-				return;
-			}
-
-			$force  = $this->option('force');
-			$inline = $this->option('inline');
-			$test   = $this->option('test') || $this->option('pest');
+			[$force, $inline, $test] = $this->stageOptions();
 
 			$class = $this->createClass($force, $inline);
 			$view  = $this->createView($force, $inline);
@@ -59,6 +53,11 @@ if (class_exists(MakeCommand::class)) {
 				$this->lineWelcome();
 				$this->lineBladeTag();
 			}
+		}
+
+		protected function stageOptions(): array
+		{
+			return [$this->option('force'), $this->option('inline'), $this->option('test') || $this->option('pest')];
 		}
 
 		protected function handleCreateTest($test, $force)
