@@ -12,9 +12,6 @@ use Filefabrik\Paxsy\Console\Commands\Make\TraitPackagizer;
 use Filefabrik\Paxsy\Support\Str\ReplaceArray;
 use Filefabrik\Paxsy\Support\Stubs\Facade;
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -32,26 +29,16 @@ class MakeRoute extends GeneratorCommand
 
 	/**
 	 * @return int|bool
-	 * @throws FileNotFoundException
-	 * @throws ContainerExceptionInterface
-	 * @throws NotFoundExceptionInterface
 	 */
 	public function handle(): int|bool
 	{
-		if (! $this->package()) {
-			$packageName = Inputs::suggestPackageName($this->name);
-
-			if (! $packageName) {
-				$this->error('No packages found!');
-				return self::FAILURE;
-			}
-			// reset the load state
-			$this->resetPackage()->input->setOption('package', $packageName);
+		if (! $this->stagePackage()) {
+			return self::FAILURE;
 		}
-		// todo already exist
-		$path = $this->intoPackagePath('/routes/web.php');
 
 		$this->optionsBody();
+		// todo already exist
+		$path = $this->intoPackagePath('/routes/web.php');
 
 		if (file_exists($path) && ! $this->option('force')) {
 			$this->error('Route "'.$path.'" already exists!');
@@ -62,6 +49,28 @@ class MakeRoute extends GeneratorCommand
 
 		$this->makeDirectory($path);
 
+		return $this->stagePutRoute($path);
+	}
+
+	protected function stagePackage()
+	{
+		if (! $this->package()) {
+			$packageName = Inputs::suggestPackageName($this->name);
+
+			if (! $packageName) {
+				$this->error('No packages found!');
+
+				return false;
+			}
+			// reset the load state
+			$this->resetPackage()->input->setOption('package', $packageName);
+		}
+
+		return true;
+	}
+
+	protected function stagePutRoute(string $path)
+	{
 		$stub = $this->files->get($this->getStub());
 		$stub = $this->replaceContent($stub);
 
@@ -87,7 +96,7 @@ class MakeRoute extends GeneratorCommand
 	 */
 	protected function getStub(): string
 	{
-		return  __DIR__.'/stubs/web.stub.php';
+		return __DIR__.'/stubs/web.stub.php';
 	}
 
 	/**
@@ -100,8 +109,11 @@ class MakeRoute extends GeneratorCommand
 		// todo config stub location/set ...whatever
 
 		$vars = Facade::variables(
-			vendorPackageNames: $this->package()->getVendorPackageNames()
-		)->renderVariables();
+			vendorPackageNames: $this->package()
+									 ->getVendorPackageNames(),
+		)
+					  ->renderVariables()
+		;
 
 		return ReplaceArray::searchReplace($stub, $vars);
 	}
