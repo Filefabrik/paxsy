@@ -7,160 +7,165 @@ use Livewire\Features\SupportConsoleCommands\Commands\MakeCommand;
 use Stringable;
 
 if (class_exists(MakeCommand::class)) {
-	/**
-	 * todo move to src/Components
-	 *
-	 * @property ComponentParser $parser
-	 */
-	class MakeLivewire extends MakeCommand
-	{
-		use TraitModularize;
+    /**
+     * todo move to src/Components
+     *
+     * @property ComponentParser $parser
+     */
+    class MakeLivewire extends MakeCommand
+    {
+        use TraitModularize;
 
-		protected $parser;
+        protected $parser;
 
-		public function handle(): void
-		{
-			// todo check why it is need to reset the ownPackage "cache" during construction
-			$this->ownPackage = null;
-			$this->package() ? $this->handle_package() : parent::handle();
-		}
+        public function handle(): void
+        {
+            // todo check why it is need to reset the ownPackage "cache" during construction
+            $this->ownPackage = null;
+            $this->package() ? $this->handle_package() : parent::handle();
+        }
 
-		public function getAliases(): array
-		{
-			return ['make:livewire', 'livewire:make'];
-		}
+        public function getAliases(): array
+        {
+            return ['make:livewire', 'livewire:make'];
+        }
 
-		/**
-		 * ugly copied the Livewire MakeCommand handle method to override the viewName()
-		 */
-		protected function parentHandle(): void
-		{
-			$name = $this->lineClassNameValid();
-			if (! $name || ! $this->lineReservedClassName($name)) {
-				return;
-			}
+        /**
+         * ugly copied the Livewire MakeCommand handle method to override the viewName()
+         */
+        protected function parentHandle(): void
+        {
+            $name = $this->lineClassNameValid();
+            if (!$name || !$this->lineReservedClassName($name)) {
+                return;
+            }
 
-			[$force, $inline, $test] = $this->stageOptions();
+            $this->stageCreateParts();
+        }
 
-			$class = $this->createClass($force, $inline);
-			$view  = $this->createView($force, $inline);
+        protected function stageOptions(): array
+        {
+            return [$this->option('force'), $this->option('inline'), $this->option('test') || $this->option('pest')];
+        }
 
-			$test = $this->handleCreateTest($test, $force);
+        protected function stageCreateParts(): void
+        {
+            [$force, $inline, $test] = $this->stageOptions();
 
-			if ($class || $view) {
-				$this->linesClassAndViews($class, $view, $inline, $test);
+            $class = $this->createClass($force, $inline);
+            $view  = $this->createView($force, $inline);
 
-				$this->lineWelcome();
-				$this->lineBladeTag();
-			}
-		}
+            $test = $this->handleCreateTest($test, $force);
 
-		protected function stageOptions(): array
-		{
-			return [$this->option('force'), $this->option('inline'), $this->option('test') || $this->option('pest')];
-		}
+            if ($class || $view) {
+                $this->linesClassAndViews($class, $view, $inline, $test);
 
-		protected function handleCreateTest($test, $force)
-		{
-			if ($test) {
-				$testType = $this->option('pest') ? 'pest' : 'phpunit';
-				$test     = $this->createTest($force, $testType);
-			}
+                $this->lineWelcome();
+                $this->lineBladeTag();
+            }
+        }
 
-			return $test;
-		}
+        protected function handleCreateTest($test, $force)
+        {
+            if ($test) {
+                $testType = $this->option('pest') ? 'pest' : 'phpunit';
+                $test     = $this->createTest($force, $testType);
+            }
 
-		protected function linesClassAndViews($class, $view, $inline, $test): void
-		{
-			$this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
-			$class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
+            return $test;
+        }
 
-			if (! $inline) {
-				$view && $this->line("<options=bold;fg=green>VIEW:</>  {$this->parser->relativeViewPath()}");
-			}
+        protected function linesClassAndViews($class, $view, $inline, $test): void
+        {
+            $this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
+            $class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
 
-			if ($test) {
-				$this->line("<options=bold;fg=green>TEST:</>  {$this->parser->relativeTestPath()}");
-			}
-		}
+            if (!$inline) {
+                $view && $this->line("<options=bold;fg=green>VIEW:</>  {$this->parser->relativeViewPath()}");
+            }
 
-		protected function lineClassNameValid()
-		{
-			if (! $this->isClassNameValid($name = $this->parser->className())) {
-				$this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
-				$this->line("<fg=red;options=bold>Class is invalid:</> {$name}");
+            if ($test) {
+                $this->line("<options=bold;fg=green>TEST:</>  {$this->parser->relativeTestPath()}");
+            }
+        }
 
-				return null;
-			}
+        protected function lineClassNameValid()
+        {
+            if (!$this->isClassNameValid($name = $this->parser->className())) {
+                $this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
+                $this->line("<fg=red;options=bold>Class is invalid:</> {$name}");
 
-			return $name;
-		}
+                return null;
+            }
 
-		protected function lineWelcome()
-		{
-			if ($this->isFirstTimeMakingAComponent() && ! app()->runningUnitTests()) {
-				// @codeCoverageIgnoreStart
-				$this->writeWelcomeMessage();
-				// @codeCoverageIgnoreEnd
-			}
-		}
+            return $name;
+        }
 
-		protected function lineBladeTag(): void
-		{
-			$bladeTag = StringHelper::tagFromInputName(
-				$this->package()
-					 ->getName(),
-				$this->parser->getInputName(),
-			);
+        protected function lineWelcome()
+        {
+            if ($this->isFirstTimeMakingAComponent() && !app()->runningUnitTests()) {
+                // @codeCoverageIgnoreStart
+                $this->writeWelcomeMessage();
+                // @codeCoverageIgnoreEnd
+            }
+        }
 
-			$this->line("<options=bold;fg=green>TAG:</>  $bladeTag");
-		}
+        protected function lineBladeTag(): void
+        {
+            $bladeTag = StringHelper::tagFromInputName(
+                $this->package()
+                     ->getName(),
+                $this->parser->getInputName(),
+            );
 
-		protected function lineReservedClassName(string|Stringable $name): bool
-		{
-			if ($this->isReservedClassName($name)) {
-				$this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
-				$this->line("<fg=red;options=bold>Class is reserved:</> {$name}");
+            $this->line("<options=bold;fg=green>TAG:</>  $bladeTag");
+        }
 
-				return false;
-			}
+        protected function lineReservedClassName(string|Stringable $name): bool
+        {
+            if ($this->isReservedClassName($name)) {
+                $this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
+                $this->line("<fg=red;options=bold>Class is reserved:</> {$name}");
 
-			return true;
-		}
+                return false;
+            }
 
-		protected function handle_package(): void
-		{
-			$classNamespace = $this->toPackageNamespace('Livewire');
-			$viewPath       = $this->intoPackagePath('resources/views/livewire');
-			$name           = $this->argument('name');
-			$this->parser   = new ComponentParser(
-				$classNamespace,
-				$viewPath,
-				$name,
-				$this->option('stub'),
-			);
+            return true;
+        }
 
-			// important the your-package-name::livewire.klicker
-			$this->parser->setPackage($this->package())
-						 ->setInputName($this->argument('name'))
-			;
-			// change classes and namespaces for a paxsy package dir
-			$this->parser->remapClasses();
+        protected function handle_package(): void
+        {
+            $classNamespace = $this->toPackageNamespace('Livewire');
+            $viewPath       = $this->intoPackagePath('resources/views/livewire');
+            $name           = $this->argument('name');
+            $this->parser   = new ComponentParser(
+                $classNamespace,
+                $viewPath,
+                $name,
+                $this->option('stub'),
+            );
 
-			$this->parentHandle();
-		}
+            // important the your-package-name::livewire.klicker
+            $this->parser->setPackage($this->package())
+                         ->setInputName($this->argument('name'))
+            ;
+            // change classes and namespaces for a paxsy package dir
+            $this->parser->remapClasses();
 
-		public function isFirstTimeMakingAComponent(): bool
-		{
-			$package = $this->package();
-			if (! $package) {
-				return parent::isFirstTimeMakingAComponent();
-			}
-			// todo take livewire config for namespace in paxsy config or stack config
-			//$namespace = str(config('livewire.class_namespace'))->replaceFirst(app()->getNamespace(), '');
-			$packagePath = $package->intoPackagePath('src/Livewire');
+            $this->parentHandle();
+        }
 
-			return ! File::isDirectory($packagePath);
-		}
-	}
+        public function isFirstTimeMakingAComponent(): bool
+        {
+            $package = $this->package();
+            if (!$package) {
+                return parent::isFirstTimeMakingAComponent();
+            }
+            // todo take livewire config for namespace in paxsy config or stack config
+            //$namespace = str(config('livewire.class_namespace'))->replaceFirst(app()->getNamespace(), '');
+            $packagePath = $package->intoPackagePath('src/Livewire');
+
+            return !File::isDirectory($packagePath);
+        }
+    }
 }
