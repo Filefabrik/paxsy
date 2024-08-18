@@ -50,18 +50,22 @@ trait TraitOptions
 		// factory uses a model
 		foreach ($input->getOptions() as $name => $value) {
 			if ($value === '__handleByInputMask__' && $name === 'model') {
-				$command = Str::lower(Str::replaceFirst('Make', '', Str::afterLast(static::class, '\\')));
-
-				$lbl = sprintf('What model should this %s apply to? (Optional)', $command);
-				if (method_exists($this, 'possibleModels')) {
-					// input mask
-					$model = suggest(
-						$lbl,
-						$this->possibleModels(),
-					);
-					$this->input->setOption($name, $model);
-				}
+				$this->suggestModelOption($name);
 			}
+		}
+	}
+
+	protected function suggestModelOption(string $name): void
+	{
+		if (method_exists($this, 'possibleModels')) {
+			$command = Str::lower(Str::replaceFirst('Make', '', Str::afterLast(static::class, '\\')));
+			$lbl     = sprintf('What model should this %s apply to? (Optional)', $command);
+			// input mask
+			$model = suggest(
+				$lbl,
+				$this->possibleModels(),
+			);
+			$this->input->setOption($name, $model);
 		}
 	}
 
@@ -72,34 +76,35 @@ trait TraitOptions
 	 */
 	protected function optionsBody(): void
 	{
-		if (config('paxsy.gui_interactions') && $this->package()) {
-			$opts = $this->provideOptions();
+		if (config('paxsy.gui_interactions') && $this->package() && $opts = $this->provideOptions()) {
 			// call once per make command
+			// show for what the option is
+			$selected = multiselect('Options for '.class_basename($this).'?', $opts, [], scroll: 15);
 
-			if ($opts) {
-				// show for what the option is
-				$selected = multiselect('Options for '.class_basename($this).'?', $opts, [], scroll: 15);
+			$options = $this->getDefinition()
+							->getOptions()
+			;
+			$this->configureOptionValues($selected, $options);
+		}
+	}
 
-				$options = $this->getDefinition()
-								->getOptions()
-				;
-				// todo, chained options make:controller -> make:model, the make model must not create a controller
+	protected function configureOptionValues($selected, $options): void
+	{
+		// todo, chained options make:controller -> make:model, the make model must not create a controller
 
-				foreach ($selected as $option => $value) {
-					$useKey = (is_string($option)) ? $option : $value;
+		foreach ($selected as $option => $value) {
+			$useKey = (is_string($option)) ? $option : $value;
 
-					if ($options[$useKey]->acceptValue()) {
-						// todo ugly
-						if (is_int($option) && $useKey === 'model') {
-							$this->input->setOption($useKey, '__handleByInputMask__');
-						} else {
-							$this->input->setOption($useKey, $value);
-						}
-					} else {
-						// set what was given via console command
-						$this->input->setOption($useKey, true);
-					}
+			if ($options[$useKey]->acceptValue()) {
+				// todo ugly
+				if (is_int($option) && $useKey === 'model') {
+					$this->input->setOption($useKey, '__handleByInputMask__');
+				} else {
+					$this->input->setOption($useKey, $value);
 				}
+			} else {
+				// set what was given via console command
+				$this->input->setOption($useKey, true);
 			}
 		}
 	}
