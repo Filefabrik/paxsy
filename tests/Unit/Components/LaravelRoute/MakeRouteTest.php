@@ -11,7 +11,6 @@ beforeEach(function() {
 	removePackageStack();
 });
 
-// todo there is a test-bug
 it(
 	'Call original make:route',
 	function() {
