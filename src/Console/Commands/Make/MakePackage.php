@@ -14,139 +14,194 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class MakePackage extends Command
 {
-	/**
-	 * @var string
-	 */
-	protected $signature = 'paxsy:package
+    /**
+     * @var string
+     */
+    protected $signature = 'paxsy:package
 	    {vendor? : Your vendor name}
 		{package? : The name of the package}
 		{stubs=default : Select a Stubs Set}';
 
-	/**
-	 * @var string
-	 */
-	protected $description = 'Create a new composer-package in /app-paxsy  "php artisan paxsy:package MyCompanyVendor ThPackageName"';
+    /**
+     * @var string
+     */
+    protected $description = 'Create a new composer-package in /app-paxsy  "php artisan paxsy:package MyCompanyVendor ThPackageName"';
 
-	/**
-	 * @return int
-	 * @throws ContainerExceptionInterface
-	 * @throws NotFoundExceptionInterface
-	 */
-	public function handle(): int
-	{
-		$packageStack = StackApp::get();
+    protected array $stageVars = ['vendor'           => null,
+                                  'package'          => null,
+                                  'selectedStubsSet' => null,
+                                  'stubs'            => null,
+                                  'stubsConfig'      => null,
+                                  'stubsDirectory'   => null,
+                                  'replaceableVars'  => null];
 
-		[$vendor, $package, $selectedStubsSet] = $this->inputArguments();
-		if (! $vendor || ! $package || ! $selectedStubsSet) {
-			$this->error(sprintf(
-				'missing a part vendor:"%s" or package:"%s" or stubs:"%s"',
-				$vendor,
-				$package,
-				$selectedStubsSet
-			));
+    /**
+     * @return int
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function handle(): int
+    {
+        foreach (['stageArguments',
+                  'stageVendorPackage',
+                  'stageStubsConfig',
+                  'stageStubs',
+                  'stageStubsDirectory',
+                  'stageReplaceableVars'] as $method) {
+            if (!$this->{$method}()) {
+                return self::FAILURE;
+            }
+        }
 
-			return self::FAILURE;
-		}
+        /*
+         * directories and files
+         */
 
-		// todo must have the Package context, which has the Package Stack
-		$newPackage = new VendorPackageNames(
-			vendor : $vendor,
-			package: $package,
-		);
+        $stubsHelper = Helper::createStubs(
+            packageBasePath: $this->stageVars['newPackage']->packageBasePath(),
+            stubsMap       : $this->stageVars['stubs'],
+            stubsDirectory : $this->stageVars['stubsDirectory'],
+            variables      : $this->stageVars['replaceableVars'],
+        );
+        $stubsHelper->writeStubs();
+        $stubsHelper->mapLinesInto($this);
 
-		// ATM take the default app-packages
-		$newPackage->setStackName($packageStack->getStackName());
-		// check package exists
-		if (is_dir($newPackage->packageBasePath())) {
-			$this->error(sprintf(
-				'Package:"%s" already exists under:"%s"!',
-				$newPackage->getPackageName(),
-				$newPackage->packageBasePath()
-			));
+        // force to reread packages
+        StackApp::get()
+                ->reset()
+        ;
 
-			return self::FAILURE;
-		}
-		// check package exists
-		// at this point, all requirements
-		$this->createStackNotExists();
+        return self::SUCCESS;
+    }
 
-		/**
-		 * Semi-Validation
-		 */
-		$stubsConfig = new FromConfig($selectedStubsSet);
+    protected function stageArguments()
+    {
+        [$vendor, $package, $selectedStubsSet] = $this->inputArguments();
+        if (!$vendor || !$package || !$selectedStubsSet) {
+            $this->error(sprintf(
+                             'missing a part vendor:"%s" or package:"%s" or stubs:"%s"',
+                             $vendor,
+                             $package,
+                             $selectedStubsSet,
+                         ));
 
-		/*
-		 * directories and files
-		 */
-		$stubs = $stubsConfig->stubs();
+            return null;
+        }
 
-		if (! $stubs) {
-			$message = sprintf(
-				'Missing Stubs in /config/paxsy.php on selected stubs: "%s" in: %s',
-				$stubsConfig->getSelectedStubs(),
-				$stubsConfig->stubsLocator()
-			);
+        $this->stageVars['vendor']           = $vendor;
+        $this->stageVars['package']          = $package;
+        $this->stageVars['selectedStubsSet'] = $selectedStubsSet;
 
-			Log::error($message);
-			$this->error($message);
+        return true;
+    }
 
-			return self::FAILURE;
-		}
+    protected function stageVendorPackage()
+    {
+        // todo must have the Package context, which has the Package Stack
+        $newPackage = new VendorPackageNames(
+            vendor : $this->stageVars['vendor'],
+            package: $this->stageVars['package'],
+        );
 
-		$stubsDirectory = $stubsConfig->directory();
+        // ATM take the default app-packages
+        $newPackage->setStackName(StackApp::get()
+                                          ->getStackName());
+        // check package exists
+        if (is_dir($newPackage->packageBasePath())) {
+            $this->error(sprintf(
+                             'Package:"%s" already exists under:"%s"!',
+                             $newPackage->getPackageName(),
+                             $newPackage->packageBasePath(),
+                         ));
 
-		if (! $stubsDirectory) {
-			$message = sprintf('Missing Stub-Directory in /config/paxsy.php %s', $stubsConfig->directoryLocator());
-			Log::error($message);
-			$this->error($message);
+            return false;
+        }
+        // check package exists
+        // at this point, all requirements
+        $this->createStackNotExists();
 
-			return self::FAILURE;
-		}
+        $this->stageVars['newPackage'] = $newPackage;
 
-		$replaceableVars = Facade::variables(
-			vendorPackageNames: $newPackage,
-			config            : $stubsConfig,
-		)
-								 ->renderVariables()
-		;
+        return true;
+    }
 
-		$stubsHelper = Helper::createStubs(
-			packageBasePath: $newPackage->packageBasePath(),
-			stubsMap       : $stubs,
-			stubsDirectory : $stubsDirectory,
-			variables      : $replaceableVars,
-		);
-		$stubsHelper->writeStubs();
-		$stubsHelper->mapLinesInto($this);
+    protected function stageStubsConfig()
+    {
+        /**
+         * Semi-Validation
+         */
+        return $this->stageVars['stubsConfig'] = new FromConfig($this->stageVars['selectedStubsSet']);
+    }
 
-		// force to reread packages
-		StackApp::get()
-				->reset()
-		;
+    protected function stageStubs()
+    {
+        $stubs = $this->stageVars['stubsConfig']->stubs();
 
-		return self::SUCCESS;
-	}
+        if (!$stubs) {
+            $message = sprintf(
+                'Missing Stubs in /config/paxsy.php on selected stubs: "%s" in: %s',
+                $this->stageVars['stubsConfig']->getSelectedStubs(),
+                $this->stageVars['stubsConfig']->stubsLocator(),
+            );
 
-	/**
-	 * Auto-Create the Directory
-	 *
-	 * @return void
-	 * @throws ContainerExceptionInterface
-	 * @throws NotFoundExceptionInterface
-	 */
-	protected function createStackNotExists(): void
-	{
-		$packageStack = StackApp::get();
+            Log::error($message);
+            $this->error($message);
 
-		if (! $packageStack->exists()) {
-			$this->info('Stack does not exist!');
-			$packageStack->ensureStackDirectoryExists();
-			$this->info(sprintf('And was created under:"%s"', $packageStack->getStackName()));
-		}
-	}
+            return null;
+        }
+        $this->stageVars['stubs'] = $stubs;
 
-	protected function inputArguments(): array
-	{
-		return array_map(fn($str) => $this->argument($str), ['vendor', 'package', 'stubs']);
-	}
+        return true;
+    }
+
+    protected function stageStubsDirectory()
+    {
+        $stubsDirectory = $this->stageVars['stubsConfig']->directory();
+
+        if (!$stubsDirectory) {
+            $message = sprintf('Missing Stub-Directory in /config/paxsy.php %s',
+                               $this->stageVars['stubsConfig']->directoryLocator());
+            Log::error($message);
+            $this->error($message);
+
+            return null;
+        }
+
+        $this->stageVars['stubsDirectory'] = $stubsDirectory;
+
+        return true;
+    }
+
+    protected function stageReplaceableVars()
+    {
+        return $this->stageVars['replaceableVars'] = Facade::variables(
+            vendorPackageNames: $this->stageVars['newPackage'],
+            config            : $this->stageVars ['stubsConfig'],
+        )
+                                                           ->renderVariables()
+        ;
+    }
+
+    /**
+     * Auto-Create the Directory
+     *
+     * @return void
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    protected function createStackNotExists(): void
+    {
+        $packageStack = StackApp::get();
+
+        if (!$packageStack->exists()) {
+            $this->info('Stack does not exist!');
+            $packageStack->ensureStackDirectoryExists();
+            $this->info(sprintf('And was created under:"%s"', $packageStack->getStackName()));
+        }
+    }
+
+    protected function inputArguments(): array
+    {
+        return array_map(fn($str) => $this->argument($str), ['vendor', 'package', 'stubs']);
+    }
 }
