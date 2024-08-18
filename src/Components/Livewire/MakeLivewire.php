@@ -40,6 +40,16 @@ if (class_exists(MakeCommand::class)) {
                 return;
             }
 
+            $this->stageCreateParts();
+        }
+
+        protected function stageOptions(): array
+        {
+            return [$this->option('force'), $this->option('inline'), $this->option('test') || $this->option('pest')];
+        }
+
+        protected function stageCreateParts(): void
+        {
             [$force, $inline, $test] = $this->stageOptions();
 
             $class = $this->createClass($force, $inline);
@@ -53,11 +63,6 @@ if (class_exists(MakeCommand::class)) {
                 $this->lineWelcome();
                 $this->lineBladeTag();
             }
-        }
-
-        protected function stageOptions(): array
-        {
-            return [$this->option('force'), $this->option('inline'), $this->option('test') || $this->option('pest')];
         }
 
         protected function handleCreateTest($test, $force)
