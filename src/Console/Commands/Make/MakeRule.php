@@ -7,5 +7,7 @@ use Illuminate\Foundation\Console\RuleMakeCommand;
 
 class MakeRule extends RuleMakeCommand
 {
-    use TraitPackagizer, TraitCallDelegation,TraitOptions;
+	use TraitPackagizer;
+	use TraitCallDelegation;
+	use TraitOptions;
 }
