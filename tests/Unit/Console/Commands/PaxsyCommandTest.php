@@ -11,7 +11,7 @@ use Filefabrik\Paxsy\Paxsy;
 /** @copyright-header * */
 beforeEach(function() {
 	// todo all reset for make:package into function ...
-	
+
 	currentStackName();
 	removePackageStack();
 	rerouteStubsDirectory();
@@ -83,8 +83,8 @@ it(
 		useShellDisabled();
 
 		$this->artisan('paxsy')
-			 ->expectsQuestion('Paxsy Menu', 'create Package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', 'PaxsyVendorName')
+			 ->expectsQuestion('Paxsy Menu', 'new laravel composer package')
+			 ->expectsQuestion('"your-vendor-name" of the package', 'PaxsyVendorName')
 			 ->expectsQuestion('Name of your package?', 'PackEdgeName')
 			 ->expectsQuestion(
 			 	'Choose the "make" command for your "paxsy-vendor-name/pack-edge-name" Package?',
