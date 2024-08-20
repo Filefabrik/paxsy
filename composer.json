@@ -24,8 +24,6 @@
     "license": "MIT",
     "require": {
         "php": ">=8.2",
-        "ext-dom": "*",
-        "ext-simplexml": "*",
         "composer/composer": "^2.1",
         "filefabrik/bootraiser": "~v2.0",
         "laravel/framework": "^11.0",
