@@ -280,7 +280,7 @@ class PaxsyCommand extends Command
 										  ->getPackage()
 										  ->toName()
 		;
-		$label = 'Choose the "make" command for your "'.$vendor_package_name.'" Package?';
+		$label = sprintf( 'Choose the "make" command for your "%s" package?',$vendor_package_name);
 
 		$command = Inputs::suggestMakeCommands($label);
 
