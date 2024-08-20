@@ -24,12 +24,9 @@
     "license": "MIT",
     "require": {
         "php": ">=8.2",
-        "ext-dom": "*",
-        "ext-simplexml": "*",
         "composer/composer": "^2.1",
         "filefabrik/bootraiser": "~v2.0",
-        "laravel/framework": "^11.0",
-        "orchestra/testbench": "^9.0"
+        "laravel/framework": "^11.0"
     },
     "require-dev": {
         "ext-json": "*",
@@ -42,7 +39,8 @@
         "phpunit/phpunit": "^9.5|^10.5",
         "phpstan/phpstan": "@stable",
         "illuminate/support": "^11",
-        "laravel/prompts": "^v0.1"
+        "laravel/prompts": "^v0.1",
+        "orchestra/testbench": "^9.0"
     },
     "autoload": {
         "psr-4": {
