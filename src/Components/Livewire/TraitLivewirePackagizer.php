@@ -5,7 +5,7 @@ namespace Filefabrik\Paxsy\Components\Livewire;
 use Filefabrik\Paxsy\Console\Commands\Admin\TraitOptions;
 use Filefabrik\Paxsy\Console\Commands\TraitPackageSupport;
 
-trait TraitModularize
+trait TraitLivewirePackagizer
 {
 	use TraitPackageSupport;
 	use TraitOptions;
