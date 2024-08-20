@@ -43,7 +43,7 @@ it(
 
 		$this->artisan('paxsy')
 			 ->expectsQuestion('Paxsy Menu', 'create_package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', '')
+			 ->expectsQuestion('"your-vendor-name" of the package', '')
 			 ->assertExitCode(1)
 		;
 	},
@@ -56,7 +56,7 @@ it(
 
 		$this->artisan('paxsy')
 			 ->expectsQuestion('Paxsy Menu', 'create_package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', 'testVendor')
+			 ->expectsQuestion('"your-vendor-name" of the package', 'testVendor')
 			 ->expectsQuestion('Name of your package?', '')
 			 ->assertExitCode(1)
 		;
@@ -211,7 +211,7 @@ it(
 		config()->set('paxsy.ui_default_vendor');
 		$this->artisan('paxsy')
 			 ->expectsQuestion('Paxsy Menu', 'create_package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', 't')
+			 ->expectsQuestion('"your-vendor-name" of the package', 't')
 			 ->expectsQuestion('Name of your package?', 't')
 			 ->expectsQuestion('Choose the "make" command for your "t/t" Package?', PaxsyCommand::QUIT)
 			 ->expectsQuestion('Paxsy Menu', PaxsyCommand::QUIT)
@@ -233,7 +233,7 @@ it(
 
 		$this->artisan('paxsy')
 			 ->expectsQuestion('Paxsy Menu', 'create Package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', 'PaxsyVendorName')
+			 ->expectsQuestion('"your-vendor-name" of the package', 'PaxsyVendorName')
 			 ->expectsQuestion('Name of your package?', 'PackEdgeName')
 			 ->expectsQuestion('Which preconfigured Stub-Set?', 'set2')
 			 ->expectsQuestion(
