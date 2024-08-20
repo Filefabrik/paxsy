@@ -14,7 +14,7 @@ if (class_exists(MakeCommand::class)) {
 	 */
 	class MakeLivewire extends MakeCommand
 	{
-		use TraitModularize;
+		use TraitLivewirePackagizer;
 
 		protected $parser;
 
