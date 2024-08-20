@@ -2,10 +2,10 @@
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
 
+use Filefabrik\Paxsy\Console\Commands\Admin\TraitOptions;
 use Illuminate\Foundation\Console\RuleMakeCommand;
 
-// @codeCoverageIgnore
 class MakeRule extends RuleMakeCommand
 {
-	use TraitPackagizer;
+    use TraitPackagizer, TraitCallDelegation,TraitOptions;
 }
