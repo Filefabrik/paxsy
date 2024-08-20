@@ -14,32 +14,37 @@ use Illuminate\Console\Command;
  */
 class MakePackageStack extends Command
 {
-	protected $signature = 'paxsy:package-create';
+    protected $signature = 'paxsy:package-create';
 
-	protected $description = 'Initial a create directory where packages will be organized into';
+    protected $description = 'Initial a create directory where packages will be organized into';
 
-	public function handle(): int
-	{
-		$packageStack = StackApp::get();
+    public function handle(): int
+    {
+        $packageStack = StackApp::get();
 
-		if (! $packageStack->exists()) {
-			$packageStack->ensureStackDirectoryExists();
+        $stackName     = $packageStack->getStackName();
+        $stackBasePath = $packageStack->getStackBasePath();
 
-			// todo would you like to publish configs before. so you can customize some stuff if need
-			$this->line('<kbd>php artisan vendor:publish --tag=paxsy-config</kbd>');
+        if (!$packageStack->exists()) {
+            $packageStack->ensureStackDirectoryExists();
 
-			$successfully = 'Package Stack "'.$packageStack->getStackName().'" created successfully in your laravel: "'.$packageStack->getStackBasePath().'"!';
+            // todo would you like to publish configs before. so you can customize some stuff if need
+            $this->line('<kbd>php artisan vendor:publish --tag=paxsy-config</kbd>');
 
-			$this->getOutput()
-				 ->title($successfully)
-			;
+            $successfully =
+                sprintf('Package Stack "%s" created successfully in your laravel: "%s"!', $stackName, $stackBasePath);
 
-			return self::SUCCESS;
-		}
-		$this->getOutput()
-			 ->title('Package Stack "'.$packageStack->getStackName().'" already exists in your laravel: "'.$packageStack->getStackBasePath().'"!')
-		;
+            $this->getOutput()
+                 ->title($successfully)
+            ;
 
-		return self::SUCCESS;
-	}
+            return self::SUCCESS;
+        }
+        $msg = sprintf('Package Stack "%s" already exists in your laravel: "%s"!', $stackName, $stackBasePath);
+        $this->getOutput()
+             ->title($msg)
+        ;
+
+        return self::SUCCESS;
+    }
 }
