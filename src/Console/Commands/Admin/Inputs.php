@@ -55,7 +55,7 @@ class Inputs
 		}
 
 		return suggest(
-			label  : '"your-vendor-name" of the Package',
+			label  : '"your-vendor-name" of the package',
 			options: fn($value) => (new Collection($opts))
 				->filter(fn($title) => str_contains(Str::lower($title), Str::lower($value)))
 				->all(),

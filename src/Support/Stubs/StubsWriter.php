@@ -87,7 +87,7 @@ class StubsWriter
 
 		// todo perhaps flag force or re-create all files
 		if ($this->filesystem->exists($filename)) {
-			$this->line(" - Skipping <info>{$destinationPath}</info> (already exists)");
+			$this->line(sprintf(' - Skipping <info>%s</info> (already exists)', $destinationPath));
 
 			return false;
 		}
@@ -97,7 +97,7 @@ class StubsWriter
 		$this->filesystem->ensureDirectoryExists($out);
 		$this->filesystem->put($filename, $output);
 
-		$this->line(" — Wrote to <info>{$destinationPath}</info>");
+		$this->line(sprintf(' — Wrote file <info>%s</info> into %s', $destinationPath, $out));
 
 		return true;
 	}

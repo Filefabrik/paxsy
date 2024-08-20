@@ -42,6 +42,7 @@ class MakePackage extends Command
 	 */
 	public function handle(): int
 	{
+		/** @var callable $method */
 		foreach (['stageArguments',
 			'stageVendorPackage',
 			'stageStubsConfig',
@@ -74,7 +75,7 @@ class MakePackage extends Command
 		return self::SUCCESS;
 	}
 
-	protected function stageArguments()
+	protected function stageArguments(): ?true
 	{
 		[$vendor, $package, $selectedStubsSet] = $this->inputArguments();
 		if (! $vendor || ! $package || ! $selectedStubsSet) {
@@ -95,7 +96,11 @@ class MakePackage extends Command
 		return true;
 	}
 
-	protected function stageVendorPackage()
+	/**
+	 * @throws ContainerExceptionInterface
+	 * @throws NotFoundExceptionInterface
+	 */
+	protected function stageVendorPackage(): bool
 	{
 		// todo must have the Package context, which has the Package Stack
 		$newPackage = new VendorPackageNames(
@@ -125,7 +130,7 @@ class MakePackage extends Command
 		return true;
 	}
 
-	protected function stageStubsConfig()
+	protected function stageStubsConfig(): FromConfig
 	{
 		/**
 		 * Semi-Validation
@@ -133,7 +138,7 @@ class MakePackage extends Command
 		return $this->stageVars['stubsConfig'] = new FromConfig($this->stageVars['selectedStubsSet']);
 	}
 
-	protected function stageStubs()
+	protected function stageStubs(): ?true
 	{
 		$stubs = $this->stageVars['stubsConfig']->stubs();
 
@@ -154,7 +159,7 @@ class MakePackage extends Command
 		return true;
 	}
 
-	protected function stageStubsDirectory()
+	protected function stageStubsDirectory(): ?true
 	{
 		$stubsDirectory = $this->stageVars['stubsConfig']->directory();
 
@@ -174,7 +179,7 @@ class MakePackage extends Command
 		return true;
 	}
 
-	protected function stageReplaceableVars()
+	protected function stageReplaceableVars(): array
 	{
 		return $this->stageVars['replaceableVars'] = Facade::variables(
 			vendorPackageNames: $this->stageVars['newPackage'],

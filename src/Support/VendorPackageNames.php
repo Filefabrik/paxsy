@@ -22,7 +22,7 @@ use UnexpectedValueException;
 class VendorPackageNames
 {
 	/**
-	 * From config('stack_name') /app-modules/
+	 * From config('stack_name') /app-paxsy/
 	 *
 	 * @var string|null
 	 */

@@ -6,12 +6,11 @@
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Console\Commands\PaxsyCommand;
-use Filefabrik\Paxsy\Paxsy;
 
 /** @copyright-header * */
 beforeEach(function() {
 	// todo all reset for make:package into function ...
-	
+
 	currentStackName();
 	removePackageStack();
 	rerouteStubsDirectory();
@@ -43,7 +42,7 @@ it(
 
 		$this->artisan('paxsy')
 			 ->expectsQuestion('Paxsy Menu', 'create_package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', '')
+			 ->expectsQuestion('"your-vendor-name" of the package', '')
 			 ->assertExitCode(1)
 		;
 	},
@@ -56,7 +55,7 @@ it(
 
 		$this->artisan('paxsy')
 			 ->expectsQuestion('Paxsy Menu', 'create_package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', 'testVendor')
+			 ->expectsQuestion('"your-vendor-name" of the package', 'testVendor')
 			 ->expectsQuestion('Name of your package?', '')
 			 ->assertExitCode(1)
 		;
@@ -83,16 +82,16 @@ it(
 		useShellDisabled();
 
 		$this->artisan('paxsy')
-			 ->expectsQuestion('Paxsy Menu', 'create Package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', 'PaxsyVendorName')
+			 ->expectsQuestion('Paxsy Menu', 'new laravel composer package')
+			 ->expectsQuestion('"your-vendor-name" of the package', 'PaxsyVendorName')
 			 ->expectsQuestion('Name of your package?', 'PackEdgeName')
 			 ->expectsQuestion(
-			 	'Choose the "make" command for your "paxsy-vendor-name/pack-edge-name" Package?',
+			 	'Choose the "make" command for your "paxsy-vendor-name/pack-edge-name" package?',
 			 	'make:model',
 			 )
 			 ->expectsQuestion('What should the model be named?', 'EdgyMododoodel')
 			 ->expectsQuestion(
-			 	'Choose the "make" command for your "paxsy-vendor-name/pack-edge-name" Package?',
+			 	'Choose the "make" command for your "paxsy-vendor-name/pack-edge-name" package?',
 			 	PaxsyCommand::QUIT,
 			 )
 			 ->expectsQuestion('Paxsy Menu', PaxsyCommand::QUIT)
@@ -139,7 +138,7 @@ it(
 			 ->expectsQuestion('Paxsy Menu', 'handle_package')
 			 ->expectsQuestion('package to call a make: command', $defaultPackage->vendorPackageName())
 			 ->expectsQuestion(
-			 	'Choose the "make" command for your "'.$defaultPackage->vendorPackageName().'" Package?',
+			 	'Choose the "make" command for your "'.$defaultPackage->vendorPackageName().'" package?',
 			 	PaxsyCommand::QUIT,
 			 )
 			 ->expectsQuestion('Paxsy Menu', PaxsyCommand::QUIT)
@@ -211,9 +210,9 @@ it(
 		config()->set('paxsy.ui_default_vendor');
 		$this->artisan('paxsy')
 			 ->expectsQuestion('Paxsy Menu', 'create_package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', 't')
+			 ->expectsQuestion('"your-vendor-name" of the package', 't')
 			 ->expectsQuestion('Name of your package?', 't')
-			 ->expectsQuestion('Choose the "make" command for your "t/t" Package?', PaxsyCommand::QUIT)
+			 ->expectsQuestion('Choose the "make" command for your "t/t" package?', PaxsyCommand::QUIT)
 			 ->expectsQuestion('Paxsy Menu', PaxsyCommand::QUIT)
 			 ->assertExitCode(0)
 		;
@@ -226,21 +225,20 @@ it(
 
 		config()->set(
 			'paxsy.stub_sets',
-			['set1' => $defStubsSet, 'set2' => $defStubsSet, 'set3' => $defStubsSet]
+			['set1' => $defStubsSet, 'set2' => $defStubsSet, 'set3' => $defStubsSet],
 		);
 		// prevent from composer update
 		useShellDisabled();
 
 		$this->artisan('paxsy')
-			 ->expectsQuestion('Paxsy Menu', 'create Package')
-			 ->expectsQuestion('"your-vendor-name" of the Package', 'PaxsyVendorName')
+			 ->expectsQuestion('Paxsy Menu', 'new laravel composer package')
+			 ->expectsQuestion('"your-vendor-name" of the package', 'PaxsyVendorName')
 			 ->expectsQuestion('Name of your package?', 'PackEdgeName')
 			 ->expectsQuestion('Which preconfigured Stub-Set?', 'set2')
 			 ->expectsQuestion(
-			 	'Choose the "make" command for your "paxsy-vendor-name/pack-edge-name" Package?',
+			 	'Choose the "make" command for your "paxsy-vendor-name/pack-edge-name" package?',
 			 	PaxsyCommand::QUIT,
 			 )
-
 			 ->expectsQuestion('Paxsy Menu', PaxsyCommand::QUIT)
 		;
 	},

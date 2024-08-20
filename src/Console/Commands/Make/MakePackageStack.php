@@ -22,13 +22,16 @@ class MakePackageStack extends Command
 	{
 		$packageStack = StackApp::get();
 
+		$stackName     = $packageStack->getStackName();
+		$stackBasePath = $packageStack->getStackBasePath();
+
 		if (! $packageStack->exists()) {
 			$packageStack->ensureStackDirectoryExists();
 
 			// todo would you like to publish configs before. so you can customize some stuff if need
 			$this->line('<kbd>php artisan vendor:publish --tag=paxsy-config</kbd>');
 
-			$successfully = 'Package Stack "'.$packageStack->getStackName().'" created successfully in your laravel: "'.$packageStack->getStackBasePath().'"!';
+			$successfully = sprintf('Package Stack "%s" created successfully in your laravel: "%s"!', $stackName, $stackBasePath);
 
 			$this->getOutput()
 				 ->title($successfully)
@@ -36,8 +39,9 @@ class MakePackageStack extends Command
 
 			return self::SUCCESS;
 		}
+		$msg = sprintf('Package Stack "%s" already exists in your laravel: "%s"!', $stackName, $stackBasePath);
 		$this->getOutput()
-			 ->title('Package Stack "'.$packageStack->getStackName().'" already exists in your laravel: "'.$packageStack->getStackBasePath().'"!')
+			 ->title($msg)
 		;
 
 		return self::SUCCESS;
