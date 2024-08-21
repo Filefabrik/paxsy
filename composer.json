@@ -25,7 +25,8 @@
         "filefabrik/bootraiser": "~v2.0",
         "illuminate/support": "^11",
         "laravel/framework": "^11.0",
-        "laravel/prompts": "^v0.1"   
+        "laravel/prompts": "^v0.1",
+        "orchestra/testbench": "^9.0"
     },
     "require-dev": {
         "ext-json": "*",
@@ -36,8 +37,7 @@
         "pestphp/pest-plugin-drift": "^2.6",
         "pestphp/pest-plugin-laravel": "^2.3",
         "phpunit/phpunit": "^9.5|^10.5",
-        "phpstan/phpstan": "@stable",
-         "orchestra/testbench": "^9.0"
+        "phpstan/phpstan": "@stable"
     },
     "autoload": {
         "psr-4": {
