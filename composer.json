@@ -1,32 +1,31 @@
 {
     "name": "filefabrik/paxsy",
     "description": "Software-Packaging your Laravel apps from https://paxsy.filefabrik.com",
-    "version": "v1.0.8",
+    "version": "v1.0.9",
     "keywords": [
         "laravel",
         "laravel 11",
         "livewire 3",
         "laravel package development",
-        "from internachi modular"
+        "adapted from internachi modular Chris Morrell"
     ],
     "authors": [
         {
             "name": "Filefabrik",
             "homepage": "https://filefabrik.com"
-        },
-        {
-            "name": "Chris Morrell",
-            "homepage": "http://www.cmorrell.com",
-            "role": "concept adapted and full refactored from"
         }
     ],
     "type": "library",
     "license": "MIT",
     "require": {
         "php": ">=8.2",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
         "composer/composer": "^2.1",
         "filefabrik/bootraiser": "~v2.0",
+        "illuminate/support": "^11",
         "laravel/framework": "^11.0",
+        "laravel/prompts": "^v0.1",
         "orchestra/testbench": "^9.0"
     },
     "require-dev": {
@@ -38,9 +37,7 @@
         "pestphp/pest-plugin-drift": "^2.6",
         "pestphp/pest-plugin-laravel": "^2.3",
         "phpunit/phpunit": "^9.5|^10.5",
-        "phpstan/phpstan": "@stable",
-        "illuminate/support": "^11",
-        "laravel/prompts": "^v0.1"
+        "phpstan/phpstan": "@stable"
     },
     "autoload": {
         "psr-4": {
