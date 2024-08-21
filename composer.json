@@ -1,23 +1,18 @@
 {
     "name": "filefabrik/paxsy",
     "description": "Software-Packaging your Laravel apps from https://paxsy.filefabrik.com",
-    "version": "v1.0.8",
+    "version": "v1.0.9",
     "keywords": [
         "laravel",
         "laravel 11",
         "livewire 3",
         "laravel package development",
-        "from internachi modular"
+        "adapted from internachi modular Chris Morrell"
     ],
     "authors": [
         {
             "name": "Filefabrik",
             "homepage": "https://filefabrik.com"
-        },
-        {
-            "name": "Chris Morrell",
-            "homepage": "http://www.cmorrell.com",
-            "role": "concept adapted and full refactored from"
         }
     ],
     "type": "library",
