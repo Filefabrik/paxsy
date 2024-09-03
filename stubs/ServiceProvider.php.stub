@@ -18,13 +18,13 @@ class StubPackageNamespaceServiceProvider extends ServiceProvider
     {
         Raiser::forProvider($this)
                 ->publishConfigs()
-                ->migrations()
-                ->routes()
-                ->translations()
-                ->views()
-                ->components()
-                ->commands()
-                ->livewire();
+                ->Migrations()
+                ->Routes()
+                ->Translations()
+                ->Views()
+                ->Components()
+                ->Commands()
+                ->Livewire();
     }
 
 }
