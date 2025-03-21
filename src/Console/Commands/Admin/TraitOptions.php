@@ -3,6 +3,7 @@
 namespace Filefabrik\Paxsy\Console\Commands\Admin;
 
 use Filefabrik\Paxsy\Console\Support\SolvedOptions;
+use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -54,14 +55,16 @@ trait TraitOptions
 
 	protected function suggestModelOption(string $name): void
 	{
-		$command = Str::lower(Str::replaceFirst('Make', '', Str::afterLast(static::class, '\\')));
-		$lbl     = sprintf('What model should this %s apply to? (Optional)', $command);
-		// input mask
-		$model = suggest(
-			$lbl,
-			$this->possibleModels(),
-		);
-		$this->input->setOption($name, $model);
+		if ($this instanceof GeneratorCommand) {
+			$command = Str::lower(Str::replaceFirst('Make', '', Str::afterLast(static::class, '\\')));
+			$lbl     = sprintf('What model should this %s apply to? (Optional)', $command);
+			// input mask
+			$model = suggest(
+				$lbl,
+				$this->possibleModels(),
+			);
+			$this->input->setOption($name, $model);
+		}
 	}
 
 	/**
