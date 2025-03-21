@@ -1,16 +1,11 @@
 <?php declare(strict_types=1);
-/**
- * PHP version 8.2
- */
-
-/** @copyright-header * */
 
 use Filefabrik\Paxsy\Support\Package;
 use Filefabrik\Paxsy\Support\Stack;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 
-beforeEach(function() {
+beforeEach(function () {
 	removePackageStack();
 
 	app()->make(Stack::class, ['paxsy', app(), new Filesystem()]);
@@ -18,7 +13,7 @@ beforeEach(function() {
 
 it(
 	'simple presence ',
-	function() {
+	function () {
 		$ps = packageStack();
 
 		expect($ps)
@@ -30,7 +25,7 @@ it(
 );
 it(
 	'get named package',
-	function() {
+	function () {
 		$ps = packageStack();
 		$ps->ensureStackDirectoryExists();
 
@@ -40,8 +35,10 @@ it(
 
 		expect($pkg)
 			->toBeInstanceOf(Package::class)
-			->and($pkg->getVendorPackageNames()
-					  ->toComposerName())
+			->and(
+				$pkg->getVendorPackageNames()
+					->toComposerName(),
+			)
 			->toBe('my-test-vendor/the-test-package')
 		;
 	},
@@ -52,7 +49,7 @@ it(
  */
 it(
 	'package-create not exists(packageStackBasePath/directory was created before)',
-	function() {
+	function () {
 		$ps       = packageStack();
 		$packages = $ps->packages();
 		expect($packages)
@@ -75,7 +72,7 @@ it(
  */
 it(
 	'package-create exists and empty',
-	function() {
+	function () {
 		$ps = packageStack();
 		$ps->ensureStackDirectoryExists();
 		$packages = $ps->packages();
@@ -98,13 +95,13 @@ it(
 
 it(
 	'reset',
-	function() {
+	function () {
 		expect(packageStack()->reset())->toBeInstanceOf(Stack::class);
 	},
 );
 it(
 	'reload',
-	function() {
+	function () {
 		$ps = packageStack();
 		$ps->ensureStackDirectoryExists();
 
@@ -124,15 +121,17 @@ it(
 );
 it(
 	'get filesystem',
-	function() {
-		expect(packageStack()
-				   ->getFilesystem())->toBeInstanceOf(Filesystem::class);
+	function () {
+		expect(
+			packageStack()
+				->getFilesystem(),
+		)->toBeInstanceOf(Filesystem::class);
 	},
 );
 
 it(
 	'get package create name',
-	function() {
+	function () {
 		expect(packageStack()->getStackName())
 			->toBe(currentStackName())
 			->and((new Stack('packages', app(), new Filesystem()))->getStackName())
@@ -142,7 +141,7 @@ it(
 );
 it(
 	'get packages base path',
-	function() {
+	function () {
 		expect(packageStack()->getStackBasePath())
 			->toBe(base_path().'/'.currentStackName())
 			->and((new Stack('packages', app(), new Filesystem()))->getStackBasePath())
@@ -152,7 +151,7 @@ it(
 );
 it(
 	'exists and ensure package create directory exists',
-	function() {
+	function () {
 		$ps = packageStack();
 
 		expect($ps->exists())
@@ -167,7 +166,7 @@ it(
 
 it(
 	'check Stack class ',
-	function() {
+	function () {
 		//	app()->make(Stack::class, ['paxsy', app(), new Filesystem()]);
 		$result = packageStack()->reload();
 		expect($result)
@@ -177,16 +176,18 @@ it(
 		;
 	},
 );
-it('get vendor list', function() {
+it('get vendor list', function () {
 	currentStackName();
 	removePackageStack();
 	rerouteStubsDirectory();
 	$this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default']);
 	$this->artisan(
 		'paxsy:package',
-		['vendor' => 'test vendor 2', 'package' => 'pgk testing 2', 'stubs' => 'default']
+		['vendor' => 'test vendor 2', 'package' => 'pgk testing 2', 'stubs' => 'default'],
 	);
 
-	expect(packageStack()->getVendorList())->toBe(['TestVendor2' => 'TestVendor2',
-		'TestVendor'                                                => 'TestVendor', ]);
+	expect(packageStack()->getVendorList())->toBe([
+		'TestVendor2' => 'TestVendor2',
+		'TestVendor'  => 'TestVendor',
+	]);
 });

@@ -1,17 +1,14 @@
 <?php declare(strict_types=1);
-/**
- * PHP version 8.2
- */
-/** @copyright-header * */
 
 namespace Filefabrik\Paxsy\Console\Commands\Admin;
 
 use Filefabrik\Paxsy\Console\Support\SolvedOptions;
 use Illuminate\Support\Str;
-use function Laravel\Prompts\multiselect;
-use function Laravel\Prompts\suggest;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
+use function Laravel\Prompts\multiselect;
+use function Laravel\Prompts\suggest;
 
 /**
  * Each make: has its own options. So display them to console
@@ -57,16 +54,14 @@ trait TraitOptions
 
 	protected function suggestModelOption(string $name): void
 	{
-		if (method_exists($this, 'possibleModels')) {
-			$command = Str::lower(Str::replaceFirst('Make', '', Str::afterLast(static::class, '\\')));
-			$lbl     = sprintf('What model should this %s apply to? (Optional)', $command);
-			// input mask
-			$model = suggest(
-				$lbl,
-				$this->possibleModels(),
-			);
-			$this->input->setOption($name, $model);
-		}
+		$command = Str::lower(Str::replaceFirst('Make', '', Str::afterLast(static::class, '\\')));
+		$lbl     = sprintf('What model should this %s apply to? (Optional)', $command);
+		// input mask
+		$model = suggest(
+			$lbl,
+			$this->possibleModels(),
+		);
+		$this->input->setOption($name, $model);
 	}
 
 	/**
@@ -122,14 +117,16 @@ trait TraitOptions
 	{
 		// in config/paxsy.php ignores option loop create controller -> with model -> with controller
 
-		$mustIgnore = [...(array) config('paxsy.ignore_option', []), ...SolvedOptions::solvedAsOption()];
+		$mustIgnore = [...(array)config('paxsy.ignore_option', []), ...SolvedOptions::solvedAsOption()];
 
 		$opts = [];
-		foreach ($this->getDefinition()
-					  ->getOptions() as $option) {
+		foreach (
+			$this->getDefinition()
+				 ->getOptions() as $option
+		) {
 			// todo if short option
 			$name = $option->getName();
-			if (! in_array($name, $mustIgnore)) {
+			if (!in_array($name, $mustIgnore)) {
 				$opts[$option->getName()] = '--'.$option->getName().' '.$option->getDescription();
 			}
 		}
