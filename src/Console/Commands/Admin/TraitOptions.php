@@ -5,11 +5,10 @@ namespace Filefabrik\Paxsy\Console\Commands\Admin;
 use Filefabrik\Paxsy\Console\Support\SolvedOptions;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\suggest;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Each make: has its own options. So display them to console
@@ -120,7 +119,7 @@ trait TraitOptions
 	{
 		// in config/paxsy.php ignores option loop create controller -> with model -> with controller
 
-		$mustIgnore = [...(array)config('paxsy.ignore_option', []), ...SolvedOptions::solvedAsOption()];
+		$mustIgnore = [...(array) config('paxsy.ignore_option', []), ...SolvedOptions::solvedAsOption()];
 
 		$opts = [];
 		foreach (
@@ -129,7 +128,7 @@ trait TraitOptions
 		) {
 			// todo if short option
 			$name = $option->getName();
-			if (!in_array($name, $mustIgnore)) {
+			if (! in_array($name, $mustIgnore)) {
 				$opts[$option->getName()] = '--'.$option->getName().' '.$option->getDescription();
 			}
 		}
