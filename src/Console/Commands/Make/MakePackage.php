@@ -54,7 +54,7 @@ class MakePackage extends Command
 				'stageReplaceableVars',
 			] as $method
 		) {
-			if (!$this->{$method}()) {
+			if (! $this->{$method}()) {
 				return self::FAILURE;
 			}
 		}
@@ -83,7 +83,7 @@ class MakePackage extends Command
 	protected function stageArguments(): ?true
 	{
 		[$vendor, $package, $selectedStubsSet] = $this->inputArguments();
-		if (!$vendor || !$package || !$selectedStubsSet) {
+		if (! $vendor || ! $package || ! $selectedStubsSet) {
 			$this->error(
 				sprintf(
 					'missing a part vendor:"%s" or package:"%s" or stubs:"%s"',
@@ -153,7 +153,7 @@ class MakePackage extends Command
 	{
 		$stubs = $this->stageVars['stubsConfig']->stubs();
 
-		if (!$stubs) {
+		if (! $stubs) {
 			$message = sprintf(
 				'Missing Stubs in /config/paxsy.php on selected stubs: "%s" in: %s',
 				$this->stageVars['stubsConfig']->getSelectedStubs(),
@@ -174,7 +174,7 @@ class MakePackage extends Command
 	{
 		$stubsDirectory = $this->stageVars['stubsConfig']->directory();
 
-		if (!$stubsDirectory) {
+		if (! $stubsDirectory) {
 			$message = sprintf(
 				'Missing Stub-Directory in /config/paxsy.php %s',
 				$this->stageVars['stubsConfig']->directoryLocator(),
@@ -211,7 +211,7 @@ class MakePackage extends Command
 	{
 		$packageStack = StackApp::get();
 
-		if (!$packageStack->exists()) {
+		if (! $packageStack->exists()) {
 			$this->info('Stack does not exist!');
 			$packageStack->ensureStackDirectoryExists();
 			$this->info(sprintf('And was created under:"%s"', $packageStack->getStackName()));
