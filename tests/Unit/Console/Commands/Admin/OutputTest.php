@@ -1,9 +1,4 @@
 <?php declare(strict_types=1);
-/**
- * PHP version 8.2
- */
-
-/** @copyright-header * */
 
 use Filefabrik\Paxsy\Console\Commands\Admin\Output;
 
@@ -67,13 +62,21 @@ it(
 
 		// create to packages
 
-		$this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default']);
+		$this->artisan('paxsy:package', [
+			'vendor'  => 'test vendor',
+			'package' => 'pgk testing',
+			'stubs'   => 'default',
+		]);
 		$this->artisan(
 			'paxsy:package',
-			['vendor' => 'test vendor 2', 'package' => 'pgk testing 2', 'stubs' => 'default'],
+			[
+				'vendor'  => 'test vendor 2',
+				'package' => 'pgk testing 2',
+				'stubs'   => 'default',
+			],
 		);
 
-		expect(Output::getPackageList())->toBe([
+		expect(Output::getPackageList())->toMatchArray([
 			'test-vendor2/pgk-testing2' => 'test-vendor2/pgk-testing2',
 			'test-vendor/pgk-testing'   => 'test-vendor/pgk-testing',
 		]);
