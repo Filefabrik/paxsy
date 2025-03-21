@@ -2,6 +2,7 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Console\Commands\Admin\Menus;
@@ -18,7 +19,7 @@ it(
 			}
 		}
 		expect($foundFlag)->toBeTrue();
-	}
+	},
 )->with('main menu');
 
 it(
@@ -27,5 +28,5 @@ it(
 		$res = Menus::selectableMenu(Menus::$mainMenu);
 
 		expect($res[$method])->toBe($label);
-	}
+	},
 )->with('main menu');

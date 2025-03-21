@@ -59,5 +59,5 @@ it(
 		checkComponentFilesAndDirectories($expected_full_path);
 		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
 		//	expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
-	}
+	},
 );

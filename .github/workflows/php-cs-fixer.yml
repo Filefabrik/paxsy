@@ -1,6 +1,8 @@
 name: Code Style
 
-on: [ push ]
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   coverage:

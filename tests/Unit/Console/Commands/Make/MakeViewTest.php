@@ -15,10 +15,14 @@ beforeEach(function() {
 	clearLaravelDirectories([base_path('resources/views')]);
 });
 it('without package', function() {
-	$this->artisan('make:view', [])->expectsQuestion('What should the view be named?', 'MyTestingView');
+	$this->artisan('make:view', [])
+		 ->expectsQuestion('What should the view be named?', 'MyTestingView')
+	;
 });
 it('without package but test', function() {
-	$this->artisan('make:view', ['--pest'])->expectsQuestion('What should the view be named?', 'MyTestingView');
+	$this->artisan('make:view', ['--pest'])
+		 ->expectsQuestion('What should the view be named?', 'MyTestingView')
+	;
 });
 it(
 	'gui with test ',

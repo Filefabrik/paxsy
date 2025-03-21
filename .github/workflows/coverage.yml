@@ -1,5 +1,9 @@
 name: PHP Coverage
-on: [push]
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 jobs:
   phpunit:
     runs-on: ubuntu-latest

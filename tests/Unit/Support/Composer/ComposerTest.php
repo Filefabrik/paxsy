@@ -2,6 +2,7 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Support\Composer\Composer;
@@ -14,7 +15,7 @@ it(
 	'check booted default',
 	function() {
 		expect($this->app->get(WithInterface::class))->toBeInstanceOf(WithShellExec::class);
-	}
+	},
 );
 // switching
 it(
@@ -24,7 +25,7 @@ it(
 		// reboot
 		PaxsyComposerBootService::boot();
 		expect($this->app->get(WithInterface::class))->toBeInstanceOf(WithDisabled::class);
-	}
+	},
 );
 // switching
 it(
@@ -34,7 +35,7 @@ it(
 		// reboot
 		PaxsyComposerBootService::boot();
 		expect($this->app->get(WithInterface::class))->toBeInstanceOf(WithShellExec::class);
-	}
+	},
 );
 
 it(
@@ -43,7 +44,7 @@ it(
 		config()->set('paxsy.composer_execution', 'stupid');
 		// reboot
 		PaxsyComposerBootService::boot();
-	}
+	},
 )->throws(UnexpectedValueException::class, 'Paxsy Composer configuration key is invalid. key:stupid');
 
 it(

@@ -15,6 +15,7 @@ class PaxsyServiceProvider extends ServiceProvider
 {
 	/**
 	 * todo stack is wrong at this location
+	 *
 	 * @var Stack|null
 	 */
 	protected ?Stack $stack = null;
@@ -25,7 +26,9 @@ class PaxsyServiceProvider extends ServiceProvider
 	 */
 	public function register(): void
 	{
-		Raiser::forProvider($this)->loadConfigs();
+		Raiser::forProvider($this)
+			  ->loadConfigs()
+		;
 
 		/*
 			* todo move body out, not testable

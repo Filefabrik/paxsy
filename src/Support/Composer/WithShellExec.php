@@ -12,12 +12,16 @@ class WithShellExec extends AbstractWith implements WithInterface
 {
 	public function __construct()
 	{
-		$this->startTransaction = ['cd '.$this->getLaravelHostComposer()
-												->directory(),
-			'_startTransaction', ];
-		$this->endTransaction = ['cd '.$this->getLaravelHostComposer()
-												->getOriginalWorkingDir(),
-			'_endTransaction'];
+		$this->startTransaction = [
+			'cd '.$this->getLaravelHostComposer()
+					   ->directory(),
+			'_startTransaction',
+		];
+		$this->endTransaction = [
+			'cd '.$this->getLaravelHostComposer()
+					   ->getOriginalWorkingDir(),
+			'_endTransaction',
+		];
 	}
 
 	/**

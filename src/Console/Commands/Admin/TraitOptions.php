@@ -1,12 +1,9 @@
 <?php declare(strict_types=1);
-/**
- * PHP version 8.2
- */
-/** @copyright-header * */
 
 namespace Filefabrik\Paxsy\Console\Commands\Admin;
 
 use Filefabrik\Paxsy\Console\Support\SolvedOptions;
+use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\suggest;
@@ -57,7 +54,7 @@ trait TraitOptions
 
 	protected function suggestModelOption(string $name): void
 	{
-		if (method_exists($this, 'possibleModels')) {
+		if ($this instanceof GeneratorCommand) {
 			$command = Str::lower(Str::replaceFirst('Make', '', Str::afterLast(static::class, '\\')));
 			$lbl     = sprintf('What model should this %s apply to? (Optional)', $command);
 			// input mask
@@ -125,8 +122,10 @@ trait TraitOptions
 		$mustIgnore = [...(array) config('paxsy.ignore_option', []), ...SolvedOptions::solvedAsOption()];
 
 		$opts = [];
-		foreach ($this->getDefinition()
-					  ->getOptions() as $option) {
+		foreach (
+			$this->getDefinition()
+				 ->getOptions() as $option
+		) {
 			// todo if short option
 			$name = $option->getName();
 			if (! in_array($name, $mustIgnore)) {

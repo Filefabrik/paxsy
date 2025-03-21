@@ -32,8 +32,9 @@ class Output
 		return StackApp::get()
 					   ->packages()
 					   ->map(function(Package $package) {
-					   	return ['name' => $package->getName(),
-					   		'path'        => $package->getComposerName(),
+					   	return [
+					   		'name' => $package->getName(),
+					   		'path' => $package->getComposerName(),
 					   	];
 					   })
 					   ->toArray()
@@ -100,7 +101,8 @@ class Output
 									 ->toArray()
 		;
 		table(
-			['/'.$packageStack->getStackName().' Package Directory',
+			[
+				'/'.$packageStack->getStackName().' Package Directory',
 				'composer name',
 				'Package Namespace',
 			],
@@ -127,8 +129,10 @@ class Output
 	 */
 	private static function vendorPackageInRequire(Package $package): string
 	{
-		$bool = Composer::vendorPackageInRequire($package->getVendorPackageNames()
-														 ->toComposerName());
+		$bool = Composer::vendorPackageInRequire(
+			$package->getVendorPackageNames()
+					->toComposerName(),
+		);
 
 		return $bool ? '<fg=green;options=bold>🖌 </>' : '<fg=red;options=bold>🖌 </>';
 	}

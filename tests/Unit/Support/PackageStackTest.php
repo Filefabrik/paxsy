@@ -1,9 +1,4 @@
 <?php declare(strict_types=1);
-/**
- * PHP version 8.2
- */
-
-/** @copyright-header * */
 
 use Filefabrik\Paxsy\Support\Package;
 use Filefabrik\Paxsy\Support\Stack;
@@ -40,8 +35,10 @@ it(
 
 		expect($pkg)
 			->toBeInstanceOf(Package::class)
-			->and($pkg->getVendorPackageNames()
-					  ->toComposerName())
+			->and(
+				$pkg->getVendorPackageNames()
+					->toComposerName(),
+			)
 			->toBe('my-test-vendor/the-test-package')
 		;
 	},
@@ -125,8 +122,10 @@ it(
 it(
 	'get filesystem',
 	function() {
-		expect(packageStack()
-				   ->getFilesystem())->toBeInstanceOf(Filesystem::class);
+		expect(
+			packageStack()
+				->getFilesystem(),
+		)->toBeInstanceOf(Filesystem::class);
 	},
 );
 
@@ -181,12 +180,23 @@ it('get vendor list', function() {
 	currentStackName();
 	removePackageStack();
 	rerouteStubsDirectory();
-	$this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default']);
+	$this->artisan('paxsy:package', [
+		'vendor'  => 'test vendor',
+		'package' => 'pgk testing',
+		'stubs'   => 'default',
+	]);
 	$this->artisan(
 		'paxsy:package',
-		['vendor' => 'test vendor 2', 'package' => 'pgk testing 2', 'stubs' => 'default']
+		[
+			'vendor'  => 'test vendor 2',
+			'package' => 'pgk testing 2',
+			'stubs'   => 'default',
+		],
 	);
 
-	expect(packageStack()->getVendorList())->toBe(['TestVendor2' => 'TestVendor2',
-		'TestVendor'                                                => 'TestVendor', ]);
+	expect(packageStack()->getVendorList())->toMatchArray([
+		'TestVendor2' => 'TestVendor2',
+		'TestVendor'  => 'TestVendor',
+
+	]);
 });

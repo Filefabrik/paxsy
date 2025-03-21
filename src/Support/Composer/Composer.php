@@ -72,7 +72,7 @@ class Composer
 	 */
 	private function getRequire(): ?array
 	{
-		return  $this->getDefinition()['require'] ?? null;
+		return $this->getDefinition()['require'] ?? null;
 	}
 
 	/**

@@ -1,9 +1,4 @@
 <?php declare(strict_types=1);
-/**
- * PHP version 8.2
- */
-
-/** @copyright-header * */
 
 use Composer\Autoload\ClassLoader;
 use Filefabrik\Paxsy\Console\Commands\Make\MakePackage;
@@ -11,7 +6,6 @@ use Filefabrik\Paxsy\Support\Composer\WithDisabled;
 use Filefabrik\Paxsy\Support\Composer\WithInterface;
 use Filefabrik\Paxsy\Support\Stack;
 use Filefabrik\Paxsy\Support\VendorPackageNames;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -73,13 +67,15 @@ function clearLaravelDirectories(array|string $dirs)
 
 function clearLaravelFiles(): void
 {
-	$files = ['tests/Unit/PHPUnit_Unit_Laravel.php',
+	$files = [
+		'tests/Unit/PHPUnit_Unit_Laravel.php',
 		'tests/Feature/MyPESTFeatureTestingIntoLaravel.php',
 		'database/factories/MyTestFactoryInLaravelFactory.php',
 		'database/seeders/TestingSeederPure.php',
 		'app/Models/TestModelWithoutPackage.php',
 		'app/Models/TestingControllerModels.php',
-		'app/Http/Controllers/TestController2.php'];
+		'app/Http/Controllers/TestController2.php',
+	];
 	foreach ($files as $file) {
 		$testFile = base_path($file);
 		if (is_file($testFile)) {
@@ -113,7 +109,7 @@ function makePackageByArtisanCommand($testCase): void
 
 	//$testCase->artisan('paxsy', $defaultPackage);
 	// during composer-package creation without dump-autoload or update, the namespace for the package has to be load
-	autoloadNamespace(app(), $defaultPackage);
+	autoloadNamespace($defaultPackage);
 }
 
 /**
@@ -156,7 +152,9 @@ function checkComponentFilesAndDirectories($full_path): void
 	$directory     = dirname($directory);
 	$sibling_paths = implode(', ', glob($directory.'/*') ?? []);
 
-	expect($full_path)->toBeReadableFile("Could not find file. Files in directory: '{$files}'. Siblings to parent directory: '{$sibling_paths}'");
+	expect($full_path)->toBeReadableFile(
+		"Could not find file. Files in directory: '{$files}'. Siblings to parent directory: '{$sibling_paths}'",
+	);
 }
 
 function forcePaxsyConfig($withTestingStackName = true): void
@@ -197,15 +195,16 @@ function rerouteStubsDirectory(): void
  * So force adds autoload namespaces for the vendor package
  *
  *
- * @param Application             $application
  * @param VendorPackageNames|null $vendorPackageNames
  *
  * @return void
+ * @throws ReflectionException
  */
-function autoloadNamespace(Application $application, ?VendorPackageNames $vendorPackageNames = null): void
+function autoloadNamespace(?VendorPackageNames $vendorPackageNames = null): void
 {
 	/** @var ClassLoader $autoloader */
-	$autoloader = require $application->basePath('vendor/autoload.php');
+	$autoloader = require realpath(__DIR__.'/../vendor/autoload.php');
+
 	$vendorPackageNames ??= defaultTestPackage();
 
 	$reflectAutoload = new ReflectionClass($autoloader);

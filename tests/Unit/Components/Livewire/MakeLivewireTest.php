@@ -38,12 +38,16 @@ it(
 		makeComponentInPackage(
 			$this,
 			'make:livewire',
-			['name'      => 'my-lv-Compo',
-				'--package' => $defaultPackage->getPackageName()],
+			[
+				'name'      => 'my-lv-Compo',
+				'--package' => $defaultPackage->getPackageName(),
+			],
 		);
 
 		// preparations
-		$expected_class_path = DefaultPackageNames::VendorPackageComponentPath('src/'.LivewireComponentNames::default_location.'/'.'MyLvCompo'.'.php');
+		$expected_class_path = DefaultPackageNames::VendorPackageComponentPath(
+			'src/'.LivewireComponentNames::default_location.'/'.'MyLvCompo'.'.php',
+		);
 
 		$expected_view_path = DefaultPackageNames::VendorPackageComponentPath(LivewireComponentNames::defaultResourceDir());
 
@@ -83,8 +87,10 @@ it(
 		$buggyClassName = 'TestIngClassname~#';
 		$this->artisan(
 			$command,
-			['name'      => 'my \\ # ~ lv // ..testIngClassname~ #',
-				'--package' => $defaultPackage->getPackageName()],
+			[
+				'name'      => 'my \\ # ~ lv // ..testIngClassname~ #',
+				'--package' => $defaultPackage->getPackageName(),
+			],
 		)
 			 ->expectsOutputToContain("Class is invalid: {$buggyClassName}")
 			 ->assertExitCode(0)
@@ -103,8 +109,10 @@ it(
 		$buggyClassName = 'Protected';
 		$this->artisan(
 			$command,
-			['name'      => 'protected',
-				'--package' => $defaultPackage->getPackageName()],
+			[
+				'name'      => 'protected',
+				'--package' => $defaultPackage->getPackageName(),
+			],
 		)
 			 ->expectsOutputToContain("Class is reserved: {$buggyClassName}")
 			 ->assertExitCode(0)
@@ -121,8 +129,10 @@ it(
 		$command = 'make:livewire';
 		$this->artisan(
 			$command,
-			['name'      => 'protected',
-				'--package' => $defaultPackage->getPackageName()],
+			[
+				'name'      => 'protected',
+				'--package' => $defaultPackage->getPackageName(),
+			],
 		);
 	},
 );
@@ -136,9 +146,11 @@ it(
 
 		$this->artisan(
 			'make:livewire',
-			['name'      => 'my-lv-Compo',
+			[
+				'name'      => 'my-lv-Compo',
 				'--package' => $defaultPackage->getPackageName(),
-				'--test'    => true],
+				'--test'    => true,
+			],
 		);
 	},
 );

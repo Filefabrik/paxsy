@@ -77,5 +77,5 @@ it(
 		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Notifications/NoodyweacationTest.php');
 
 		checkComponentFilesAndDirectories($expected_full_path);
-	}
+	},
 );

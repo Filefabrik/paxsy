@@ -36,7 +36,7 @@ it(
 			 ->assertExitCode(1)
 			 ->expectsOutput('No packages found!')
 		;
-	}
+	},
 );
 it(
 	'Select existing Package by suggestion',
@@ -54,7 +54,7 @@ it(
 		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
 
 		checkComponentFilesAndDirectories($expected_full_path);
-	}
+	},
 );
 
 it(

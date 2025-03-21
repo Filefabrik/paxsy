@@ -2,6 +2,7 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Console\Commands\Make\MakePackage;
@@ -20,7 +21,7 @@ it(
 		$vendorPackageName = 'z-vendor/z-package';
 
 		$zPackage = VendorPackageNames::fromVendorPackage($vendorPackageName)
-									   ->setStackName(currentStackName())
+									  ->setStackName(currentStackName())
 		;
 
 		$vendorName  = $zPackage->getVendorName();
@@ -36,15 +37,17 @@ it(
 		;
 		$this->artisan(
 			'make:livewire',
-			['name'      => 'my-lv-CompoZpackage',
+			[
+				'name'      => 'my-lv-CompoZpackage',
 				'--package' => $zPackage->getPackageName(),
 			],
 		);
 		$this->artisan(
 			'make:livewire',
-			['name'      => 'my-lv-Compo',
+			[
+				'name'      => 'my-lv-Compo',
 				'--package' => $defaultPackage->getPackageName(),
 			],
 		);
-	}
+	},
 );

@@ -25,7 +25,10 @@ trait TraitInputs
 		if (! $vendor_package_name) {
 			return null;
 		}
-		return VendorPackageNames::fromVendorPackage($vendor_package_name)->setStackName($this->stack->getStackName());
+
+		return VendorPackageNames::fromVendorPackage($vendor_package_name)
+								 ->setStackName($this->stack->getStackName())
+		;
 	}
 
 	/**

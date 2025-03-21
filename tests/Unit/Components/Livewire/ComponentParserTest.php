@@ -27,5 +27,5 @@ it(
 		// testbench dir
 		$livewirePathing = 'app-paxsy-testing.the-test-package.resources.views.livewire.testing-livewire-name';
 		expect($parser->viewName())->toEndWith($livewirePathing);
-	}
+	},
 );

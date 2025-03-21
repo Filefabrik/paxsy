@@ -72,7 +72,7 @@ trait TraitPackagizer
 		if ($this->package()) {
 			$model = PathsNamespaces::fromPathToNamespace(PathsNamespaces::ltrim($model));
 			// clear model, only the Model-Name
-			$model = Str::afterLast($model, Namespacering::Divider, );
+			$model = Str::afterLast($model, Namespacering::Divider);
 
 			return $this->toPackageNamespace('Models', $model);
 		}

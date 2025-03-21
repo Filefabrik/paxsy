@@ -3,6 +3,19 @@
 This changelog follows the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format,
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.0.10] 2025-03-21
+
+### Changed
+
+- the correct version is v1.0.10. Older Log entries result from earlier development
+
+### Fixed
+
+- PestPHP Tests some fixings
+- Codestyle Fixing
+- Version Bump to 3.1.1 ^ 
+
+
 ## [3.1.0] 2024-03-31
 
 ### Added

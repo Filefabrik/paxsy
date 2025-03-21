@@ -18,7 +18,11 @@ it(
 		// create
 		$this->artisan('paxsy:package-create')
 			 ->expectsOutputToContain('<kbd>php artisan vendor:publish --tag=paxsy-config</kbd>')
-			 ->expectsOutputToContain('Package Stack "'.currentStackName().'" created successfully in your laravel: "'.base_path(currentStackName()).'"!')
+			 ->expectsOutputToContain(
+			 	'Package Stack "'.currentStackName().'" created successfully in your laravel: "'.base_path(
+			 		currentStackName(),
+			 	).'"!',
+			 )
 			 ->assertExitCode(0)
 		;
 		expect($target)
@@ -27,7 +31,11 @@ it(
 
 		// re-create
 		$this->artisan('paxsy:package-create')
-			 ->expectsOutput('Package Stack "'.currentStackName().'" already exists in your laravel: "'.base_path(currentStackName()).'"!')
+			 ->expectsOutput(
+			 	'Package Stack "'.currentStackName().'" already exists in your laravel: "'.base_path(
+			 		currentStackName(),
+			 	).'"!',
+			 )
 			 ->assertExitCode(0)
 		;
 	},

@@ -11,7 +11,7 @@ it(
 	'missing vendor and package name',
 	function() {
 		new Stringularity();
-	}
+	},
 )->throws(UnexpectedValueException::class, 'Name and ClassName name cannot be null. Set name or/and className.');
 
 // Shaking 4 variants they must be resulting the same.
@@ -25,7 +25,7 @@ it(
 			->and($s->toClass())
 			->toBe('MyName')
 		;
-	}
+	},
 );
 
 it(
@@ -38,7 +38,7 @@ it(
 			->and($s->toClass())
 			->toBe('MyName')
 		;
-	}
+	},
 );
 
 it(
@@ -51,7 +51,7 @@ it(
 			->and($s->toClass())
 			->toBe('MyName')
 		;
-	}
+	},
 );
 
 it(
@@ -64,5 +64,5 @@ it(
 			->and($s->toClass())
 			->toBe('MyName')
 		;
-	}
+	},
 );

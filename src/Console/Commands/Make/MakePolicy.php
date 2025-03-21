@@ -25,16 +25,18 @@ class MakePolicy extends PolicyMakeCommand
 	/**
 	 * Build the class with the given name.
 	 *
-	 * @param  string  $name
+	 * @param string $name
+	 *
 	 * @return string
 	 */
 	protected function buildClass($name)
 	{
 		$stub = $this->replaceUserNamespace(
-			parent::buildClass($name)
+			parent::buildClass($name),
 		);
 
 		$model = $this->option('model');
+
 		// if model === model ask
 
 		return $model ? $this->replaceModel($stub, $model) : $stub;

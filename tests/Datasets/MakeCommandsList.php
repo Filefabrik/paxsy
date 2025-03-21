@@ -32,5 +32,5 @@ dataset(
 		'make:seeder',
 		'make:test',
 		'make:view',
-	]
+	],
 );

@@ -57,7 +57,8 @@ it(
 				],
 				$arguments,
 			),
-		)->expectsQuestion('Options for MakeRule?', ['implicit'])
+		)
+			 ->expectsQuestion('Options for MakeRule?', ['implicit'])
 			 ->expectsQuestion('What should the rule be named?', 'TestRule2')
 			 ->assertOk()
 		;

@@ -2,8 +2,10 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
+use Filefabrik\Paxsy\Components\Livewire\Component;
 use Filefabrik\Paxsy\Support\Components\ComponentHelper;
 
 it(
@@ -13,10 +15,10 @@ it(
 			// core
 			\Filefabrik\Paxsy\Components\LaravelRoute\Component::class,
 			// 3rd Party
-			\Filefabrik\Paxsy\Components\Livewire\Component::class,
+			Component::class,
 		];
 
 		$commandList = ComponentHelper::makeCommands($components);
 		expect($commandList)->toContain('make:livewire', 'make:route');
-	}
+	},
 );

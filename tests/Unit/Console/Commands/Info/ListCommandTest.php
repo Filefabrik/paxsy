@@ -2,11 +2,14 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Console\Commands\Info\ListCommand;
 
-beforeEach(function() {removePackageStack();});
+beforeEach(function() {
+	removePackageStack();
+});
 it(
 	'signature and description',
 	function() {
@@ -40,7 +43,7 @@ it(
 			 ->assertExitCode(0)
 		;
 
-		$this->artisan(\Filefabrik\Paxsy\Console\Commands\Info\ListCommand::class)
+		$this->artisan(ListCommand::class)
 			 ->expectsOutput('You have 1 package installed.')
 			 ->assertExitCode(0)
 		;
@@ -55,5 +58,5 @@ it(
 			 ->expectsOutput('You have 2 packages installed.')
 			 ->assertExitCode(0)
 		;
-	}
+	},
 );

@@ -2,6 +2,7 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Console\Commands\Composer\RepositoryCommand;
@@ -9,6 +10,7 @@ use Filefabrik\Paxsy\Console\Commands\Composer\VendorPackageCommand;
 use Filefabrik\Paxsy\Paxsy;
 use Filefabrik\Paxsy\Tests\Support\CommandReflectorTrait;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 beforeEach(function() {
 	currentStackName();
@@ -19,9 +21,8 @@ it(
 	function() {
 		$this->artisan(
 			'paxsy:repository',
-			[VendorPackageCommand::VendorPackageIdent => 'testing-vendor/the-package']
+			[VendorPackageCommand::VendorPackageIdent => 'testing-vendor/the-package'],
 		)
-
 			 ->assertExitCode(0)
 		;
 	},
@@ -31,9 +32,8 @@ it(
 	function() {
 		$this->artisan(
 			'paxsy:repository',
-			[VendorPackageCommand::VendorPackageIdent => 'testing-vendor/the-package', '--remove' => true]
+			[VendorPackageCommand::VendorPackageIdent => 'testing-vendor/the-package', '--remove' => true],
 		)
-
 			 ->assertExitCode(0)
 		;
 	},
@@ -45,9 +45,11 @@ it(
 			use CommandReflectorTrait;
 		};
 
-		$expectArgs = ['vendor/package',
+		$expectArgs = [
+			'vendor/package',
 			InputArgument::REQUIRED,
-			'The "vendor/package" under /'.Paxsy::currentStackName().'/{package}'];
+			'The "vendor/package" under /'.Paxsy::currentStackName().'/{package}',
+		];
 
 		expect($dummy->getSignature())
 			->toContain('paxsy:repository')
@@ -55,14 +57,18 @@ it(
 			->toContain($expectArgs)
 			->and($dummy->reflectOptions())
 			->toContain(
-				['remove',
+				[
+					'remove',
 					null,
-					\Symfony\Component\Console\Input\InputOption::VALUE_OPTIONAL,
-					'Remove the Repository for the package'],
-				['flags',
+					InputOption::VALUE_OPTIONAL,
+					'Remove the Repository for the package',
+				],
+				[
+					'flags',
 					null,
-					\Symfony\Component\Console\Input\InputOption::VALUE_OPTIONAL,
-					'Additional flags'],
+					InputOption::VALUE_OPTIONAL,
+					'Additional flags',
+				],
 			)
 		;
 	},
