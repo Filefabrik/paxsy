@@ -2,14 +2,14 @@
 
 use Filefabrik\Paxsy\Console\Commands\Admin\Output;
 
-beforeEach(function () {
+beforeEach(function() {
 	currentStackName();
 	removePackageStack();
 	rerouteStubsDirectory();
 });
 it(
 	'output helper configured Commands',
-	function () {
+	function() {
 		// translated commands
 		$components = ['make:route', 'make:livewire'];
 
@@ -19,7 +19,7 @@ it(
 
 it(
 	'get packages',
-	function () {
+	function() {
 		expect(Output::getPackages())->toBe([]);
 
 		// create to packages
@@ -42,7 +42,7 @@ it(
 		);
 
 		expect(Output::getPackages())->toMatchArray([
-			'pgk-testing'  => [
+			'pgk-testing' => [
 				'name' => 'pgk-testing',
 				'path' => 'test-vendor/pgk-testing',
 			],
@@ -57,7 +57,7 @@ it(
 
 it(
 	'get package list',
-	function () {
+	function() {
 		expect(Output::getPackageList())->toBe([]);
 
 		// create to packages
@@ -85,7 +85,7 @@ it(
 
 it(
 	'available make Commands',
-	function () {
+	function() {
 		expect(Output::availableMakeCommands())->toBe([
 			'make:cast',
 			'make:controller',
