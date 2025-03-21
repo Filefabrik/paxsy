@@ -20,7 +20,9 @@ class MakeMigration extends MigrateMakeCommand
 
 			$path = str_replace($app_directory, $module_directory, $path);
 
-			$filesystem = $this->getLaravel()->make(Filesystem::class);
+			$filesystem = $this->getLaravel()
+							   ->make(Filesystem::class)
+			;
 			if (! $filesystem->isDirectory($module_directory)) {
 				$filesystem->makeDirectory($module_directory, 0755, true);
 			}

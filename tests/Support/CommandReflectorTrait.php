@@ -15,11 +15,11 @@ trait CommandReflectorTrait
 
 	public function reflectOptions()
 	{
-		return$this->getOptions();
+		return $this->getOptions();
 	}
 
 	public function reflectArguments()
 	{
-		return$this->getArguments();
+		return $this->getArguments();
 	}
 }

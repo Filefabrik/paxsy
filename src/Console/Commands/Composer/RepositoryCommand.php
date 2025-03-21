@@ -79,9 +79,12 @@ class RepositoryCommand extends Command
 	protected function getArguments(): array
 	{
 		return
-			[[VendorPackageCommand::VendorPackageIdent,
-				InputArgument::REQUIRED,
-				'The "vendor/package" under /'.Paxsy::currentStackName().'/{package}'],
+			[
+				[
+					VendorPackageCommand::VendorPackageIdent,
+					InputArgument::REQUIRED,
+					'The "vendor/package" under /'.Paxsy::currentStackName().'/{package}',
+				],
 			];
 	}
 

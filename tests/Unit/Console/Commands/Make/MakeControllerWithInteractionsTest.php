@@ -174,8 +174,10 @@ it(
 
 		checkComponentFilesAndDirectories($expected_full_path);
 		// check test was rendered right way
-		checkComponentFilesAndDirectories(DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Http/Controllers/TestControllerTest.php'));
+		checkComponentFilesAndDirectories(
+			DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Http/Controllers/TestControllerTest.php'),
+		);
 
 		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
-	}
+	},
 );

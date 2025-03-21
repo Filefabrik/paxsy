@@ -191,11 +191,13 @@ class MakeController extends ControllerMakeCommand
 			$namespacedRequests .= PHP_EOL.'use '.$namespace.'\\'.$updateRequestClass.';';
 		}
 
-		return $this->replaceFormRequests_package([$replace,
+		return $this->replaceFormRequests_package([
+			$replace,
 			$namespace,
 			$namespacedRequests,
 			$storeRequestClass,
-			$updateRequestClass]);
+			$updateRequestClass,
+		]);
 	}
 
 	protected function replaceFormRequests_package(array $vars): array

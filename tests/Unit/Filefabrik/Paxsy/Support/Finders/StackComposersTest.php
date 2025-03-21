@@ -27,5 +27,5 @@ test(
 
 		$foundPackages = StackComposers::findPackages(new Stack(currentStackName(), app(), new Filesystem()));
 		expect($foundPackages->count())->toBe(0);
-	}
+	},
 );

@@ -20,7 +20,7 @@ abstract class PackageNames
 
 	public static function VendorPackageComponentPath($segment): string
 	{
-		return base_path(implode('/', [static::RelativePackagePath(), $segment]), );
+		return base_path(implode('/', [static::RelativePackagePath(), $segment]));
 	}
 
 	/**

@@ -121,7 +121,8 @@ abstract class AbstractWith
 	 */
 	protected function getLaravelHostComposer(): Composer
 	{
-		return $this->laravelHostComposer ??= \Filefabrik\Paxsy\Console\Commands\Admin\Composer::getLaravelHostComposer();
+		return $this->laravelHostComposer ??= \Filefabrik\Paxsy\Console\Commands\Admin\Composer::getLaravelHostComposer(
+		);
 	}
 
 	/**

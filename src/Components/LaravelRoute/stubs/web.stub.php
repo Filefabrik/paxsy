@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 // @codeCoverageIgnoreStart
 use Illuminate\Support\Facades\Route;
 
@@ -7,12 +8,14 @@ use Illuminate\Support\Facades\Route;
  * Test double route
  */
 Route::prefix('StubPackageName')
-     ->group(function() {
-         Route::get('index',
-             function() {
-                 return 'Paxsy Route in: ' . ' StubRelPackageDir';
-             });
-     })
+	 ->group(function () {
+		 Route::get(
+			 'index',
+			 function () {
+				 return 'Paxsy Route in: '.' StubRelPackageDir';
+			 },
+		 );
+	 })
 ;
 
 // use StubVendorNamespace\StubPackageNamespace\Http\Controllers\StubPackageNamespaceController;

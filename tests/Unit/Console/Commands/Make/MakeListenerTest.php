@@ -96,5 +96,5 @@ it(
 		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Listeners/LeasetainerTest.php');
 
 		checkComponentFilesAndDirectories($expected_full_path);
-	}
+	},
 );

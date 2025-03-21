@@ -27,7 +27,7 @@ class Package
 	 */
 	public function __construct(
 		private readonly string $name,
-		private readonly VendorPackageNames $vendorPackageNames
+		private readonly VendorPackageNames $vendorPackageNames,
 	) {
 	}
 
@@ -82,6 +82,7 @@ class Package
 	/**
 	 * The Full package path is inside the Stack and the Package-Name
 	 * todo allow spreed in $to
+	 *
 	 * @param string $to
 	 *
 	 * @return string

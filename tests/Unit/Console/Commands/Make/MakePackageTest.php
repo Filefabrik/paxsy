@@ -61,7 +61,9 @@ it(
 		$cp = 'paxsy';
 		$this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'creepy'])
 			 ->assertExitCode(1)
-			 ->expectsOutput('Missing Stubs in /config/'.$cp.'.php on selected stubs: "creepy" in: '.$cp.'.stub_sets.creepy.stubs')
+			 ->expectsOutput(
+			 	'Missing Stubs in /config/'.$cp.'.php on selected stubs: "creepy" in: '.$cp.'.stub_sets.creepy.stubs',
+			 )
 		;
 	},
 );
@@ -131,7 +133,7 @@ it(
 			 ->assertExitCode(1)
 			 ->expectsOutputToContain('Package:"'.'pgk-testing'.'" already exists under:')
 		;// Package:"pgk-testing" already exists under:"/var/www/html/app-paxsy-testing/pgk-testing"!
-	}
+	},
 );
 it(
 	'stubs directory is missing',
@@ -139,8 +141,8 @@ it(
 		config()->set('paxsy.stub_sets.default.directory', '');
 		$cp = 'paxsy';
 		$this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default'])
-			->expectsOutput('Missing Stub-Directory in /config/paxsy.php paxsy.stub_sets.default.directory')
+			 ->expectsOutput('Missing Stub-Directory in /config/paxsy.php paxsy.stub_sets.default.directory')
 			 ->assertExitCode(1)
 		;
-	}
+	},
 );

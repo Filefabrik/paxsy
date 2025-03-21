@@ -37,7 +37,9 @@ class PaxsyComposerBootService
 		return match ($configKey) {
 			'shell_exec' => WithShellExec::class,
 			'disabled'   => WithDisabled::class,
-			default      => throw new UnexpectedValueException('Paxsy Composer configuration key is invalid. key:'.$configKey),
+			default      => throw new UnexpectedValueException(
+				'Paxsy Composer configuration key is invalid. key:'.$configKey,
+			),
 		};
 	}
 }

@@ -2,6 +2,7 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Console\Commands\Composer\DumpAutoloadCommand;
@@ -25,8 +26,7 @@ it(
 it(
 	'handle dummy command',
 	function() {
-		$this->artisan('paxsy:dump-autoload', )
-
+		$this->artisan('paxsy:dump-autoload')
 			 ->assertExitCode(0)
 		;
 	},

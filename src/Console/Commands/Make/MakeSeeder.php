@@ -29,6 +29,6 @@ class MakeSeeder extends SeederMakeCommand
 
 	protected function seederNamespace(): string
 	{
-		return$this->toPackageNamespace('Database', 'Seeders');
+		return $this->toPackageNamespace('Database', 'Seeders');
 	}
 }

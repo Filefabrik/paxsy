@@ -40,6 +40,7 @@ trait TraitCallDelegation
 		if ($this->sequenceStarter) {
 			SolvedOptions::reset();
 		}
+
 		return $res;
 	}
 }

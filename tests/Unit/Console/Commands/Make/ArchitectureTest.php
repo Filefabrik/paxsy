@@ -13,7 +13,7 @@ arch(
 		expect($command)
 			->toExtend($extCls)
 		;
-	}
+	},
 )->with('make Commands Extends');
 
 /**
@@ -26,7 +26,7 @@ arch(
 			->traits()
 			->toExtend('\Filefabrik\Paxsy\Console\Commands\Make\TraitPackagizer')
 		;
-	}
+	},
 )->with([[MakeCast::class]]);
 
 arch(
@@ -36,5 +36,5 @@ arch(
 			 ->expectsOutputToContain('--package')
 			 ->assertExitCode(0)
 		;
-	}
+	},
 )->with('make Commands List');

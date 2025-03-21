@@ -49,7 +49,7 @@ class MakeListener extends ListenerMakeCommand
 		return $this->package() && Str::startsWith(
 			$name,
 			$this->package()
-														->srcPackageNamespace()
+				 ->srcPackageNamespace(),
 		);
 	}
 }

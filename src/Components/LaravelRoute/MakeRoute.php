@@ -78,8 +78,12 @@ class MakeRoute extends GeneratorCommand
 
 		if ($putted === self::SUCCESS) {
 			$this->info('Route is written to:'.$path);
-			$this->info(url($this->package()
-								 ->getName().'/index'));
+			$this->info(
+				url(
+					$this->package()
+						 ->getName().'/index',
+				),
+			);
 		} else {
 			// @codeCoverageIgnoreStart
 			$this->error('Not written Route to:'.$path);

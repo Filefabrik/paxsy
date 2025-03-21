@@ -79,5 +79,5 @@ it(
 		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Console/Commands/FlightCommandTest.php');
 
 		checkComponentFilesAndDirectories($expected_full_path);
-	}
+	},
 );

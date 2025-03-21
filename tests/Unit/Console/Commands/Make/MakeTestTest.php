@@ -107,7 +107,8 @@ it(
 		$command                = 'make:test';
 		$arguments              = ['name' => 'MyUnitPESTPHPTesting', '--pest' => true, '--unit' => true];
 		$expected_relative_path = 'tests/Unit/MyUnitPESTPHPTesting.php';
-		$expected_substrings    = ['test(\'example\', function () {',
+		$expected_substrings    = [
+			'test(\'example\', function () {',
 		];
 
 		makeComponentInPackage($this, $command, $arguments);
@@ -127,7 +128,8 @@ it(
 		$command                = 'make:test';
 		$arguments              = ['name' => 'MyFeaturePESTPHPTesting', '--pest' => true];
 		$expected_relative_path = 'tests/Feature/MyFeaturePESTPHPTesting.php';
-		$expected_substrings    = ['test(\'example\', function () {',
+		$expected_substrings    = [
+			'test(\'example\', function () {',
 			'$response = $this->get(\'/\');',
 		];
 

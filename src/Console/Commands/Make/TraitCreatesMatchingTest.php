@@ -45,7 +45,7 @@ trait TraitCreatesMatchingTest
 				//'--package' => $package->getName(),
 				'--pest'    => $this->option('pest'),
 				'--phpunit' => $this->option('phpunit'),
-			]
+			],
 		) == 0;
 	}
 }

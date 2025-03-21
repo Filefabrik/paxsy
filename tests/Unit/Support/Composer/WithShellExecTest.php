@@ -2,8 +2,10 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
+use Filefabrik\Paxsy\Components\ComposerRepository\Repository;
 use Filefabrik\Paxsy\Support\Composer\WithInterface;
 use Filefabrik\Paxsy\Support\Composer\WithShellExec;
 
@@ -53,7 +55,7 @@ it(
 		$i = new WithShellExec();
 
 		$i->batchMode();
-		$body = \Filefabrik\Paxsy\Components\ComposerRepository\Repository::body('my/key');
+		$body = Repository::body('my/key');
 		$i->addRepository('my/key', $body);
 		$i->execute();
 		expect($i->getCommandExpressions()[0])->toBe("composer config repositories.paxsy-my/key '$body'");

@@ -41,8 +41,7 @@ it(
 				$arguments,
 			),
 		)
-				 ->assertExitCode(0)
-				 //->expectsQuestion('Extra additional Options?','Create')
+			 ->assertExitCode(0)//->expectsQuestion('Extra additional Options?','Create')
 		;
 
 		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
@@ -59,7 +58,9 @@ it(
 		makePackageByArtisanCommand($this);
 
 		$modelClass = 'TestingControllerModels';
-		(new Filesystem())->delete([base_path('app/Models/TestingControllerModels.php'), base_path('app/Http/Controllers/TestController2.php')]);
+		(new Filesystem())->delete(
+			[base_path('app/Models/TestingControllerModels.php'), base_path('app/Http/Controllers/TestController2.php')],
+		);
 		$command   = 'make:controller';
 		$arguments = ['name' => 'TestController2', '--model' => $modelClass];
 
@@ -68,7 +69,10 @@ it(
 			[
 			] + [...$arguments],
 		)
-			 ->expectsQuestion('A App\Models\TestingControllerModels model does not exist. Do you want to generate it?', 1)
+			 ->expectsQuestion(
+			 	'A App\Models\TestingControllerModels model does not exist. Do you want to generate it?',
+			 	1,
+			 )
 			 ->assertOk()
 		;
 	},
@@ -85,7 +89,8 @@ it(
 		$arguments = ['name' => 'TestController2', '--model' => ' m d \\ dek// '];
 		$this->artisan(
 			$command,
-			['--package' => $packageName,
+			[
+				'--package' => $packageName,
 			] + [...$arguments],
 		);
 	},

@@ -2,6 +2,7 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Components\Livewire\StringHelper;
@@ -50,9 +51,11 @@ it(
 		$res = StringHelper::tagFromInputName('paxsy-sexy', $name);
 		expect($res)->toBe('<livewire:paxsy-sexy::'.$ex.'/>');
 	},
-)->with([['make-love-wire-great-again', 'make-love-wire-great-again'],
+)->with([
+	['make-love-wire-great-again', 'make-love-wire-great-again'],
 	['make love wire great-again', 'make-love-wire-great-again'],
-	['fast and furious', 'fast-and-furious']]);
+	['fast and furious', 'fast-and-furious'],
+]);
 
 it(
 	'to Livewire Component Name ',
@@ -60,7 +63,7 @@ it(
 		$dummyFile = new SplFileInfo(
 			file            : '/notExists/FastAndFurious.php',
 			relativePath    : '',
-			relativePathname: 'FastAndFurious.php'
+			relativePathname: 'FastAndFurious.php',
 		);
 
 		$defaultPackage = defaultTestPackage();

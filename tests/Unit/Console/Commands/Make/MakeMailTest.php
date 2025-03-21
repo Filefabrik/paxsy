@@ -77,5 +77,5 @@ it(
 		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Mail/MailasseTest.php');
 
 		checkComponentFilesAndDirectories($expected_full_path);
-	}
+	},
 );

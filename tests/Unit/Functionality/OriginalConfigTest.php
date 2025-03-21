@@ -6,6 +6,7 @@
 
 /** @copyright-header * */
 
+use Filefabrik\Paxsy\Components\Livewire\Component;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -26,10 +27,13 @@ function makeOriginalConfig(): void
 	}
 }
 
-beforeEach(/**
- * @throws ContainerExceptionInterface
- * @throws NotFoundExceptionInterface
- */ fn() => makeOriginalConfig());
+beforeEach(
+	/**
+	 * @throws ContainerExceptionInterface
+	 * @throws NotFoundExceptionInterface
+	 */
+	fn() => makeOriginalConfig(),
+);
 it(
 	'config that we will be delivered all segments',
 	function() {
@@ -63,7 +67,8 @@ it(
 )->with([
 	['comment', 'App-Paxsy default new Module creation Stubs'],
 	['stubs.directories', ['/tests', '/database/factories', '/database/seeders']],
-	['stubs.files',
+	[
+		'stubs.files',
 		[
 			'composer.json'                                         => 'composer-stub-latest.json.stub',
 			'src/Providers/StubPackageNamespaceServiceProvider.php' => 'ServiceProvider.php.stub',
@@ -71,25 +76,30 @@ it(
 			'.gitignore'                                            => 'gitignore-file.stub',
 			'tests/TestCase.php'                                    => 'TestCase.php.stub',
 
-		], ],
-	['replacementMap',
+		],
+	],
+	[
+		'replacementMap',
 		[/* With RendererPackage */
 			'package' => // The Keys can only exist one time in all replacementVariables, otherwise they will override
-				  ['StubRelPackageDir' => 'relPackageDir',
-				  	// absolute directory to the package
-				  	'StubPackagePath'         => 'packagePath',
-				  	'StubVendorNamespace'     => 'vendor.class',
-				  	'StubPackageNamespace'    => 'package.class',
-				  	'StubPackageNameSingular' => 'package.singular',
-				  	'StubPackageNamePlural'   => 'package.plural',
-				  	'StubPackageName'         => 'package.name',
-				  	'StubComposerName'        => 'composerName',
-				  ],
+			 [
+			 	'StubRelPackageDir' => 'relPackageDir',
+			 	// absolute directory to the package
+			 	'StubPackagePath'         => 'packagePath',
+			 	'StubVendorNamespace'     => 'vendor.class',
+			 	'StubPackageNamespace'    => 'package.class',
+			 	'StubPackageNameSingular' => 'package.singular',
+			 	'StubPackageNamePlural'   => 'package.plural',
+			 	'StubPackageName'         => 'package.name',
+			 	'StubComposerName'        => 'composerName',
+			 ],
 			// simple text-Parser
 			'text' => [
 				'StubTestCaseBase'     => 'TestCase',
 				'#StubTestUseTestCase' => 'use PHPUnit\TestCase;',
-			], ], ],
+			],
+		],
+	],
 ]);
 it(
 	'stubs maps default. Files the must mapped correctly',
@@ -136,7 +146,8 @@ it(
 		['StubPackageNameSingular', 'package.singular'],
 		['StubPackageNamePlural', 'package.plural'],
 		['StubPackageName', 'package.name'],
-		['StubComposerName', 'composerName'], ],
+		['StubComposerName', 'composerName'],
+	],
 );
 
 it(
@@ -147,8 +158,8 @@ it(
 			->toBeArray()
 			->toContain(
 				\Filefabrik\Paxsy\Components\LaravelRoute\Component::class,
-				\Filefabrik\Paxsy\Components\Livewire\Component::class,
+				Component::class,
 			)
 		;
-	}
+	},
 );

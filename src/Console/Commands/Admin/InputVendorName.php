@@ -39,7 +39,7 @@ readonly class InputVendorName
 			$this->command->info('1. enter the vendor-name');
 			$vendorName = Inputs::suggestComposerVendors(
 				$this->stack,
-				(string) config('paxsy.ui_default_vendor')
+				(string) config('paxsy.ui_default_vendor'),
 			);
 		}
 

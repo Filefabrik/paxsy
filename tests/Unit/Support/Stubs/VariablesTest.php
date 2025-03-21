@@ -2,6 +2,7 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Support\Stubs\Variables;
@@ -11,5 +12,5 @@ it(
 	function() {
 		$vars = new Variables();
 		expect($vars->renderVariables())->toBe([]);
-	}
+	},
 );

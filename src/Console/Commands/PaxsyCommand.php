@@ -59,6 +59,7 @@ class PaxsyCommand extends Command
 
 	/**
 	 * Keeps the main Menu open
+	 *
 	 * @return int
 	 */
 	private function recursiveMainMenu(): int
@@ -106,9 +107,11 @@ class PaxsyCommand extends Command
 
 		$hasErrors = $this->call(
 			MakePackage::class,
-			['vendor'  => $vendorPackageNames->getVendorName(),
+			[
+				'vendor'  => $vendorPackageNames->getVendorName(),
 				'package' => $vendorPackageNames->getPackageName(),
-				'stubs'   => $selectedStubsSet],
+				'stubs'   => $selectedStubsSet,
+			],
 		);
 		// @codeCoverageIgnoreStart
 		if ($hasErrors) {
@@ -117,7 +120,9 @@ class PaxsyCommand extends Command
 			return self::FAILURE;
 		}
 		// @codeCoverageIgnoreEnd
-		$this->line('Package created under /'.$vendorPackageNames->getStackName().'/'.$vendorPackageNames->getPackageName());
+		$this->line(
+			'Package created under /'.$vendorPackageNames->getStackName().'/'.$vendorPackageNames->getPackageName(),
+		);
 
 		$vendor_namespace_input = $vendorPackageNames->toComposerName();
 
@@ -125,7 +130,7 @@ class PaxsyCommand extends Command
 		$this->task_composer_add_repository_vendor_package($vendorPackageNames->vendorPackageName());
 
 		// open command tools to create vendor package components
-		return	$this->in_package_tasks($vendor_namespace_input);
+		return $this->in_package_tasks($vendor_namespace_input);
 	}
 
 	/**
@@ -152,10 +157,12 @@ class PaxsyCommand extends Command
 
 		if (! $vendor_package_name) {
 			$this->error('There are no packages inside '.$this->stack->getStackName());
+
 			return self::FAILURE;
 		}
 		$this->line('Jumped into Package: '.$vendor_package_name, 'info');
-		return	$this->in_package_tasks($vendor_package_name);
+
+		return $this->in_package_tasks($vendor_package_name);
 	}
 
 	/**
@@ -217,6 +224,7 @@ class PaxsyCommand extends Command
 
 		$this->task_composer_remove_repository($vendorPackageNames->vendorPackageName());
 		$this->task_composer_remove_vendor_package($vendorPackageNames->vendorPackageName());
+
 		return self::SUCCESS;
 	}
 
@@ -237,7 +245,7 @@ class PaxsyCommand extends Command
 	 */
 	protected function task_composer_remove_repository(?string $vendor_package_name = null): int
 	{
-		return   $this->call(
+		return $this->call(
 			'paxsy:repository',
 			[VendorPackageCommand::VendorPackageIdent => $vendor_package_name, '--remove' => true],
 		);
@@ -263,7 +271,7 @@ class PaxsyCommand extends Command
 	 */
 	protected function task_composer_remove_vendor_package(?string $vendor_package_name = null): int
 	{
-		return	$this->call(
+		return $this->call(
 			'paxsy:vendor-package',
 			[VendorPackageCommand::VendorPackageIdent => $vendor_package_name, '--remove' => true],
 		);
@@ -333,7 +341,7 @@ class PaxsyCommand extends Command
 
 		$vendorPackageNames = new VendorPackageNames(
 			vendor : $vendor,
-			package:new Stringularity($packageName),
+			package: new Stringularity($packageName),
 		);
 
 		// relative segment from laravel host application Most important stack_name setting

@@ -68,7 +68,7 @@ class Extractor
 
 		return new Package(
 			name              : $moduleName,
-			vendorPackageNames: $vendorPackageNames
+			vendorPackageNames: $vendorPackageNames,
 		);
 	}
 

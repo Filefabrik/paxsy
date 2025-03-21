@@ -2,6 +2,7 @@
 /**
  * PHP version 8.2
  */
+
 /** @copyright-header * */
 
 use Filefabrik\Paxsy\Console\Commands\Composer\VendorPackageCommand;
@@ -15,9 +16,11 @@ it(
 				return $this->signature;
 			}
 		};
-		$contains = ['paxsy:vendor-package ',
+		$contains = [
+			'paxsy:vendor-package ',
 			'{vendor/package : my-company/my-package-name}',
-			'{--remove=false : remove vendor/package from laravel host composer.json}'];
+			'{--remove=false : remove vendor/package from laravel host composer.json}',
+		];
 
 		expect($dummy->getSignature())->toContain(...$contains);
 	},
@@ -45,8 +48,10 @@ it(
 	'Handle against with Disabled',
 	function() {
 		useShellDisabled();
-		$this->artisan('paxsy:vendor-package', [VendorPackageCommand::VendorPackageIdent => 'my-company/my-package-name'])
-
+		$this->artisan(
+			'paxsy:vendor-package',
+			[VendorPackageCommand::VendorPackageIdent => 'my-company/my-package-name'],
+		)
 			 ->assertExitCode(0)
 		;
 	},
@@ -56,8 +61,10 @@ it(
 	'Handle against with Disabled --remove',
 	function() {
 		useShellDisabled();
-		$this->artisan('paxsy:vendor-package', [VendorPackageCommand::VendorPackageIdent => 'my-company/my-package-name', '--remove' => true])
-
+		$this->artisan(
+			'paxsy:vendor-package',
+			[VendorPackageCommand::VendorPackageIdent => 'my-company/my-package-name', '--remove' => true],
+		)
 			 ->assertExitCode(0)
 		;
 	},

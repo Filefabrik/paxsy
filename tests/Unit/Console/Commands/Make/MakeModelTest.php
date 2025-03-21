@@ -160,5 +160,5 @@ it(
 		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Models/ModelmasseTest.php');
 
 		checkComponentFilesAndDirectories($expected_full_path);
-	}
+	},
 );
