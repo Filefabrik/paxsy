@@ -4,7 +4,6 @@ namespace Filefabrik\Paxsy\Tests;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-
 	protected function getPackageProviders($app): array
 	{
 		/** @noinspection PhpFullyQualifiedNameUsageInspection */
@@ -21,5 +20,4 @@ class TestCase extends \Orchestra\Testbench\TestCase
 		return [
 		];
 	}
-
 }
