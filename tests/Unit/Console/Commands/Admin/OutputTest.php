@@ -7,14 +7,14 @@
 
 use Filefabrik\Paxsy\Console\Commands\Admin\Output;
 
-beforeEach(function() {
+beforeEach(function () {
 	currentStackName();
 	removePackageStack();
 	rerouteStubsDirectory();
 });
 it(
 	'output helper configured Commands',
-	function() {
+	function () {
 		// translated commands
 		$components = ['make:route', 'make:livewire'];
 
@@ -24,29 +24,45 @@ it(
 
 it(
 	'get packages',
-	function() {
+	function () {
 		expect(Output::getPackages())->toBe([]);
 
 		// create to packages
 
-		$this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default']);
 		$this->artisan(
 			'paxsy:package',
-			['vendor' => 'test vendor 2', 'package' => 'pgk testing 2', 'stubs' => 'default']
+			[
+				'vendor'  => 'test vendor',
+				'package' => 'pgk testing',
+				'stubs'   => 'default',
+			],
+		);
+		$this->artisan(
+			'paxsy:package',
+			[
+				'vendor'  => 'test vendor 2',
+				'package' => 'pgk testing 2',
+				'stubs'   => 'default',
+			],
 		);
 
-		expect(Output::getPackages())->toBe([
-			'pgk-testing2' => ['name' => 'pgk-testing2',
-				'path'                   => 'test-vendor2/pgk-testing2'],
-			'pgk-testing' => ['name' => 'pgk-testing',
-				'path'                  => 'test-vendor/pgk-testing'],
+		expect(Output::getPackages())->toMatchArray([
+			'pgk-testing'  => [
+				'name' => 'pgk-testing',
+				'path' => 'test-vendor/pgk-testing',
+			],
+			'pgk-testing2' => [
+				'name' => 'pgk-testing2',
+				'path' => 'test-vendor2/pgk-testing2',
+			],
+
 		]);
-	}
+	},
 );
 
 it(
 	'get package list',
-	function() {
+	function () {
 		expect(Output::getPackageList())->toBe([]);
 
 		// create to packages
@@ -54,19 +70,19 @@ it(
 		$this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default']);
 		$this->artisan(
 			'paxsy:package',
-			['vendor' => 'test vendor 2', 'package' => 'pgk testing 2', 'stubs' => 'default']
+			['vendor' => 'test vendor 2', 'package' => 'pgk testing 2', 'stubs' => 'default'],
 		);
 
 		expect(Output::getPackageList())->toBe([
 			'test-vendor2/pgk-testing2' => 'test-vendor2/pgk-testing2',
 			'test-vendor/pgk-testing'   => 'test-vendor/pgk-testing',
 		]);
-	}
+	},
 );
 
 it(
 	'available make Commands',
-	function() {
+	function () {
 		expect(Output::availableMakeCommands())->toBe([
 			'make:cast',
 			'make:controller',
@@ -96,5 +112,5 @@ it(
 			'make:route',
 			'make:livewire',
 		]);
-	}
+	},
 );
