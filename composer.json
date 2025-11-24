@@ -25,21 +25,20 @@
         "composer/composer": "^2.1",
         "filefabrik/bootraiser": "~v2.0",
         "illuminate/support": "^12",
-        "laravel/framework": "^12",
-        "laravel/prompts": "^v0.1"
+      "laravel/framework": "^12"
+
     },
     "require-dev": {
         "ext-json": "*",
         "friendsofphp/php-cs-fixer": "^3.14",
         "livewire/livewire": "^v3.4",
         "mockery/mockery": "^1.5",
-        "pestphp/pest": "^2.34",
-        "pestphp/pest-plugin-drift": "^2.6",
-        "pestphp/pest-plugin-laravel": "^2.3",
-        "phpunit/phpunit": "^9.5|^10.5",
+      "pestphp/pest": "^v4",
+      "pestphp/pest-plugin-drift": "^v2.6.1",
+      "pestphp/pest-plugin-laravel": "^v3.2.0",
+        "phpunit/phpunit": "^9.5|^10|^11",
         "phpstan/phpstan": "@stable",
-
-        "orchestra/testbench": "^9.0|^10"
+      "orchestra/testbench": "^10"
     },
     "autoload": {
         "psr-4": {
