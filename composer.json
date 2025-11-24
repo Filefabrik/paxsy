@@ -4,7 +4,8 @@
     "version": "v2.0.0",
     "keywords": [
         "laravel",
-        "laravel 11|12",
+        "laravel 11",
+        "laravel 12",
         "livewire 3",
         "laravel package development",
         "adapted from internachi modular Chris Morrell"
