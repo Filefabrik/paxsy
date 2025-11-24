@@ -23,8 +23,8 @@
         "ext-simplexml": "*",
         "composer/composer": "^2.1",
         "filefabrik/bootraiser": "~v2.0",
-        "illuminate/support": "^11|^12",
-        "laravel/framework": "^11.0",
+        "illuminate/support": "^11",
+        "laravel/framework": "^11.0|^12",
         "laravel/prompts": "^v0.1"
     },
     "require-dev": {
