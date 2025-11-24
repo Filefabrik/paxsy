@@ -34,8 +34,8 @@
         "livewire/livewire": "^v3.4",
         "mockery/mockery": "^1.5",
       "pestphp/pest": "^v4",
-      "pestphp/pest-plugin-drift": "^v2.6.1",
-      "pestphp/pest-plugin-laravel": "^v3.2.0",
+      "pestphp/pest-plugin-drift": "^v4",
+      "pestphp/pest-plugin-laravel": "^v4",
       "phpstan/phpstan": "@stable",
       "orchestra/testbench": "^10"
     },
