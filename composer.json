@@ -1,10 +1,11 @@
 {
     "name": "filefabrik/paxsy",
     "description": "Software-Packaging your Laravel apps from https://paxsy.filefabrik.com",
-    "version": "v2.0.0",
+    "version": "v2.0.1",
     "keywords": [
         "laravel",
-        "laravel 11|12",
+        "laravel 11",
+        "laravel 12",
         "livewire 3",
         "laravel package development",
         "adapted from internachi modular Chris Morrell"
@@ -23,7 +24,7 @@
         "ext-simplexml": "*",
         "composer/composer": "^2.1",
         "filefabrik/bootraiser": "~v2.0",
-        "illuminate/support": "^11|^12",
+        "illuminate/support": "^11",
         "laravel/framework": "^11.0",
         "laravel/prompts": "^v0.1"
     },
