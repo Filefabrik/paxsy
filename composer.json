@@ -4,7 +4,7 @@
     "version": "v1.0.10",
     "keywords": [
         "laravel",
-        "laravel 11",
+        "laravel 11|12",
         "livewire 3",
         "laravel package development",
         "adapted from internachi modular Chris Morrell"
@@ -18,12 +18,12 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "ext-dom": "*",
         "ext-simplexml": "*",
         "composer/composer": "^2.1",
         "filefabrik/bootraiser": "~v2.0",
-        "illuminate/support": "^11",
+        "illuminate/support": "^11|^12",
         "laravel/framework": "^11.0",
         "laravel/prompts": "^v0.1"
     },
