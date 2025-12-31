@@ -19,10 +19,14 @@ jobs:
           coverage: xdebug
       - name: Install Composer Dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Setup Code Climate
+        uses: remarkablemark/setup-codeclimate@v2
       - name: Code Climate Setup
+
         run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter && chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
+            cc-test-reporter before-build
+            npm test
+            cc-test-reporter after-build --exit-code $?
       - name: Run Tests
         run: |
           php vendor/bin/pest --coverage-clover clover.xml --configuration phpunit.xml tests/Unit

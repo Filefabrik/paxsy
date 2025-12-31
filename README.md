@@ -5,9 +5,9 @@
 ![](https://github.com/Filefabrik/paxsy/actions/workflows/pestphp.yml/badge.svg)
 ![](https://github.com/Filefabrik/paxsy/actions/workflows/phpstan.yml/badge.svg)
 
-* min Laravel 11
+* min Laravel 12
 * min SupportLivewire 3.4
-* min php 8.2
+* min php 8.4
 
 install via composer
 
