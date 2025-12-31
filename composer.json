@@ -25,7 +25,7 @@
         "composer/composer": "^2.1",
         "filefabrik/bootraiser": "~v2.0",
         "illuminate/support": "^12",
-        "laravel/framework": "^12"
+        "laravel/framework": "^12.0"
     },
     "require-dev": {
         "ext-json": "*",
