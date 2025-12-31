@@ -20,28 +20,28 @@ use Filefabrik\Paxsy\Console\Commands\PaxsyCommand;
  */
 class PaxsyCommands
 {
-	/**
-	 * Add new Commands in Paxsy here
-	 *
-	 * @var class-string[]
-	 */
-	public static array $bootPublicCommands = [
+    /**
+     * Add new Commands in Paxsy here
+     *
+     * @var class-string[]
+     */
+    public static array $bootPublicCommands = [
 
-		PaxsyCommand::class,
-		DumpAutoloadCommand::class,
-		MakePackage::class,
-		ListCommand::class,
-		MakePackageStack::class,
-		UpdateCommand::class,
-		RepositoryCommand::class,
-		VendorPackageCommand::class,
-	];
+        PaxsyCommand::class,
+        DumpAutoloadCommand::class,
+        MakePackage::class,
+        ListCommand::class,
+        MakePackageStack::class,
+        UpdateCommand::class,
+        RepositoryCommand::class,
+        VendorPackageCommand::class,
+    ];
 
-	/**
-	 * @return class-string[]
-	 */
-	public static function publicCommands(): array
-	{
-		return self::$bootPublicCommands;
-	}
+    /**
+     * @return class-string[]
+     */
+    public static function publicCommands(): array
+    {
+        return self::$bootPublicCommands;
+    }
 }

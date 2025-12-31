@@ -8,18 +8,18 @@ namespace Filefabrik\Paxsy\Tests\Support;
 
 trait CommandReflectorTrait
 {
-	public function getSignature()
-	{
-		return $this->signature;
-	}
+    public function getSignature()
+    {
+        return $this->signature;
+    }
 
-	public function reflectOptions()
-	{
-		return $this->getOptions();
-	}
+    public function reflectOptions()
+    {
+        return $this->getOptions();
+    }
 
-	public function reflectArguments()
-	{
-		return $this->getArguments();
-	}
+    public function reflectArguments()
+    {
+        return $this->getArguments();
+    }
 }

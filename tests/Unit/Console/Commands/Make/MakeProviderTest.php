@@ -8,26 +8,26 @@
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
 beforeEach(function() {
-	removePackageStack();
+    removePackageStack();
 });
 
 it(
-	'create Job Component via command in Default-Vendor-Package',
-	function() {
-		makePackageByArtisanCommand($this);
+    'create Job Component via command in Default-Vendor-Package',
+    function() {
+        makePackageByArtisanCommand($this);
 
-		$command                = 'make:provider';
-		$arguments              = ['name' => 'TestProvider'];
-		$expected_relative_path = 'src/Providers/TestProvider.php';
-		$expected_substrings    = [
-			'namespace '.DefaultPackageNames::namespacyfy('Providers').';',
-			'class TestProvider',
-		];
-		makeComponentInPackage($this, $command, $arguments);
-		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+        $command                = 'make:provider';
+        $arguments              = ['name' => 'TestProvider'];
+        $expected_relative_path = 'src/Providers/TestProvider.php';
+        $expected_substrings    = [
+            'namespace '.DefaultPackageNames::namespacyfy('Providers').';',
+            'class TestProvider',
+        ];
+        makeComponentInPackage($this, $command, $arguments);
+        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
 
-		checkComponentFilesAndDirectories($expected_full_path);
+        checkComponentFilesAndDirectories($expected_full_path);
 
-		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
-	},
+        expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+    },
 );

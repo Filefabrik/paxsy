@@ -1,4 +1,14 @@
+includes:
+    # todo larastan does not work
+    #- vendor/larastan/larastan/extension.neon
+    #- vendor/nesbot/carbon/extension.neon
 parameters:
-	level: 4
-	paths:
-		- src
+    tmpDir: ./.tmp
+    paths:
+        - src/
+
+    # Level 10 is the highest level
+    level: 8
+    # checkMissingIterableValueType: true
+    #checkMissingVarReturn: true
+    reportUnmatchedIgnoredErrors: true

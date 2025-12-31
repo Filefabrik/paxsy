@@ -8,36 +8,36 @@
 use Filefabrik\Paxsy\Console\Commands\Composer\UpdateCommand;
 
 it(
-	'signature',
-	function() {
-		$dummy = new class() extends UpdateCommand {
-			public function getSignature()
-			{
-				return $this->signature;
-			}
-		};
+    'signature',
+    function() {
+        $dummy = new class () extends UpdateCommand {
+            public function getSignature()
+            {
+                return $this->signature;
+            }
+        };
 
-		expect($dummy->getSignature())->toBe('paxsy:composer-update');
-	},
+        expect($dummy->getSignature())->toBe('paxsy:composer-update');
+    },
 );
 // todo feature test
 it(
-	'Flags expectation',
-	function() {
-		$this->artisan('paxsy:composer-update', ['--help' => true])
-			 ->expectsOutputToContain('--flags')
-			 ->assertExitCode(0)
-		;
-	},
+    'Flags expectation',
+    function() {
+        $this->artisan('paxsy:composer-update', ['--help' => true])
+             ->expectsOutputToContain('--flags')
+             ->assertExitCode(0)
+        ;
+    },
 );
 
 it(
-	'Execute with disabled',
-	function() {
-		useShellDisabled();
+    'Execute with disabled',
+    function() {
+        useShellDisabled();
 
-		$this->artisan('paxsy:composer-update', [])
-			 ->assertExitCode(0)
-		;
-	},
+        $this->artisan('paxsy:composer-update', [])
+             ->assertExitCode(0)
+        ;
+    },
 );

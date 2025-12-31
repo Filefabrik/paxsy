@@ -7,5 +7,5 @@ use Illuminate\Foundation\Console\ChannelMakeCommand;
 // @codeCoverageIgnore
 class MakeChannel extends ChannelMakeCommand
 {
-	use TraitPackagizer;
+    use TraitPackagizer;
 }

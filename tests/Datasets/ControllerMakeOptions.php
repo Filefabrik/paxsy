@@ -4,16 +4,16 @@
  */
 /** @copyright-header * */
 dataset(
-	'Controller Make Options',
-	[
-		// todo make to dataset and iterate
-		// todo use parent and type as extra test
-		['api'],
-		['creatable'],
-		['force'],
-		['invokable'],
-		['requests'],
-		['resource'],
-		['singleton'],
-	],
+    'Controller Make Options',
+    [
+        // todo make to dataset and iterate
+        // todo use parent and type as extra test
+        ['api'],
+        ['creatable'],
+        ['force'],
+        ['invokable'],
+        ['requests'],
+        ['resource'],
+        ['singleton'],
+    ],
 );

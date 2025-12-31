@@ -24,3 +24,16 @@ docker-compose.yml
 /.local/
 /bootraiser-test/
 /auth.json
+/.xdebugCoverage/
+/.tmp/cache/nette.configurator/Container_8b758df18a.php
+/.tmp/cache/nette.configurator/Container_8b758df18a.php.lock
+/.tmp/cache/nette.configurator/Container_8b758df18a.php.meta
+/.tmp/cache/nette.configurator/Container_647be17c12.php
+/.tmp/cache/nette.configurator/Container_647be17c12.php.lock
+/.tmp/cache/nette.configurator/Container_647be17c12.php.meta
+/.tmp/cache/nette.configurator/Container_db421b470b.php
+/.tmp/cache/nette.configurator/Container_db421b470b.php.lock
+/.tmp/cache/nette.configurator/Container_db421b470b.php.meta
+/.tmp/rector/42/7b/427be51e22d2fec12d8003cdff90548303fad345.php
+/.tmp/rector/d4/78/d478ef5e0dac0aa0229cf189684021fb36e3aa65.php
+/.editorconfig

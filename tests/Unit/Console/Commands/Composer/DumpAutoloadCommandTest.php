@@ -8,26 +8,26 @@
 use Filefabrik\Paxsy\Console\Commands\Composer\DumpAutoloadCommand;
 
 beforeEach(function() {
-	useShellDisabled();
+    useShellDisabled();
 });
 it(
-	'signature',
-	function() {
-		$dummy = new class() extends DumpAutoloadCommand {
-			public function getSignature()
-			{
-				return $this->signature;
-			}
-		};
+    'signature',
+    function() {
+        $dummy = new class () extends DumpAutoloadCommand {
+            public function getSignature()
+            {
+                return $this->signature;
+            }
+        };
 
-		expect($dummy->getSignature())->toBe('paxsy:dump-autoload');
-	},
+        expect($dummy->getSignature())->toBe('paxsy:dump-autoload');
+    },
 );
 it(
-	'handle dummy command',
-	function() {
-		$this->artisan('paxsy:dump-autoload')
-			 ->assertExitCode(0)
-		;
-	},
+    'handle dummy command',
+    function() {
+        $this->artisan('paxsy:dump-autoload')
+             ->assertExitCode(0)
+        ;
+    },
 );

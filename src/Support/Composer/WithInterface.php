@@ -10,19 +10,19 @@ use Illuminate\Console\Command;
 
 interface WithInterface
 {
-	public function execute(): static;
+    public function execute(): static;
 
-	public function add(string $expression, mixed $flags = null): static;
+    public function add(string $expression, mixed $flags = null): static;
 
-	public function addVendorPackage(...$params): static;
+    public function addVendorPackage(...$params): static;
 
-	public function removeVendorPackage(...$params): static;
+    public function removeVendorPackage(...$params): static;
 
-	public function addRepository(...$params): static;
+    public function addRepository(...$params): static;
 
-	public function removeRepository(...$params): static;
+    public function removeRepository(...$params): static;
 
-	public function lastTransactionToConsole(Command $command);
+    public function lastTransactionToConsole(Command $command);
 
-	public function singleMode(): static;
+    public function singleMode(): static;
 }

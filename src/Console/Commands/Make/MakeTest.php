@@ -8,30 +8,30 @@ use Illuminate\Foundation\Console\TestMakeCommand;
 
 class MakeTest extends TestMakeCommand
 {
-	use TraitPackagizer {
-		TraitPackagizer::getPath as getModularPath;
-	}
+    use TraitPackagizer {
+        TraitPackagizer::getPath as getModularPath;
+    }
 
-	protected function getPath($name): array|string
-	{
-		if ($package = $this->package()) {
-			$name    = $package->subtractsPackageNamespace($name);
-			$name    = $package->subtractsNamespace('Tests', $name);
-			$relPath = Pathering::concat('tests', PathsNamespaces::fromNamespaceToPath($name)).'.php';
+    protected function getPath($name): array|string
+    {
+        if ($package = $this->package()) {
+            $name    = $package->subtractsPackageNamespace($name);
+            $name    = $package->subtractsNamespace('Tests', $name);
+            $relPath = Pathering::concat('tests', PathsNamespaces::fromNamespaceToPath($name)).'.php';
 
-			return $this->intoPackagePath($relPath);
-		}
+            return $this->intoPackagePath($relPath);
+        }
 
-		return parent::getPath($name);
-	}
+        return parent::getPath($name);
+    }
 
-	/**
-	 * @return string
-	 */
-	protected function rootNamespace(): string
-	{
-		return $this->package()
-					?->joinPackageNamespace('Tests') ?? parent::rootNamespace()
-		;
-	}
+    /**
+     * @return string
+     */
+    protected function rootNamespace(): string
+    {
+        return $this->package()
+                    ?->joinPackageNamespace('Tests') ?? parent::rootNamespace()
+        ;
+    }
 }

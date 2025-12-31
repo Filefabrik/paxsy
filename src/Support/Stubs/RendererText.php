@@ -8,14 +8,14 @@ namespace Filefabrik\Paxsy\Support\Stubs;
 
 class RendererText implements VariablesRendererInterface
 {
-	/**
-	 * @param array $variablesMap
-	 * @param mixed $objects
-	 *
-	 * @return array
-	 */
-	public static function toArray(array $variablesMap, mixed $objects = null): array
-	{
-		return $variablesMap;
-	}
+    /**
+     * @param array $variablesMap
+     * @param mixed $objects
+     *
+     * @return array
+     */
+    public static function toArray(array $variablesMap, mixed $objects = null): array
+    {
+        return $variablesMap;
+    }
 }

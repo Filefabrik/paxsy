@@ -7,5 +7,5 @@ use Illuminate\Foundation\Console\RequestMakeCommand;
 // @codeCoverageIgnore
 class MakeRequest extends RequestMakeCommand
 {
-	use TraitPackagizer;
+    use TraitPackagizer;
 }

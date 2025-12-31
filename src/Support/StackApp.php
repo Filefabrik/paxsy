@@ -15,14 +15,14 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class StackApp
 {
-	/**
-	 * public getter
-	 *
-	 * @throws ContainerExceptionInterface
-	 * @throws NotFoundExceptionInterface
-	 */
-	public static function get(?Application $app = null): ?Stack
-	{
-		return ($app ?? app())->get(Stack::class);
-	}
+    /**
+     * public getter
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public static function get(?Application $app = null): ?Stack
+    {
+        return ($app ?? app())->get(Stack::class);
+    }
 }

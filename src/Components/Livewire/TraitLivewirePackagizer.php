@@ -7,6 +7,6 @@ use Filefabrik\Paxsy\Console\Commands\TraitPackageSupport;
 
 trait TraitLivewirePackagizer
 {
-	use TraitPackageSupport;
-	use TraitOptions;
+    use TraitPackageSupport;
+    use TraitOptions;
 }

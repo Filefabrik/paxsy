@@ -11,41 +11,41 @@ namespace Filefabrik\Paxsy\Console\Support;
  */
 class SolvedOptions
 {
-	/**
-	 * @var array
-	 */
-	public static array $solved = [];
+    /**
+     * @var array
+     */
+    public static array $solved = [];
 
-	/**
-	 * @param string ...$solves
-	 */
-	public static function addSolvedComponent(...$solves): void
-	{
-		foreach ((array) $solves as $solved) {
-			self::$solved[$solved] = true;
-		}
-	}
+    /**
+     * @param string ...$solves
+     */
+    public static function addSolvedComponent(...$solves): void
+    {
+        foreach ((array) $solves as $solved) {
+            self::$solved[$solved] = true;
+        }
+    }
 
-	/**
-	 * @return array
-	 */
-	public static function solvedAsOption(): array
-	{
-		$opts = [];
-		foreach (self::$solved as $n => $null) {
-			$opts[] = str_replace('make:', '', $n);
-		}
+    /**
+     * @return array
+     */
+    public static function solvedAsOption(): array
+    {
+        $opts = [];
+        foreach (self::$solved as $n => $null) {
+            $opts[] = str_replace('make:', '', $n);
+        }
 
-		return $opts;
-	}
+        return $opts;
+    }
 
-	public static function hasSolvedOptions(): bool
-	{
-		return (bool) self::$solved;
-	}
+    public static function hasSolvedOptions(): bool
+    {
+        return (bool) self::$solved;
+    }
 
-	public static function reset(): void
-	{
-		self::$solved = [];
-	}
+    public static function reset(): void
+    {
+        self::$solved = [];
+    }
 }

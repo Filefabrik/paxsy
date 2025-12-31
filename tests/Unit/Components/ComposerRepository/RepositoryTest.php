@@ -8,18 +8,18 @@
 use Filefabrik\Paxsy\Components\ComposerRepository\Repository;
 
 it(
-	'repository body',
-	function() {
-		$parsed = Repository::body('app-paxsy-testing/that-is-a-package-path');
+    'repository body',
+    function() {
+        $parsed = Repository::body('app-paxsy-testing/that-is-a-package-path');
 
-		expect($parsed)->toBe(
-			'{
+        expect($parsed)->toBe(
+            '{
   "type": "path",
   "url": "app-paxsy-testing/that-is-a-package-path",
   "options": {
     "symlink": true
   }
 }',
-		);
-	},
+        );
+    },
 );

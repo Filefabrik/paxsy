@@ -8,8 +8,8 @@ use Illuminate\Foundation\Console\JobMakeCommand;
 // @codeCoverageIgnore
 class MakeJob extends JobMakeCommand
 {
-	use TraitPackagizer;
-	use TraitOptions;
-	use TraitCreatesMatchingTest;
-	use TraitCallDelegation;
+    use TraitPackagizer;
+    use TraitOptions;
+    use TraitCreatesMatchingTest;
+    use TraitCallDelegation;
 }

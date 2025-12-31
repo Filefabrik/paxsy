@@ -8,8 +8,8 @@ namespace Filefabrik\Paxsy\Support\Str;
 
 class ReplaceArray
 {
-	public static function searchReplace(string $s, array $searchReplace): string
-	{
-		return (string) str_replace(array_keys($searchReplace), array_values($searchReplace), $s);
-	}
+    public static function searchReplace(string $s, array $searchReplace): string
+    {
+        return (string) str_replace(array_keys($searchReplace), array_values($searchReplace), $s);
+    }
 }
