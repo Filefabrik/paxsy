@@ -37,3 +37,4 @@ docker-compose.yml
 /.tmp/rector/42/7b/427be51e22d2fec12d8003cdff90548303fad345.php
 /.tmp/rector/d4/78/d478ef5e0dac0aa0229cf189684021fb36e3aa65.php
 /.editorconfig
+/.tmp/

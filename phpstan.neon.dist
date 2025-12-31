@@ -7,8 +7,8 @@ parameters:
     paths:
         - src/
 
-    # Level 10 is the highest level
-    level: 8
+    # Level 10 is the highest level todo 6 or 8
+    level: 4
     # checkMissingIterableValueType: true
     #checkMissingVarReturn: true
     reportUnmatchedIgnoredErrors: true

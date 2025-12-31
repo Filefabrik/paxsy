@@ -19,7 +19,7 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": ">=8.4",
+        "php": "^8.4",
         "ext-dom": "*",
         "ext-simplexml": "*",
         "composer/composer": "^2.1",
