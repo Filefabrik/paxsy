@@ -1,7 +1,7 @@
 {
     "name": "filefabrik/paxsy",
     "description": "Software-Packaging your Laravel apps from https://paxsy.filefabrik.com",
-    "version": "v2.0.2-dev",
+    "version": "v2.0.0",
     "keywords": [
         "laravel",
         "laravel 12",

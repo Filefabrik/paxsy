@@ -5,9 +5,9 @@
 ![](https://github.com/Filefabrik/paxsy/actions/workflows/pestphp.yml/badge.svg)
 ![](https://github.com/Filefabrik/paxsy/actions/workflows/phpstan.yml/badge.svg)
 
-* min Laravel 12
+* **Laravel 12**
 * min SupportLivewire 3.4
-* min php 8.4
+* **php 8.4**
 
 install via composer
 
@@ -20,6 +20,3 @@ composer require filefabrik/paxsy --dev
 [Paxsy Doc Site](https://paxsy.filefabrik.com/docs/overview/)
 
 [![Packagist Version](https://img.shields.io/packagist/v/filefabrik/paxsy)](https://packagist.org/packages/filefabrik/paxsy)
-
-
-
