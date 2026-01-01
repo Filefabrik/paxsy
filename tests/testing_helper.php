@@ -12,15 +12,15 @@ use Psr\Container\NotFoundExceptionInterface;
 
 function currentStackName()
 {
-	config()->set('paxsy.stack_name', 'app-paxsy-testing');
+    config()->set('paxsy.stack_name', 'app-paxsy-testing');
 
-	return config('paxsy.stack_name');
+    return config('paxsy.stack_name');
 }
 
 function useShellDisabled(): void
 {
-	config()->set('paxsy.composer_execution', 'disabled');
-	app()->singleton(WithInterface::class, fn() => new WithDisabled());
+    config()->set('paxsy.composer_execution', 'disabled');
+    app()->singleton(WithInterface::class, fn() => new WithDisabled());
 }
 
 /**
@@ -32,10 +32,10 @@ function useShellDisabled(): void
  */
 function removePackageStack(?string $name = null): void
 {
-	$dir = base_path($name ?? currentStackName());
-	if (is_dir($dir)) {
-		(new Filesystem())->deleteDirectory($dir);
-	}
+    $dir = base_path($name ?? currentStackName());
+    if (is_dir($dir)) {
+        (new Filesystem())->deleteDirectory($dir);
+    }
 }
 
 /**
@@ -45,43 +45,43 @@ function removePackageStack(?string $name = null): void
  */
 function defaultTestPackage(): VendorPackageNames
 {
-	$vendorPackageName = 'my-test-vendor/the-test-package';
+    $vendorPackageName = 'my-test-vendor/the-test-package';
 
-	return VendorPackageNames::fromVendorPackage($vendorPackageName)
-							 ->setStackName(currentStackName())
-	;
+    return VendorPackageNames::fromVendorPackage($vendorPackageName)
+                             ->setStackName(currentStackName())
+    ;
 }
 
 function ensureDirectoryExists(string $dir): void
 {
-	(new Filesystem())->ensureDirectoryExists($dir);
+    (new Filesystem())->ensureDirectoryExists($dir);
 }
 
 function clearLaravelDirectories(array|string $dirs)
 {
-	foreach ((array) $dirs as $dir) {
-		$fs = new Filesystem();
-		$fs->deleteDirectory($dir, true);
-	}
+    foreach ((array) $dirs as $dir) {
+        $fs = new Filesystem();
+        $fs->deleteDirectory($dir, true);
+    }
 }
 
 function clearLaravelFiles(): void
 {
-	$files = [
-		'tests/Unit/PHPUnit_Unit_Laravel.php',
-		'tests/Feature/MyPESTFeatureTestingIntoLaravel.php',
-		'database/factories/MyTestFactoryInLaravelFactory.php',
-		'database/seeders/TestingSeederPure.php',
-		'app/Models/TestModelWithoutPackage.php',
-		'app/Models/TestingControllerModels.php',
-		'app/Http/Controllers/TestController2.php',
-	];
-	foreach ($files as $file) {
-		$testFile = base_path($file);
-		if (is_file($testFile)) {
-			unlink($testFile);
-		}
-	}
+    $files = [
+        'tests/Unit/PHPUnit_Unit_Laravel.php',
+        'tests/Feature/MyPESTFeatureTestingIntoLaravel.php',
+        'database/factories/MyTestFactoryInLaravelFactory.php',
+        'database/seeders/TestingSeederPure.php',
+        'app/Models/TestModelWithoutPackage.php',
+        'app/Models/TestingControllerModels.php',
+        'app/Http/Controllers/TestController2.php',
+    ];
+    foreach ($files as $file) {
+        $testFile = base_path($file);
+        if (is_file($testFile)) {
+            unlink($testFile);
+        }
+    }
 }
 
 /**
@@ -92,24 +92,24 @@ function clearLaravelFiles(): void
  */
 function makePackageByArtisanCommand($testCase): void
 {
-	rerouteStubsDirectory();
+    rerouteStubsDirectory();
 
-	$defaultPackage = defaultTestPackage();
-	$vendorName     = $defaultPackage->getVendorName();
-	$packageName    = $defaultPackage->getPackageName();
-	$params         = [
-		'vendor'  => $vendorName,
-		'package' => $packageName,
-		'stubs'   => 'default',
+    $defaultPackage = defaultTestPackage();
+    $vendorName     = $defaultPackage->getVendorName();
+    $packageName    = $defaultPackage->getPackageName();
+    $params         = [
+        'vendor'  => $vendorName,
+        'package' => $packageName,
+        'stubs'   => 'default',
 
-	];
-	$testCase->artisan(MakePackage::class, $params)
-			 ->assertExitCode(0)
-	;
+    ];
+    $testCase->artisan(MakePackage::class, $params)
+             ->assertExitCode(0)
+    ;
 
-	//$testCase->artisan('paxsy', $defaultPackage);
-	// during composer-package creation without dump-autoload or update, the namespace for the package has to be load
-	autoloadNamespace($defaultPackage);
+    //$testCase->artisan('paxsy', $defaultPackage);
+    // during composer-package creation without dump-autoload or update, the namespace for the package has to be load
+    autoloadNamespace($defaultPackage);
 }
 
 /**
@@ -121,20 +121,20 @@ function makePackageByArtisanCommand($testCase): void
  */
 function makeComponentInPackage($testCase, $command, $createArguments): void
 {
-	$packageName = defaultTestPackage()
-		->getPackageName()
-	;
-	$testCase->artisan(
-		$command,
-		array_merge(
-			[
-				'--package' => $packageName,
-			],
-			$createArguments,
-		),
-	)
-			 ->assertExitCode(0)
-	;
+    $packageName = defaultTestPackage()
+        ->getPackageName()
+    ;
+    $testCase->artisan(
+        $command,
+        array_merge(
+            [
+                '--package' => $packageName,
+            ],
+            $createArguments,
+        ),
+    )
+             ->assertExitCode(0)
+    ;
 }
 
 /**
@@ -146,21 +146,21 @@ function makeComponentInPackage($testCase, $command, $createArguments): void
  */
 function checkComponentFilesAndDirectories($full_path): void
 {
-	$directory = dirname($full_path);
-	$files     = implode(', ', glob($directory.'/*') ?? []);
+    $directory = dirname($full_path);
+    $files     = implode(', ', glob($directory.'/*') ?? []);
 
-	$directory     = dirname($directory);
-	$sibling_paths = implode(', ', glob($directory.'/*') ?? []);
+    $directory     = dirname($directory);
+    $sibling_paths = implode(', ', glob($directory.'/*') ?? []);
 
-	expect($full_path)->toBeReadableFile(
-		"Could not find file. Files in directory: '{$files}'. Siblings to parent directory: '{$sibling_paths}'",
-	);
+    expect($full_path)->toBeReadableFile(
+        "Could not find file. Files in directory: '{$files}'. Siblings to parent directory: '{$sibling_paths}'",
+    );
 }
 
 function forcePaxsyConfig($withTestingStackName = true): void
 {
-	config()->set('paxsy', require dirname(__DIR__).'/config/paxsy.php');
-	! $withTestingStackName ?: config()->set('paxsy.stack_name', 'app-paxsy-testing');
+    config()->set('paxsy', require dirname(__DIR__).'/config/paxsy.php');
+    ! $withTestingStackName ?: config()->set('paxsy.stack_name', 'app-paxsy-testing');
 }
 
 /**
@@ -170,7 +170,7 @@ function forcePaxsyConfig($withTestingStackName = true): void
  */
 function withGuiInteractions()
 {
-	config()->set('paxsy.gui_interactions', true);
+    config()->set('paxsy.gui_interactions', true);
 }
 
 /**
@@ -180,14 +180,14 @@ function withGuiInteractions()
  */
 function rerouteStubsDirectory(): void
 {
-	$testingStubsDir = dirname(__DIR__).'/stubs';
-	forcePaxsyConfig();
+    $testingStubsDir = dirname(__DIR__).'/stubs';
+    forcePaxsyConfig();
 
-	if (is_dir($testingStubsDir)) {
-		config()
-			->set('paxsy.stub_sets.default.directory', $testingStubsDir)
-		;
-	}
+    if (is_dir($testingStubsDir)) {
+        config()
+            ->set('paxsy.stub_sets.default.directory', $testingStubsDir)
+        ;
+    }
 }
 
 /**
@@ -202,22 +202,22 @@ function rerouteStubsDirectory(): void
  */
 function autoloadNamespace(?VendorPackageNames $vendorPackageNames = null): void
 {
-	/** @var ClassLoader $autoloader */
-	$autoloader = require realpath(__DIR__.'/../vendor/autoload.php');
+    /** @var ClassLoader $autoloader */
+    $autoloader = require realpath(__DIR__.'/../vendor/autoload.php');
 
-	$vendorPackageNames ??= defaultTestPackage();
+    $vendorPackageNames ??= defaultTestPackage();
 
-	$reflectAutoload = new ReflectionClass($autoloader);
-	$reflectAutoload->getProperty('missingClasses')
-					->setValue($autoloader, [])
-	;
+    $reflectAutoload = new ReflectionClass($autoloader);
+    $reflectAutoload->getProperty('missingClasses')
+                    ->setValue($autoloader, [])
+    ;
 
-	$coI                   = $autoloader;
-	$autoloadNamespace     = $vendorPackageNames->toNamespace().'\\';
-	$vendorPackageBasePath = $vendorPackageNames->packageBasePath().'/src';
-	$coI->setClassMapAuthoritative(false);
+    $coI                   = $autoloader;
+    $autoloadNamespace     = $vendorPackageNames->toNamespace().'\\';
+    $vendorPackageBasePath = $vendorPackageNames->packageBasePath().'/src';
+    $coI->setClassMapAuthoritative(false);
 
-	$coI->addPsr4($autoloadNamespace, $vendorPackageBasePath);
+    $coI->addPsr4($autoloadNamespace, $vendorPackageBasePath);
 }
 
 /**
@@ -229,5 +229,5 @@ function autoloadNamespace(?VendorPackageNames $vendorPackageNames = null): void
  */
 function packageStack(): Stack
 {
-	return app()->get(Stack::class);
+    return app()->get(Stack::class);
 }

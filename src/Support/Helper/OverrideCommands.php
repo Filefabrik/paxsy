@@ -29,53 +29,54 @@ use Filefabrik\Paxsy\Console\Commands\Make\MakeRule;
 use Filefabrik\Paxsy\Console\Commands\Make\MakeSeeder;
 use Filefabrik\Paxsy\Console\Commands\Make\MakeTest;
 use Filefabrik\Paxsy\Console\Commands\Make\MakeView;
+use Illuminate\Console\GeneratorCommand;
 
 class OverrideCommands
 {
-	/**
-	 * @var array|string[]
-	 */
-	protected static array $overrideCommands = [
-		'make:cast'         => MakeCast::class,
-		'make:controller'   => MakeController::class,
-		'make:command'      => MakeCommand::class,
-		'make:channel'      => MakeChannel::class,
-		'make:event'        => MakeEvent::class,
-		'make:exception'    => MakeException::class,
-		'make:factory'      => MakeFactory::class,
-		'make:job'          => MakeJob::class,
-		'make:listener'     => MakeListener::class,
-		'make:mail'         => MakeMail::class,
-		'make:middleware'   => MakeMiddleware::class,
-		'make:model'        => MakeModel::class,
-		'make:notification' => MakeNotification::class,
-		'make:observer'     => MakeObserver::class,
-		'make:policy'       => MakePolicy::class,
-		'make:provider'     => MakeProvider::class,
-		'make:request'      => MakeRequest::class,
-		'make:resource'     => MakeResource::class,
-		'make:rule'         => MakeRule::class,
-		'make:seeder'       => MakeSeeder::class,
-		'make:test'         => MakeTest::class,
-		'make:component'    => MakeComponent::class,
-		'make:view'         => MakeView::class,
-	];
+    /**
+     * @var array|string[]
+     */
+    protected static array $overrideCommands = [
+        'make:cast'         => MakeCast::class,
+        'make:controller'   => MakeController::class,
+        'make:command'      => MakeCommand::class,
+        'make:channel'      => MakeChannel::class,
+        'make:event'        => MakeEvent::class,
+        'make:exception'    => MakeException::class,
+        'make:factory'      => MakeFactory::class,
+        'make:job'          => MakeJob::class,
+        'make:listener'     => MakeListener::class,
+        'make:mail'         => MakeMail::class,
+        'make:middleware'   => MakeMiddleware::class,
+        'make:model'        => MakeModel::class,
+        'make:notification' => MakeNotification::class,
+        'make:observer'     => MakeObserver::class,
+        'make:policy'       => MakePolicy::class,
+        'make:provider'     => MakeProvider::class,
+        'make:request'      => MakeRequest::class,
+        'make:resource'     => MakeResource::class,
+        'make:rule'         => MakeRule::class,
+        'make:seeder'       => MakeSeeder::class,
+        'make:test'         => MakeTest::class,
+        'make:component'    => MakeComponent::class,
+        'make:view'         => MakeView::class,
+    ];
 
-	/**
-	 * @return array<string,class-string<Command>> |string[]
-	 */
-	public static function commands(): array
-	{
-		return self::$overrideCommands;
-	}
+    /**
+     * @return array<string,class-string<GeneratorCommand>> |string[]
+     */
+    public static function commands(): array
+    {
+        return self::$overrideCommands;
+    }
 
-	/**
-	 * On Bord Commands they are explizit in paxsy
-	 *
-	 * @return array
-	 */
-	public static function pureMakeCommands(): array
-	{
-		return array_keys(self::commands());
-	}
+    /**
+     * On Bord Commands they are explizit in paxsy
+     *
+     * @return array
+     */
+    public static function pureMakeCommands(): array
+    {
+        return array_keys(self::commands());
+    }
 }

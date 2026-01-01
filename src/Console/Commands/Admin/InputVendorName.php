@@ -12,59 +12,59 @@ use Illuminate\Console\Command;
 
 readonly class InputVendorName
 {
-	private Command $command;
+    private Command $command;
 
-	private Stack $stack;
+    private Stack $stack;
 
-	public function __construct(...$config)
-	{
-		[$this->command, $this->stack] = $config;
-	}
+    public function __construct(...$config)
+    {
+        [$this->command, $this->stack] = $config;
+    }
 
-	public static function handle(...$config): ?Stringularity
-	{
-		return (new self(...$config))->handleVendorName();
-	}
+    public static function handle(...$config): ?Stringularity
+    {
+        return (new self(...$config))->handleVendorName();
+    }
 
-	/**
-	 * @return Stringularity|null
-	 */
-	protected function handleVendorName(): ?Stringularity
-	{
-		$vendorName = null;
-		if (! config('paxsy.ui_vendor_select')) {
-			$vendorName = $this->staticVendorName();
-		}
-		if (! $vendorName) {
-			$this->command->info('1. enter the vendor-name');
-			$vendorName = Inputs::suggestComposerVendors(
-				$this->stack,
-				(string) config('paxsy.ui_default_vendor'),
-			);
-		}
+    /**
+     * @return Stringularity|null
+     */
+    protected function handleVendorName(): ?Stringularity
+    {
+        $vendorName = null;
+        if (! config('paxsy.ui_vendor_select')) {
+            $vendorName = $this->staticVendorName();
+        }
+        if (! $vendorName) {
+            $this->command->info('1. enter the vendor-name');
+            $vendorName = Inputs::suggestComposerVendors(
+                $this->stack,
+                (string) config('paxsy.ui_default_vendor'),
+            );
+        }
 
-		if (! $vendorName) {
-			$this->command->error('Could not handle your vendor-name');
+        if (! $vendorName) {
+            $this->command->error('Could not handle your vendor-name');
 
-			return null;
-		}
+            return null;
+        }
 
-		return new Stringularity($vendorName);
-	}
+        return new Stringularity($vendorName);
+    }
 
-	/**
-	 * @return string|null
-	 */
-	private function staticVendorName(): ?string
-	{
-		if (! $defaultVendorName = (string) config('paxsy.ui_default_vendor')) {
-			$this->command->error('You have to Configure the /config/app-paxsy.php#ui_default_vendor');
+    /**
+     * @return string|null
+     */
+    private function staticVendorName(): ?string
+    {
+        if (! $defaultVendorName = (string) config('paxsy.ui_default_vendor')) {
+            $this->command->error('You have to Configure the /config/app-paxsy.php#ui_default_vendor');
 
-			return null;
-		}
+            return null;
+        }
 
-		$this->command->line('"'.$defaultVendorName.'" (used default from /config/app-paxsy.php#ui_default_vendor)');
+        $this->command->line('"'.$defaultVendorName.'" (used default from /config/app-paxsy.php#ui_default_vendor)');
 
-		return $defaultVendorName;
-	}
+        return $defaultVendorName;
+    }
 }

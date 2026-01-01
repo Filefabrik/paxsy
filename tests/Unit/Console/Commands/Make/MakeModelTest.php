@@ -8,157 +8,157 @@
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
 beforeEach(function() {
-	removePackageStack();
+    removePackageStack();
 });
 
 it(
-	'create Models Component via command in Default-Vendor-Package',
-	function() {
-		makePackageByArtisanCommand($this);
+    'create Models Component via command in Default-Vendor-Package',
+    function() {
+        makePackageByArtisanCommand($this);
 
-		$command                = 'make:model';
-		$arguments              = ['name' => 'TestModel'];
-		$expected_relative_path = 'src/Models/TestModel.php';
-		$expected_substrings    = [
-			'namespace '.DefaultPackageNames::namespacyfy('Models').';',
-			'class TestModel',
-		];
-		makeComponentInPackage($this, $command, $arguments);
-		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+        $command                = 'make:model';
+        $arguments              = ['name' => 'TestModel'];
+        $expected_relative_path = 'src/Models/TestModel.php';
+        $expected_substrings    = [
+            'namespace '.DefaultPackageNames::namespacyfy('Models').';',
+            'class TestModel',
+        ];
+        makeComponentInPackage($this, $command, $arguments);
+        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
 
-		checkComponentFilesAndDirectories($expected_full_path);
+        checkComponentFilesAndDirectories($expected_full_path);
 
-		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
-	},
+        expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+    },
 );
 
 it(
-	'model without package',
-	function() {
-		forcePaxsyConfig();
-		$command         = 'make:model';
-		$createArguments = ['name' => 'TestModelWithoutPackage'];
+    'model without package',
+    function() {
+        forcePaxsyConfig();
+        $command         = 'make:model';
+        $createArguments = ['name' => 'TestModelWithoutPackage'];
 
-		$this->artisan(
-			$command,
-			array_merge(
-				[
+        $this->artisan(
+            $command,
+            array_merge(
+                [
 
-				],
-				$createArguments,
-			),
-		)
-			 ->assertExitCode(0)
-		;
+                ],
+                $createArguments,
+            ),
+        )
+             ->assertExitCode(0)
+        ;
 
-		$expected_substrings = [
-			'namespace App\Models;',
-			'class TestModelWithoutPackage',
-		];
-		$expected_full_path = app_path('Models/TestModelWithoutPackage.php');
+        $expected_substrings = [
+            'namespace App\Models;',
+            'class TestModelWithoutPackage',
+        ];
+        $expected_full_path = app_path('Models/TestModelWithoutPackage.php');
 
-		checkComponentFilesAndDirectories($expected_full_path);
+        checkComponentFilesAndDirectories($expected_full_path);
 
-		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
-	},
+        expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+    },
 );
 
 it(
-	'Model with Controller',
-	function() {
-		makePackageByArtisanCommand($this);
+    'Model with Controller',
+    function() {
+        makePackageByArtisanCommand($this);
 
-		$command                = 'make:model';
-		$arguments              = ['name' => 'TestModelWithKaumtroller', '-c' => true];
-		$expected_relative_path = 'src/Models/TestModelWithKaumtroller.php';
-		$expected_substrings    = [
-			'namespace '.DefaultPackageNames::namespacyfy('Models').';',
-			'class TestModelWithKaumtroller',
-		];
-		makeComponentInPackage($this, $command, $arguments);
-		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+        $command                = 'make:model';
+        $arguments              = ['name' => 'TestModelWithKaumtroller', '-c' => true];
+        $expected_relative_path = 'src/Models/TestModelWithKaumtroller.php';
+        $expected_substrings    = [
+            'namespace '.DefaultPackageNames::namespacyfy('Models').';',
+            'class TestModelWithKaumtroller',
+        ];
+        makeComponentInPackage($this, $command, $arguments);
+        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
 
-		checkComponentFilesAndDirectories($expected_full_path);
+        checkComponentFilesAndDirectories($expected_full_path);
 
-		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
-	},
+        expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+    },
 );
 it(
-	'Model with All',
-	function() {
-		forcePaxsyConfig();
-		makePackageByArtisanCommand($this);
+    'Model with All',
+    function() {
+        forcePaxsyConfig();
+        makePackageByArtisanCommand($this);
 
-		$command                = 'make:model';
-		$arguments              = ['name' => 'TestModelWithAll', '--all' => true];
-		$expected_relative_path = 'src/Models/TestModelWithAll.php';
-		$expected_substrings    = [
-			'namespace '.DefaultPackageNames::namespacyfy('Models').';',
-			'class TestModelWithAll',
-		];
-		$this->artisan(
-			$command,
-			array_merge(
-				[
-					'--package' => defaultTestPackage()->getPackageName(),
-				],
-				$arguments,
-			),
-		)
-			 ->assertExitCode(0)
-		;
-		// todo check factory and controllers also
-		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+        $command                = 'make:model';
+        $arguments              = ['name' => 'TestModelWithAll', '--all' => true];
+        $expected_relative_path = 'src/Models/TestModelWithAll.php';
+        $expected_substrings    = [
+            'namespace '.DefaultPackageNames::namespacyfy('Models').';',
+            'class TestModelWithAll',
+        ];
+        $this->artisan(
+            $command,
+            array_merge(
+                [
+                    '--package' => defaultTestPackage()->getPackageName(),
+                ],
+                $arguments,
+            ),
+        )
+             ->assertExitCode(0)
+        ;
+        // todo check factory and controllers also
+        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
 
-		checkComponentFilesAndDirectories($expected_full_path);
+        checkComponentFilesAndDirectories($expected_full_path);
 
-		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
-	},
+        expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+    },
 );
 it(
-	'with php unit',
-	function() {
-		makePackageByArtisanCommand($this);
-		withGuiInteractions();
+    'with php unit',
+    function() {
+        makePackageByArtisanCommand($this);
+        withGuiInteractions();
 
-		$command                = 'make:model';
-		$arguments              = [/*'name' => 'TestComponent'*/];
-		$expected_relative_path = 'src/Models/Modelmasse.php';
-		$expected_substrings    = [
-			'namespace '.DefaultPackageNames::namespacyfy('Models'),
-			'class Modelmasse',
-		];
+        $command                = 'make:model';
+        $arguments              = [/*'name' => 'TestComponent'*/];
+        $expected_relative_path = 'src/Models/Modelmasse.php';
+        $expected_substrings    = [
+            'namespace '.DefaultPackageNames::namespacyfy('Models'),
+            'class Modelmasse',
+        ];
 
-		//	makeComponentInPackage($this, $command, $arguments);
+        //	makeComponentInPackage($this, $command, $arguments);
 
-		$packageName = defaultTestPackage()
-			->getPackageName()
-		;
-		$this->artisan(
-			$command,
-			array_merge(
-				[
-					'--package' => $packageName,
-				],
-				$arguments,
-			),
-		)
-			 ->assertExitCode(0)
-			 ->expectsQuestion('Options for MakeModel?', ['test'])
-			 ->expectsQuestion('What should the model be named?', 'Modelmasse')
-			// todo check class content
-			// todo ...maybe bullshit to render feature test
-			 ->expectsQuestion('Options for MakeTest?', ['phpunit'])
-		;
+        $packageName = defaultTestPackage()
+            ->getPackageName()
+        ;
+        $this->artisan(
+            $command,
+            array_merge(
+                [
+                    '--package' => $packageName,
+                ],
+                $arguments,
+            ),
+        )
+             ->assertExitCode(0)
+             ->expectsQuestion('Options for MakeModel?', ['test'])
+             ->expectsQuestion('What should the model be named?', 'Modelmasse')
+            // todo check class content
+            // todo ...maybe bullshit to render feature test
+             ->expectsQuestion('Options for MakeTest?', ['phpunit'])
+        ;
 
-		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
 
-		checkComponentFilesAndDirectories($expected_full_path);
-		expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+        checkComponentFilesAndDirectories($expected_full_path);
+        expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
 
-		// test output
-		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Models/ModelmasseTest.php');
+        // test output
+        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Models/ModelmasseTest.php');
 
-		checkComponentFilesAndDirectories($expected_full_path);
-	},
+        checkComponentFilesAndDirectories($expected_full_path);
+    },
 );

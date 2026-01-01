@@ -24,3 +24,5 @@ docker-compose.yml
 /.local/
 /bootraiser-test/
 /auth.json
+/.tmp/
+/.xdebugCoverage

@@ -11,15 +11,15 @@ namespace Filefabrik\Paxsy\Tests\Support;
  */
 class DefaultPackageNames extends PackageNames
 {
-	public const vendor_name = 'my-test-vendor';
+    public const vendor_name = 'my-test-vendor';
 
-	public const package_name = 'the-test-package';
+    public const package_name = 'the-test-package';
 
-	public const vendor_namespace = 'MyTestVendor';
+    public const vendor_namespace = 'MyTestVendor';
 
-	public const package_namespace = 'TheTestPackage';
+    public const package_namespace = 'TheTestPackage';
 
-	public const package_name_singular = 'the-test-package';
+    public const package_name_singular = 'the-test-package';
 
-	public const package_name_plural = 'the-test-packages';
+    public const package_name_plural = 'the-test-packages';
 }
