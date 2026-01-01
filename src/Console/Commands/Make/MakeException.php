@@ -7,5 +7,5 @@ use Illuminate\Foundation\Console\ExceptionMakeCommand;
 // @codeCoverageIgnore
 class MakeException extends ExceptionMakeCommand
 {
-	use TraitPackagizer;
+    use TraitPackagizer;
 }

@@ -12,157 +12,157 @@ namespace Filefabrik\Paxsy\Support\Composer;
  */
 abstract class AbstractWith
 {
-	abstract protected function executeCommand(string $command, ?string $prefix = null);
+    abstract protected function executeCommand(string $command, ?string $prefix = null);
 
-	/**
-	 * @var Composer|null
-	 */
-	private ?Composer $laravelHostComposer = null;
+    /**
+     * @var Composer|null
+     */
+    private ?Composer $laravelHostComposer = null;
 
-	protected array $startTransaction = [];
+    protected array $startTransaction = [];
 
-	protected array $endTransaction = [];
+    protected array $endTransaction = [];
 
-	/**
-	 * @var array
-	 */
-	protected array $commandExpressions = [];
+    /**
+     * @var array
+     */
+    protected array $commandExpressions = [];
 
-	/**
-	 * @var Transactions
-	 */
-	private array $results = [];
+    /**
+     * @var Transactions
+     */
+    private array $results = [];
 
-	private bool $singleMode = true;
+    private bool $singleMode = true;
 
-	/**
-	 * @var Transactions
-	 */
-	protected array $transactions = [];
+    /**
+     * @var Transactions
+     */
+    protected array $transactions = [];
 
-	public function add(string $expression, mixed $flags = null): static
-	{
-		$this->commandExpressions[] = $expression.$this->renderFlags($flags);
-		// call directly
-		if ($this->singleMode) {
-			$this->execute()
-				 ->clear()
-			;
-		}
+    public function add(string $expression, mixed $flags = null): static
+    {
+        $this->commandExpressions[] = $expression.$this->renderFlags($flags);
+        // call directly
+        if ($this->singleMode) {
+            $this->execute()
+                 ->clear()
+            ;
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	protected function renderFlags(mixed $flags = null): ?string
-	{
-		if (null === $flags) {
-			return null;
-		}
-		if (is_array($flags)) {
-			$flags = implode(' ', $flags);
-		}
+    protected function renderFlags(mixed $flags = null): ?string
+    {
+        if (null === $flags) {
+            return null;
+        }
+        if (is_array($flags)) {
+            $flags = implode(' ', $flags);
+        }
 
-		return $flags ? ' '.ltrim($flags, ' ') : '';
-	}
+        return $flags ? ' '.ltrim($flags, ' ') : '';
+    }
 
-	protected function startTransaction(): void
-	{
-		if ($this->startTransaction) {
-			static::executeCommand(...$this->startTransaction);
-		}
-	}
+    protected function startTransaction(): void
+    {
+        if ($this->startTransaction) {
+            static::executeCommand(...$this->startTransaction);
+        }
+    }
 
-	protected function endTransaction(): void
-	{
-		if ($this->endTransaction) {
-			static::executeCommand(...$this->endTransaction);
-		}
-	}
+    protected function endTransaction(): void
+    {
+        if ($this->endTransaction) {
+            static::executeCommand(...$this->endTransaction);
+        }
+    }
 
-	/**
-	 * @param Transaction $result
-	 *
-	 * @return void
-	 */
-	protected function addResult(array $result): void
-	{
-		$this->results[] = $result;
-	}
+    /**
+     * @param Transaction $result
+     *
+     * @return void
+     */
+    protected function addResult(array $result): void
+    {
+        $this->results[] = $result;
+    }
 
-	public function batchMode(): static
-	{
-		$this->singleMode = false;
+    public function batchMode(): static
+    {
+        $this->singleMode = false;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function singleMode(): static
-	{
-		$this->singleMode = true;
+    public function singleMode(): static
+    {
+        $this->singleMode = true;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function isSingle(): bool
-	{
-		return $this->singleMode === true;
-	}
+    public function isSingle(): bool
+    {
+        return $this->singleMode === true;
+    }
 
-	/**
-	 * @return Transactions
-	 */
-	public function getTransactions(): array
-	{
-		return $this->transactions;
-	}
+    /**
+     * @return Transactions
+     */
+    public function getTransactions(): array
+    {
+        return $this->transactions;
+    }
 
-	/**
-	 * @return Composer
-	 */
-	protected function getLaravelHostComposer(): Composer
-	{
-		return $this->laravelHostComposer ??= \Filefabrik\Paxsy\Console\Commands\Admin\Composer::getLaravelHostComposer(
-		);
-	}
+    /**
+     * @return Composer
+     */
+    protected function getLaravelHostComposer(): Composer
+    {
+        return $this->laravelHostComposer ??= \Filefabrik\Paxsy\Console\Commands\Admin\Composer::getLaravelHostComposer(
+        );
+    }
 
-	/**
-	 * All batchable
-	 *
-	 * @return array|null
-	 */
-	public function getCommandExpressions(): ?array
-	{
-		return $this->commandExpressions;
-	}
+    /**
+     * All batchable
+     *
+     * @return array|null
+     */
+    public function getCommandExpressions(): ?array
+    {
+        return $this->commandExpressions;
+    }
 
-	/**
-	 * @return array|null
-	 */
-	public function getResults(): ?array
-	{
-		return $this->results;
-	}
+    /**
+     * @return array|null
+     */
+    public function getResults(): ?array
+    {
+        return $this->results;
+    }
 
-	/**
-	 * @return Transactions
-	 */
-	public function lastTransaction(): array
-	{
-		$transactions = $this->getTransactions();
+    /**
+     * @return Transactions
+     */
+    public function lastTransaction(): array
+    {
+        $transactions = $this->getTransactions();
 
-		return end($transactions);
-	}
+        return end($transactions);
+    }
 
-	/**
-	 * @return $this
-	 */
-	public function clear(): static
-	{
-		$this->commandExpressions = [];
-		$this->results            = [];
+    /**
+     * @return $this
+     */
+    public function clear(): static
+    {
+        $this->commandExpressions = [];
+        $this->results            = [];
 
-		return $this;
-	}
+        return $this;
+    }
 
-	abstract public function execute(): static;
+    abstract public function execute(): static;
 }

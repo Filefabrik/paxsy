@@ -9,45 +9,45 @@ use Filefabrik\Paxsy\Console\Commands\Make\MakePackage;
 use Filefabrik\Paxsy\Support\VendorPackageNames;
 
 beforeEach(function() {
-	removePackageStack();
+    removePackageStack();
 });
 it(
-	'new package ',
-	function() {
-		$defaultPackage = defaultTestPackage();
+    'new package ',
+    function() {
+        $defaultPackage = defaultTestPackage();
 
-		makePackageByArtisanCommand($this);
+        makePackageByArtisanCommand($this);
 
-		$vendorPackageName = 'z-vendor/z-package';
+        $vendorPackageName = 'z-vendor/z-package';
 
-		$zPackage = VendorPackageNames::fromVendorPackage($vendorPackageName)
-									  ->setStackName(currentStackName())
-		;
+        $zPackage = VendorPackageNames::fromVendorPackage($vendorPackageName)
+                                      ->setStackName(currentStackName())
+        ;
 
-		$vendorName  = $zPackage->getVendorName();
-		$packageName = $zPackage->getPackageName();
+        $vendorName  = $zPackage->getVendorName();
+        $packageName = $zPackage->getPackageName();
 
-		$this->artisan(MakePackage::class, [
-			'vendor'  => $vendorName,
-			'package' => $packageName,
-			'stubs'   => 'default',
+        $this->artisan(MakePackage::class, [
+            'vendor'  => $vendorName,
+            'package' => $packageName,
+            'stubs'   => 'default',
 
-		])
-			 ->assertExitCode(0)
-		;
-		$this->artisan(
-			'make:livewire',
-			[
-				'name'      => 'my-lv-CompoZpackage',
-				'--package' => $zPackage->getPackageName(),
-			],
-		);
-		$this->artisan(
-			'make:livewire',
-			[
-				'name'      => 'my-lv-Compo',
-				'--package' => $defaultPackage->getPackageName(),
-			],
-		);
-	},
+        ])
+             ->assertExitCode(0)
+        ;
+        $this->artisan(
+            'make:livewire',
+            [
+                'name'      => 'my-lv-CompoZpackage',
+                '--package' => $zPackage->getPackageName(),
+            ],
+        );
+        $this->artisan(
+            'make:livewire',
+            [
+                'name'      => 'my-lv-Compo',
+                '--package' => $defaultPackage->getPackageName(),
+            ],
+        );
+    },
 );

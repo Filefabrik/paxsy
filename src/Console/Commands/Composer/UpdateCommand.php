@@ -11,34 +11,34 @@ use Illuminate\Console\Command;
 
 class UpdateCommand extends Command
 {
-	use TraitFlags;
+    use TraitFlags;
 
-	/**
-	 * The name and signature of the console command.
-	 *
-	 * @var string
-	 */
-	protected $signature = 'paxsy:composer-update';
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'paxsy:composer-update';
 
-	/**
-	 * The console command description.
-	 *
-	 * @var string
-	 */
-	protected $description = 'Executes composer update against Laravel Host composer.json';
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Executes composer update against Laravel Host composer.json';
 
-	/**
-	 * Execute the console command.
-	 */
-	public function handle(): int
-	{
-		app()
-			->get(WithInterface::class)
-			->add('composer update', $this->getFlags())
-			->execute()
-			->lastTransactionToConsole($this)
-		;
+    /**
+     * Execute the console command.
+     */
+    public function handle(): int
+    {
+        app()
+            ->get(WithInterface::class)
+            ->add('composer update', $this->getFlags())
+            ->execute()
+            ->lastTransactionToConsole($this)
+        ;
 
-		return self::SUCCESS;
-	}
+        return self::SUCCESS;
+    }
 }

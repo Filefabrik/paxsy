@@ -9,31 +9,31 @@ use Illuminate\Support\Str;
 
 class ListCommand extends Command
 {
-	/**
-	 * @var string
-	 */
-	protected $signature = 'paxsy:list';
+    /**
+     * @var string
+     */
+    protected $signature = 'paxsy:list';
 
-	/**
-	 * @var string
-	 */
-	protected $description = 'List all Packages with additional information\'s';
+    /**
+     * @var string
+     */
+    protected $description = 'List all Packages with additional information\'s';
 
-	/**
-	 * @param Stack $packageStack
-	 *
-	 * @return int
-	 */
-	public function handle(Stack $packageStack): int
-	{
-		$count = $packageStack->packages()
-							  ->count()
-		;
-		$this->line('You have '.$count.' '.Str::plural('package', $count).' installed.');
-		$this->line('');
+    /**
+     * @param Stack $packageStack
+     *
+     * @return int
+     */
+    public function handle(Stack $packageStack): int
+    {
+        $count = $packageStack->packages()
+                              ->count()
+        ;
+        $this->line('You have '.$count.' '.Str::plural('package', $count).' installed.');
+        $this->line('');
 
-		Output::packageTable();
+        Output::packageTable();
 
-		return self::SUCCESS;
-	}
+        return self::SUCCESS;
+    }
 }

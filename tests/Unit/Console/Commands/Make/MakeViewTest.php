@@ -11,91 +11,91 @@ use Filefabrik\Paxsy\Console\Commands\Make\MakeComponent;
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
 beforeEach(function() {
-	removePackageStack();
-	clearLaravelDirectories([base_path('resources/views')]);
+    removePackageStack();
+    clearLaravelDirectories([base_path('resources/views')]);
 });
 it('without package', function() {
-	$this->artisan('make:view', [])
-		 ->expectsQuestion('What should the view be named?', 'MyTestingView')
-	;
+    $this->artisan('make:view', [])
+         ->expectsQuestion('What should the view be named?', 'MyTestingView')
+    ;
 });
 it('without package but test', function() {
-	$this->artisan('make:view', ['--pest'])
-		 ->expectsQuestion('What should the view be named?', 'MyTestingView')
-	;
+    $this->artisan('make:view', ['--pest'])
+         ->expectsQuestion('What should the view be named?', 'MyTestingView')
+    ;
 });
 it(
-	'gui with test ',
-	function() {
-		makePackageByArtisanCommand($this);
-		withGuiInteractions();
+    'gui with test ',
+    function() {
+        makePackageByArtisanCommand($this);
+        withGuiInteractions();
 
-		$command                = 'make:view';
-		$arguments              = [/*'name' => 'TestComponent'*/];
-		$expected_relative_path = 'resources/views/my-thing/sub.blade.php';
+        $command                = 'make:view';
+        $arguments              = [/*'name' => 'TestComponent'*/];
+        $expected_relative_path = 'resources/views/my-thing/sub.blade.php';
 
-		$packageName = defaultTestPackage()
-			->getPackageName()
-		;
-		$this->artisan(
-			$command,
-			array_merge(
-				[
-					'--package' => $packageName,
-				],
-				$arguments,
-			),
-		)
-			 ->assertExitCode(0)
-			 ->expectsQuestion('Options for MakeView?', ['test'])
-			 ->expectsQuestion('What should the view be named?', 'my-thing.sub')
-			// todo check class content
-			// ->expectsQuestion('Options for MakeTest?', ['phpunit'])
-		;
+        $packageName = defaultTestPackage()
+            ->getPackageName()
+        ;
+        $this->artisan(
+            $command,
+            array_merge(
+                [
+                    '--package' => $packageName,
+                ],
+                $arguments,
+            ),
+        )
+             ->assertExitCode(0)
+             ->expectsQuestion('Options for MakeView?', ['test'])
+             ->expectsQuestion('What should the view be named?', 'my-thing.sub')
+            // todo check class content
+            // ->expectsQuestion('Options for MakeTest?', ['phpunit'])
+        ;
 
-		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
 
-		checkComponentFilesAndDirectories($expected_full_path);
-		//expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+        checkComponentFilesAndDirectories($expected_full_path);
+        //expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
 
-		// test output
-		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/View/MyThing/SubTest.php');
+        // test output
+        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/View/MyThing/SubTest.php');
 
-		checkComponentFilesAndDirectories($expected_full_path);
-	},
+        checkComponentFilesAndDirectories($expected_full_path);
+    },
 );
 it(
-	'gui without test ',
-	function() {
-		makePackageByArtisanCommand($this);
-		withGuiInteractions();
+    'gui without test ',
+    function() {
+        makePackageByArtisanCommand($this);
+        withGuiInteractions();
 
-		$command                = 'make:view';
-		$arguments              = [/*'name' => 'TestComponent'*/];
-		$expected_relative_path = 'resources/views/my-thing/sub.blade.php';
+        $command                = 'make:view';
+        $arguments              = [/*'name' => 'TestComponent'*/];
+        $expected_relative_path = 'resources/views/my-thing/sub.blade.php';
 
-		$packageName = defaultTestPackage()
-			->getPackageName()
-		;
-		$this->artisan(
-			$command,
-			array_merge(
-				[
-					'--package' => $packageName,
-				],
-				$arguments,
-			),
-		)
-			 ->assertExitCode(0)
-			 ->expectsQuestion('Options for MakeView?', [])
-			 ->expectsQuestion('What should the view be named?', 'my-thing.sub')
-			// todo check class content
-			// ->expectsQuestion('Options for MakeTest?', ['phpunit'])
-		;
+        $packageName = defaultTestPackage()
+            ->getPackageName()
+        ;
+        $this->artisan(
+            $command,
+            array_merge(
+                [
+                    '--package' => $packageName,
+                ],
+                $arguments,
+            ),
+        )
+             ->assertExitCode(0)
+             ->expectsQuestion('Options for MakeView?', [])
+             ->expectsQuestion('What should the view be named?', 'my-thing.sub')
+            // todo check class content
+            // ->expectsQuestion('Options for MakeTest?', ['phpunit'])
+        ;
 
-		$expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
+        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath($expected_relative_path);
 
-		checkComponentFilesAndDirectories($expected_full_path);
-		//expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
-	},
+        checkComponentFilesAndDirectories($expected_full_path);
+        //expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
+    },
 );

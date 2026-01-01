@@ -10,13 +10,13 @@ use Filefabrik\Paxsy\Support\VendorPackageNames;
 
 class Facade
 {
-	public static function variables(VendorPackageNames $vendorPackageNames, ?FromConfig $config = null): Variables
-	{
-		$config ??= new FromConfig('default');
+    public static function variables(VendorPackageNames $vendorPackageNames, ?FromConfig $config = null): Variables
+    {
+        $config ??= new FromConfig('default');
 
-		return (new Variables())->setReplacementMaps($config->replacementMap())
-								->setRendererClasses($config->getVariablesRenderer())
-								->addVariables('package', $vendorPackageNames)
-		;
-	}
+        return (new Variables())->setReplacementMaps($config->replacementMap())
+                                ->setRendererClasses($config->getVariablesRenderer())
+                                ->addVariables('package', $vendorPackageNames)
+        ;
+    }
 }

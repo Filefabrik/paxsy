@@ -12,149 +12,149 @@ use Illuminate\Filesystem\Filesystem;
 
 class StubsWriter
 {
-	use TraitGenericLines;
+    use TraitGenericLines;
 
-	/**
-	 * @var int[]|string[]
-	 */
-	private ?array $searches = null;
+    /**
+     * @var int[]|string[]
+     */
+    private ?array $searches = null;
 
-	/**
-	 * @var array|null
-	 */
-	private ?array $replaces = null;
+    /**
+     * @var array|null
+     */
+    private ?array $replaces = null;
 
-	/**
-	 * @param string                                                                 $packageBasePath
-	 * @param array{directories:array<int,string>|null,files:array<int,string>|null} $preparedStubs
-	 * @param array                                                                  $variables
-	 * @param Filesystem                                                             $filesystem
-	 */
-	public function __construct(
-		private readonly string $packageBasePath,
-		private readonly array $preparedStubs,
-		private readonly array $variables,
-		private readonly Filesystem $filesystem = new Filesystem(),
-	) {
-	}
+    /**
+     * @param string                                                                 $packageBasePath
+     * @param array{directories:array<int,string>|null,files:array<int,string>|null} $preparedStubs
+     * @param array                                                                  $variables
+     * @param Filesystem                                                             $filesystem
+     */
+    public function __construct(
+        private readonly string $packageBasePath,
+        private readonly array $preparedStubs,
+        private readonly array $variables,
+        private readonly Filesystem $filesystem = new Filesystem(),
+    ) {
+    }
 
-	/**
-	 * @return static
-	 */
-	public function writeStubs(): static
-	{
-		$this->createIfNeed();
+    /**
+     * @return static
+     */
+    public function writeStubs(): static
+    {
+        $this->createIfNeed();
 
-		$this->writeDirectories($this->preparedStubs['directories'] ?? []);
+        $this->writeDirectories($this->preparedStubs['directories'] ?? []);
 
-		$this->writeFiles($this->preparedStubs['files'] ?? []);
+        $this->writeFiles($this->preparedStubs['files'] ?? []);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function createIfNeed(): void
-	{
-		$this->filesystem->ensureDirectoryExists($this->filesystem->dirname($this->packageBasePath));
-	}
+    public function createIfNeed(): void
+    {
+        $this->filesystem->ensureDirectoryExists($this->filesystem->dirname($this->packageBasePath));
+    }
 
-	/**
-	 * @param array $files
-	 *
-	 * @return void
-	 */
-	public function writeFiles(array $files): void
-	{
-		foreach ($files as $destination => $stub) {
-			$this->writeFile($destination, $stub);
-		}
-	}
+    /**
+     * @param array $files
+     *
+     * @return void
+     */
+    public function writeFiles(array $files): void
+    {
+        foreach ($files as $destination => $stub) {
+            $this->writeFile($destination, $stub);
+        }
+    }
 
-	/**
-	 * @param string $destinationPath
-	 * @param        $stubPath
-	 *
-	 * @return bool
-	 */
-	public function writeFile(string $destinationPath, $stubPath): bool
-	{
-		$contents = file_get_contents($stubPath);
+    /**
+     * @param string $destinationPath
+     * @param        $stubPath
+     *
+     * @return bool
+     */
+    public function writeFile(string $destinationPath, $stubPath): bool
+    {
+        $contents = file_get_contents($stubPath);
 
-		$output = $this->replaceContent($contents);
+        $output = $this->replaceContent($contents);
 
-		$destinationPath = $this->replaceContent($destinationPath);
+        $destinationPath = $this->replaceContent($destinationPath);
 
-		$filename = $this->makeFilename($destinationPath);
+        $filename = $this->makeFilename($destinationPath);
 
-		// todo perhaps flag force or re-create all files
-		if ($this->filesystem->exists($filename)) {
-			$this->line(sprintf(' - Skipping <info>%s</info> (already exists)', $destinationPath));
+        // todo perhaps flag force or re-create all files
+        if ($this->filesystem->exists($filename)) {
+            $this->line(sprintf(' - Skipping <info>%s</info> (already exists)', $destinationPath));
 
-			return false;
-		}
+            return false;
+        }
 
-		$out = $this->filesystem->dirname($filename);
+        $out = $this->filesystem->dirname($filename);
 
-		$this->filesystem->ensureDirectoryExists($out);
-		$this->filesystem->put($filename, $output);
+        $this->filesystem->ensureDirectoryExists($out);
+        $this->filesystem->put($filename, $output);
 
-		$this->line(sprintf(' — Wrote file <info>%s</info> into %s', $destinationPath, $out));
+        $this->line(sprintf(' — Wrote file <info>%s</info> into %s', $destinationPath, $out));
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * @param array $directories
-	 *
-	 * @return void
-	 */
-	public function writeDirectories(array $directories): void
-	{
-		foreach ($directories as $directory) {
-			// todo test, pathname was filled
-			$destination = $this->replaceContent($directory);
-			$createPath  = Pathering::concat($this->packageBasePath, $destination);
-			$this->filesystem
-				->ensureDirectoryExists($createPath)
-			;
-		}
-	}
+    /**
+     * @param array $directories
+     *
+     * @return void
+     */
+    public function writeDirectories(array $directories): void
+    {
+        foreach ($directories as $directory) {
+            // todo test, pathname was filled
+            $destination = $this->replaceContent($directory);
+            $createPath  = Pathering::concat($this->packageBasePath, $destination);
+            $this->filesystem
+                ->ensureDirectoryExists($createPath)
+            ;
+        }
+    }
 
-	/**
-	 * @return array
-	 */
-	public function searches(): array
-	{
-		return $this->searches ??= array_keys($this->variables);
-	}
+    /**
+     * @return array
+     */
+    public function searches(): array
+    {
+        return $this->searches ??= array_keys($this->variables);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function replaces(): array
-	{
-		return $this->replaces ??= array_values($this->variables);
-	}
+    /**
+     * @return array
+     */
+    public function replaces(): array
+    {
+        return $this->replaces ??= array_values($this->variables);
+    }
 
-	/**
-	 * @param $destination
-	 *
-	 * @return string
-	 */
-	protected function makeFilename($destination): string
-	{
-		// todo make sure it is trimmed
-		return Pathering::concat($this->packageBasePath, $destination);
-	}
+    /**
+     * @param $destination
+     *
+     * @return string
+     */
+    protected function makeFilename($destination): string
+    {
+        // todo make sure it is trimmed
+        return Pathering::concat($this->packageBasePath, $destination);
+    }
 
-	/**
-	 * @param string $contents
-	 *
-	 * @return string
-	 */
-	protected function replaceContent(string $contents): string
-	{
-		return $this->searches() && $this->replaces() ?
-			str_replace($this->searches(), $this->replaces(), $contents) :
-			$contents;
-	}
+    /**
+     * @param string $contents
+     *
+     * @return string
+     */
+    protected function replaceContent(string $contents): string
+    {
+        return $this->searches() && $this->replaces() ?
+            str_replace($this->searches(), $this->replaces(), $contents) :
+            $contents;
+    }
 }

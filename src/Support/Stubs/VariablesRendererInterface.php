@@ -11,11 +11,11 @@ namespace Filefabrik\Paxsy\Support\Stubs;
  */
 interface VariablesRendererInterface
 {
-	/**
-	 * @param array $variablesMap
-	 * @param mixed $objects
-	 *
-	 * @return array
-	 */
-	public static function toArray(array $variablesMap, mixed $objects = null): array;
+    /**
+     * @param array $variablesMap
+     * @param mixed $objects
+     *
+     * @return array
+     */
+    public static function toArray(array $variablesMap, mixed $objects = null): array;
 }

@@ -11,31 +11,31 @@ namespace Filefabrik\Paxsy\Support\Composer;
  */
 class WithDisabled extends WithShellExec implements WithInterface
 {
-	/**
-	 * @return static
-	 */
-	public function execute(): static
-	{
-		$expressions = $this->getCommandExpressions();
+    /**
+     * @return static
+     */
+    public function execute(): static
+    {
+        $expressions = $this->getCommandExpressions();
 
-		if ($expressions) {
-			$this->executeExpressions($expressions);
+        if ($expressions) {
+            $this->executeExpressions($expressions);
 
-			// perhaps for later
-			$this->transactions[] = $this->getResults();
-		}
+            // perhaps for later
+            $this->transactions[] = $this->getResults();
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string      $command
-	 * @param string|null $prefix
-	 *
-	 * @return void
-	 */
-	protected function executeCommand(string $command, ?string $prefix = null): void
-	{
-		$this->addResult(['command' => $command, 'result' => null, 'prefix' => $prefix]);
-	}
+    /**
+     * @param string      $command
+     * @param string|null $prefix
+     *
+     * @return void
+     */
+    protected function executeCommand(string $command, ?string $prefix = null): void
+    {
+        $this->addResult(['command' => $command, 'result' => null, 'prefix' => $prefix]);
+    }
 }
