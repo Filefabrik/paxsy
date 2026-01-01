@@ -1,14 +1,12 @@
 {
     "name": "filefabrik/paxsy",
     "description": "Software-Packaging your Laravel apps from https://paxsy.filefabrik.com",
-    "version": "v2.0.3",
+    "version": "v2.0.2-dev",
     "keywords": [
         "laravel",
-        "laravel 11",
         "laravel 12",
         "livewire 3",
-        "laravel package development",
-        "adapted from internachi modular Chris Morrell"
+        "laravel package development"
     ],
     "authors": [
         {
