@@ -7,5 +7,5 @@ use Illuminate\Foundation\Console\EventMakeCommand;
 // @codeCoverageIgnore
 class MakeEvent extends EventMakeCommand
 {
-	use TraitPackagizer;
+    use TraitPackagizer;
 }

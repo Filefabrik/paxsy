@@ -21,59 +21,59 @@ use Symfony\Component\Finder\Finder;
  */
 readonly class StackComposers
 {
-	/**
-	 * Decoupled and independent finder for composer.json in a Stack /app-modules/** or /packages/**
-	 *
-	 * @param Stack $stack
-	 *
-	 * @return Collection<string,Package>
-	 */
-	public static function findPackages(Stack $stack): Collection
-	{
-		return self::packagesButler(self::find($stack->getStackBasePath()), $stack);
-	}
+    /**
+     * Decoupled and independent finder for composer.json in a Stack /app-modules/** or /packages/**
+     *
+     * @param Stack $stack
+     *
+     * @return Collection<string,Package>
+     */
+    public static function findPackages(Stack $stack): Collection
+    {
+        return self::packagesButler(self::find($stack->getStackBasePath()), $stack);
+    }
 
-	/**
-	 * Searching for composer.json in a directory ...utility
-	 *
-	 * @param string $stackBasePath
-	 *
-	 * @return Finder
-	 */
-	public static function find(string $stackBasePath): Finder
-	{
-		return Finder::create()
-					 ->files()
-					 ->depth('1')
-					 ->name('composer.json')
-					 ->in($stackBasePath)
-		;
-	}
+    /**
+     * Searching for composer.json in a directory ...utility
+     *
+     * @param string $stackBasePath
+     *
+     * @return Finder
+     */
+    public static function find(string $stackBasePath): Finder
+    {
+        return Finder::create()
+                     ->files()
+                     ->depth('1')
+                     ->name('composer.json')
+                     ->in($stackBasePath)
+        ;
+    }
 
-	/**
-	 * !!Most Important Method!!
-	 * Load each found composer.json and make it usable for the whole software
-	 *
-	 * @param Finder $finder
-	 * @param Stack  $packageStack
-	 *
-	 * @return Collection<string,Package>
-	 */
-	protected static function packagesButler(Finder $finder, Stack $packageStack): Collection
-	{
-		$packages = [];
-		foreach ($finder as $item) {
-			try {
-				$package = Extractor::fromComposerFile($item, $packageStack);
-			} catch (JsonException $e) {
-				Log::error($e->getMessage());
-				continue;
-			}
+    /**
+     * !!Most Important Method!!
+     * Load each found composer.json and make it usable for the whole software
+     *
+     * @param Finder $finder
+     * @param Stack  $packageStack
+     *
+     * @return Collection<string,Package>
+     */
+    protected static function packagesButler(Finder $finder, Stack $packageStack): Collection
+    {
+        $packages = [];
+        foreach ($finder as $item) {
+            try {
+                $package = Extractor::fromComposerFile($item, $packageStack);
+            } catch (JsonException $e) {
+                Log::error($e->getMessage());
+                continue;
+            }
 
-			// current Registry design is the package-Name as index
-			$packages[$package->getName()] = $package;
-		}
+            // current Registry design is the package-Name as index
+            $packages[$package->getName()] = $package;
+        }
 
-		return new Collection($packages);
-	}
+        return new Collection($packages);
+    }
 }

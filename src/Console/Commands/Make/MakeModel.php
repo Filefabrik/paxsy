@@ -7,16 +7,16 @@ use Illuminate\Foundation\Console\ModelMakeCommand;
 
 class MakeModel extends ModelMakeCommand
 {
-	use TraitPackagizer;
-	use TraitCallDelegation;
-	use TraitCreatesMatchingTest;
+    use TraitPackagizer;
+    use TraitCallDelegation;
+    use TraitCreatesMatchingTest;
 
-	protected function getDefaultNamespace($rootNamespace): string
-	{
-		$rootNamespace = $this->package()
-							  ?->srcPackageNamespace() ?? $rootNamespace
-		;
+    protected function getDefaultNamespace($rootNamespace): string
+    {
+        $rootNamespace = $this->package()
+                              ?->srcPackageNamespace() ?? $rootNamespace
+        ;
 
-		return Namespacering::concat($rootNamespace, 'Models');
-	}
+        return Namespacering::concat($rootNamespace, 'Models');
+    }
 }

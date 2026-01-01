@@ -13,16 +13,16 @@ use Illuminate\Support\Str;
  */
 class StringModifiers
 {
-	/**
-	 * @param string $name Namespace to the Command from MyTestVendor\TheTestPackage\Console\Commands\TestCommand to test-command
-	 *
-	 * @return string
-	 */
-	public static function modifyMakeCommand(string $name): string
-	{
-		return (string) Str::of($name)
-						  ->classBasename()
-						  ->kebab()
-		;
-	}
+    /**
+     * @param string $name Namespace to the Command from MyTestVendor\TheTestPackage\Console\Commands\TestCommand to test-command
+     *
+     * @return string
+     */
+    public static function modifyMakeCommand(string $name): string
+    {
+        return (string) Str::of($name)
+                          ->classBasename()
+                          ->kebab()
+        ;
+    }
 }

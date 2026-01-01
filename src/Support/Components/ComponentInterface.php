@@ -14,7 +14,7 @@ use Illuminate\Foundation\Application;
  */
 interface ComponentInterface
 {
-	public static function make_commands(): array;
+    public static function make_commands(): array;
 
-	public static function resolveCommands(Application $application, Artisan $artisan);
+    public static function resolveCommands(Application $application, Artisan $artisan);
 }

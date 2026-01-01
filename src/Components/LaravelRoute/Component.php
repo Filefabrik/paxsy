@@ -12,22 +12,22 @@ use Illuminate\Foundation\Application;
 
 class Component implements ComponentInterface
 {
-	/**
-	 * @return string[]
-	 */
-	public static function make_commands(): array
-	{
-		return ['make:route'];
-	}
+    /**
+     * @return string[]
+     */
+    public static function make_commands(): array
+    {
+        return ['make:route'];
+    }
 
-	/**
-	 * @param Application $application
-	 * @param Artisan     $artisan
-	 *
-	 * @return void
-	 */
-	public static function resolveCommands(Application $application, Artisan $artisan): void
-	{
-		$artisan->resolveCommands([MakeRoute::class]);
-	}
+    /**
+     * @param Application $application
+     * @param Artisan     $artisan
+     *
+     * @return void
+     */
+    public static function resolveCommands(Application $application, Artisan $artisan): void
+    {
+        $artisan->resolveCommands([MakeRoute::class]);
+    }
 }

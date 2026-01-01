@@ -8,30 +8,30 @@ use Illuminate\Foundation\Console\ConsoleMakeCommand;
 
 class MakeCommand extends ConsoleMakeCommand
 {
-	use TraitPackagizer;
-	use TraitOptions;
-	use TraitCreatesMatchingTest;
-	use TraitCallDelegation;
+    use TraitPackagizer;
+    use TraitOptions;
+    use TraitCreatesMatchingTest;
+    use TraitCallDelegation;
 
-	protected function replaceClass($stub, $name): string
-	{
-		$stub = parent::replaceClass($stub, $name);
+    protected function replaceClass($stub, $name): string
+    {
+        $stub = parent::replaceClass($stub, $name);
 
-		if ($package = $this->package()) {
-			// todo check what the name is
-			$cli_name = StringModifiers::modifyMakeCommand($name);
+        if ($package = $this->package()) {
+            // todo check what the name is
+            $cli_name = StringModifiers::modifyMakeCommand($name);
 
-			$find = [
-				'{{command}}',
-				'{{ command }}',
-				'dummy:command',
-				'command:name',
-				"app:{$cli_name}",
-			];
+            $find = [
+                '{{command}}',
+                '{{ command }}',
+                'dummy:command',
+                'command:name',
+                "app:{$cli_name}",
+            ];
 
-			$stub = (string) str_replace($find, "{$package->getName()}:{$cli_name}", $stub);
-		}
+            $stub = (string) str_replace($find, "{$package->getName()}:{$cli_name}", $stub);
+        }
 
-		return $stub;
-	}
+        return $stub;
+    }
 }

@@ -7,5 +7,5 @@ use Illuminate\Foundation\Console\ResourceMakeCommand;
 // @codeCoverageIgnore
 class MakeResource extends ResourceMakeCommand
 {
-	use TraitPackagizer;
+    use TraitPackagizer;
 }

@@ -10,25 +10,25 @@ use Symfony\Component\Console\Input\InputOption;
 
 trait TraitFlags
 {
-	protected function configure(): void
-	{
-		parent::configure();
+    protected function configure(): void
+    {
+        parent::configure();
 
-		// todo rename to package
-		$this->getDefinition()
-			 ->addOption(
-			 	new InputOption(
-			 		'--flags',
-			 		null,
-			 		InputOption::VALUE_OPTIONAL,
-			 		'Additional Composer Flags such as -vvv',
-			 	),
-			 )
-		;
-	}
+        // todo rename to package
+        $this->getDefinition()
+             ->addOption(
+                 new InputOption(
+                     '--flags',
+                     null,
+                     InputOption::VALUE_OPTIONAL,
+                     'Additional Composer Flags such as -vvv',
+                 ),
+             )
+        ;
+    }
 
-	protected function getFlags(): array|string|null
-	{
-		return $this->option('flags');
-	}
+    protected function getFlags(): array|string|null
+    {
+        return $this->option('flags');
+    }
 }
