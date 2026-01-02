@@ -9,7 +9,7 @@ use Filefabrik\Paxsy\Support\Stubs\Variables;
 
 it(
     'test empty vars',
-    function () {
+    function() {
         $vars = new Variables();
         expect($vars->renderVariables())->toBe([]);
     },

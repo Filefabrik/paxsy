@@ -25,8 +25,8 @@ class PaxsyCommandsServiceProvider extends ServiceProvider
         // Register our overrides via the "booted" event to ensure that we override
         // the default behavior regardless of which service provider happens to be
         // bootstrapped first (this mostly matters for Livewire).
-        $this->app->booted(function () {
-            Artisan::starting(function (Application $artisan) {
+        $this->app->booted(function() {
+            Artisan::starting(function(Application $artisan) {
                 $this->registerMakeCommandOverrides();
                 $this->registerMigrationCommandOverrides();
 

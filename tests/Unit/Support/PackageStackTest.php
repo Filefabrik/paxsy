@@ -10,7 +10,7 @@ use Filefabrik\Paxsy\Support\Stack;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 
     app()->make(Stack::class, ['paxsy', app(), new Filesystem()]);
@@ -18,7 +18,7 @@ beforeEach(function () {
 
 it(
     'simple presence ',
-    function () {
+    function() {
         $ps = packageStack();
 
         expect($ps)
@@ -30,7 +30,7 @@ it(
 );
 it(
     'get named package',
-    function () {
+    function() {
         $ps = packageStack();
         $ps->ensureStackDirectoryExists();
 
@@ -54,7 +54,7 @@ it(
  */
 it(
     'package-create not exists(packageStackBasePath/directory was created before)',
-    function () {
+    function() {
         $ps       = packageStack();
         $packages = $ps->packages();
         expect($packages)
@@ -77,7 +77,7 @@ it(
  */
 it(
     'package-create exists and empty',
-    function () {
+    function() {
         $ps = packageStack();
         $ps->ensureStackDirectoryExists();
         $packages = $ps->packages();
@@ -100,13 +100,13 @@ it(
 
 it(
     'reset',
-    function () {
+    function() {
         expect(packageStack()->reset())->toBeInstanceOf(Stack::class);
     },
 );
 it(
     'reload',
-    function () {
+    function() {
         $ps = packageStack();
         $ps->ensureStackDirectoryExists();
 
@@ -126,7 +126,7 @@ it(
 );
 it(
     'get filesystem',
-    function () {
+    function() {
         expect(
             packageStack()
                 ->getFilesystem(),
@@ -136,7 +136,7 @@ it(
 
 it(
     'get package create name',
-    function () {
+    function() {
         expect(packageStack()->getStackName())
             ->toBe(currentStackName())
             ->and((new Stack('packages', app(), new Filesystem()))->getStackName())
@@ -146,7 +146,7 @@ it(
 );
 it(
     'get packages base path',
-    function () {
+    function() {
         expect(packageStack()->getStackBasePath())
             ->toBe(base_path().'/'.currentStackName())
             ->and((new Stack('packages', app(), new Filesystem()))->getStackBasePath())
@@ -156,7 +156,7 @@ it(
 );
 it(
     'exists and ensure package create directory exists',
-    function () {
+    function() {
         $ps = packageStack();
 
         expect($ps->exists())
@@ -171,7 +171,7 @@ it(
 
 it(
     'check Stack class ',
-    function () {
+    function() {
         //	app()->make(Stack::class, ['paxsy', app(), new Filesystem()]);
         $result = packageStack()->reload();
         expect($result)
@@ -181,7 +181,7 @@ it(
         ;
     },
 );
-it('get vendor list', function () {
+it('get vendor list', function() {
     currentStackName();
     removePackageStack();
     rerouteStubsDirectory();

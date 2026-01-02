@@ -8,13 +8,13 @@ declare(strict_types=1);
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 use Illuminate\Filesystem\Filesystem;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 
 it(
     'create Controller Component via command in Default-Vendor-Package',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:controller';
@@ -54,7 +54,7 @@ it(
 // todo remove model from /app/Models/TestModels
 it(
     'without package but with model',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $modelClass = 'TestingControllerModels';
@@ -82,7 +82,7 @@ it(
 );
 it(
     'without buggy model name',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         $packageName = defaultTestPackage()
             ->getPackageName()
@@ -101,7 +101,7 @@ it(
 
 it(
     'create Controller with Model',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         $modelClass             = 'TestModels';
         $command                = 'make:controller';
@@ -139,7 +139,7 @@ it(
 
 it(
     'create Controller with Model and Request',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         $modelClass             = 'TestModels';
         $command                = 'make:controller';

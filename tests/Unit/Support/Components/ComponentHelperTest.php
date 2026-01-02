@@ -10,7 +10,7 @@ use Filefabrik\Paxsy\Support\Components\ComponentHelper;
 
 it(
     'make commands',
-    function () {
+    function() {
         $components = [
             // core
             \Filefabrik\Paxsy\Components\LaravelRoute\Component::class,

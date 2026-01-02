@@ -52,9 +52,9 @@ class MakeListener extends ListenerMakeCommand
     protected function isInNamespace($name): bool
     {
         return $this->package() && Str::startsWith(
-                $name,
-                $this->package()
+            $name,
+            $this->package()
                      ->srcPackageNamespace(),
-            );
+        );
     }
 }

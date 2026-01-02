@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-beforeEach(function () {
+beforeEach(function() {
     currentStackName();
     removePackageStack();
     rerouteStubsDirectory();
@@ -13,7 +13,7 @@ beforeEach(function () {
 
 it(
     'stack created',
-    function () {
+    function() {
         $this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default'])
              ->assertExitCode(0)
              ->expectsOutputToContain('Stack does not exist!')
@@ -22,7 +22,7 @@ it(
 );
 it(
     'missing vendor package stub',
-    function () {
+    function() {
         $this->artisan('paxsy:package', ['vendor' => '', 'package' => '', 'stubs' => ''])
              ->assertExitCode(1)
              ->expectsOutputToContain('missing a part vendor:"" or package:"" or stubs:""')
@@ -31,7 +31,7 @@ it(
 );
 it(
     'missing stubs directory',
-    function () {
+    function() {
         $msg = 'Missing Stubs in /config/paxsy.php on selected stubs: "defailed" in: paxsy.stub_sets.defailed.stubs';
 
         $this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'defailed'])
@@ -42,7 +42,7 @@ it(
 );
 it(
     'Make Package with stub',
-    function () {
+    function() {
         $this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default'])
              ->assertExitCode(0)
         ;
@@ -50,7 +50,7 @@ it(
 );
 it(
     'Make Package without stub',
-    function () {
+    function() {
         $this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing'])
              ->assertExitCode(0)
         ;
@@ -58,7 +58,7 @@ it(
 );
 it(
     'Make Package with not existing stubs set "creepy"',
-    function () {
+    function() {
         $cp = 'paxsy';
         $this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'creepy'])
              ->assertExitCode(1)
@@ -70,7 +70,7 @@ it(
 );
 it(
     'write default package with default stubs',
-    function () {
+    function() {
         $testPath = base_path().'/'.currentStackName();
         // make sure app-modules are empty
         expect($testPath)
@@ -101,7 +101,7 @@ it(
 
 it(
     'package composer.json filled correctly',
-    function () {
+    function() {
         $testPath = base_path().'/'.currentStackName();
         // make sure app-modules are empty
         expect($testPath)
@@ -125,7 +125,7 @@ it(
 );
 it(
     'package already exist ',
-    function () {
+    function() {
         $this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default'])
              ->assertExitCode(0)
         ;
@@ -138,7 +138,7 @@ it(
 );
 it(
     'stubs directory is missing',
-    function () {
+    function() {
         config()->set('paxsy.stub_sets.default.directory', '');
         $cp = 'paxsy';
         $this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default'])

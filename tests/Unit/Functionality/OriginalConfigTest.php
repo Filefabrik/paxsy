@@ -32,15 +32,15 @@ function makeOriginalConfig(): void
 }
 
 beforeEach(
-/**
- * @throws ContainerExceptionInterface
- * @throws NotFoundExceptionInterface
- */
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     fn() => makeOriginalConfig(),
 );
 it(
     'config that we will be delivered all segments',
-    function () {
+    function() {
         expect(config('paxsy.stub_sets.default'))
             ->toBeArray()
             ->and(config('paxsy.stub_sets.default.stubs'))
@@ -55,7 +55,7 @@ it(
 
 it(
     'modules stubsDirectory default where to store into the packs',
-    function () {
+    function() {
         forcePaxsyConfig(false);
         expect(config('paxsy.stack_name'))->toBe('app-paxsy');
     },
@@ -63,7 +63,7 @@ it(
 
 it(
     'stub sets default',
-    function () {
+    function() {
         [$key, $stubDepartment] = func_get_args();
 
         expect(config('paxsy.stub_sets.default.'.$key))->toBe($stubDepartment);
@@ -107,7 +107,7 @@ it(
 ]);
 it(
     'stubs maps default. Files the must mapped correctly',
-    function () {
+    function() {
         [$outputPath, $inStubsFilename] = func_get_args();
 
         $defaultMap = config('paxsy.stub_sets.default.stubs.files');
@@ -122,7 +122,7 @@ it(
 
 it(
     'original stub directories',
-    function () {
+    function() {
         // getting the original without patching the stubs-path
 
         [$replaceKey, $replaceVarDepartment] = func_get_args();
@@ -133,7 +133,7 @@ it(
 
 it(
     'stub replacementMap default',
-    function () {
+    function() {
         [$replaceKey, $replaceVarDepartment] = func_get_args();
         $inCfg = config('paxsy.stub_sets.default.replacementMap.package.'.$replaceKey);
         expect($inCfg)->toBe($replaceVarDepartment);
@@ -156,7 +156,7 @@ it(
 
 it(
     'components array default filled correctly',
-    function () {
+    function() {
         $componentsCfg = config('paxsy.components');
         expect($componentsCfg)
             ->toBeArray()

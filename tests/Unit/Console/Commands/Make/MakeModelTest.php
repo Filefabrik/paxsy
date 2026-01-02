@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 
 it(
     'create Models Component via command in Default-Vendor-Package',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:model';
@@ -34,7 +34,7 @@ it(
 
 it(
     'model without package',
-    function () {
+    function() {
         forcePaxsyConfig();
         $command         = 'make:model';
         $createArguments = ['name' => 'TestModelWithoutPackage'];
@@ -65,7 +65,7 @@ it(
 
 it(
     'Model with Controller',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:model';
@@ -85,7 +85,7 @@ it(
 );
 it(
     'Model with All',
-    function () {
+    function() {
         forcePaxsyConfig();
         makePackageByArtisanCommand($this);
 
@@ -117,7 +117,7 @@ it(
 );
 it(
     'with php unit',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 

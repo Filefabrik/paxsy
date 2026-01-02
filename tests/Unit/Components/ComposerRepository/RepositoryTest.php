@@ -9,7 +9,7 @@ use Filefabrik\Paxsy\Components\ComposerRepository\Repository;
 
 it(
     'repository body',
-    function () {
+    function() {
         $parsed = Repository::body('app-paxsy-testing/that-is-a-package-path');
 
         $jsonString = <<<'JSON'

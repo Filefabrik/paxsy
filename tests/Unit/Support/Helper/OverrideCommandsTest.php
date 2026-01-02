@@ -9,13 +9,13 @@ use Filefabrik\Paxsy\Support\Helper\OverrideCommands;
 
 it(
     'count commands',
-    function () {
+    function() {
         expect(count(OverrideCommands::commands()))->toBe(23);
     },
 );
 it(
     'All Override Commands',
-    function ($makeCommand, $commandClass) {
+    function($makeCommand, $commandClass) {
         $allCommands = OverrideCommands::commands();
         expect($allCommands[$makeCommand])->toBe($commandClass);
     },
@@ -23,7 +23,7 @@ it(
 
 it(
     'pure make keys',
-    function ($makeCommand) {
+    function($makeCommand) {
         expect(OverrideCommands::pureMakeCommands())->toContain($makeCommand);
     },
 )->with('all override commands');

@@ -43,7 +43,7 @@ class Helper
         $preparedStubs = (new StubsMap($stubsMap, $stubsDirectory))->getStubs();
 
         return new StubsWriter(
-        // todo on multi-create use an other getter
+            // todo on multi-create use an other getter
             packageBasePath: $packageBasePath,
             preparedStubs  : $preparedStubs,
             variables      : $variables,

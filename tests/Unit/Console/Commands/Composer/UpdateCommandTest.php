@@ -9,7 +9,7 @@ use Filefabrik\Paxsy\Console\Commands\Composer\UpdateCommand;
 
 it(
     'signature',
-    function () {
+    function() {
         $dummy = new class () extends UpdateCommand {
             public function getSignature()
             {
@@ -23,7 +23,7 @@ it(
 // todo feature test
 it(
     'Flags expectation',
-    function () {
+    function() {
         $this->artisan('paxsy:composer-update', ['--help' => true])
              ->expectsOutputToContain('--flags')
              ->assertExitCode(0)
@@ -33,7 +33,7 @@ it(
 
 it(
     'Execute with disabled',
-    function () {
+    function() {
         useShellDisabled();
 
         $this->artisan('paxsy:composer-update', [])

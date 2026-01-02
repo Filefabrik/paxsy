@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 
 it(
     'create Command Component via command in Default-Vendor-Package',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:command';
@@ -36,7 +36,7 @@ it(
 );
 it(
     'command with test',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 

@@ -10,7 +10,7 @@ use Filefabrik\Paxsy\Support\Package;
 
 it(
     'component parser package not set',
-    function () {
+    function() {
         $defaultPackage = defaultTestPackage();
         $package        = new Package($defaultPackage->getPackageName(), $defaultPackage);
 

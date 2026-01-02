@@ -40,13 +40,13 @@ trait TraitCreatesMatchingTest
         ;
 
         return $this->call(
-                'make:test',
-                [
+            'make:test',
+            [
                     'name'      => $generatedTestName,
                     //'--package' => $package->getName(),
                     '--pest'    => $this->option('pest'),
                     '--phpunit' => $this->option('phpunit'),
                 ],
-            ) == 0;
+        ) == 0;
     }
 }

@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 
 it(
     'create Rule Component via command in Default-Vendor-Package',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:rule';
@@ -34,7 +34,7 @@ it(
 );
 it(
     'rule implicit',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
         $command                = 'make:rule';

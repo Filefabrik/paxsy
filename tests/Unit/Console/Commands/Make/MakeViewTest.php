@@ -14,23 +14,23 @@ declare(strict_types=1);
 use Filefabrik\Paxsy\Console\Commands\Make\MakeComponent;
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
     clearLaravelDirectories([base_path('resources/views')]);
 });
-it('without package', function () {
+it('without package', function() {
     $this->artisan('make:view', [])
          ->expectsQuestion('What should the view be named?', 'MyTestingView')
     ;
 });
-it('without package but test', function () {
+it('without package but test', function() {
     $this->artisan('make:view', ['--pest'])
          ->expectsQuestion('What should the view be named?', 'MyTestingView')
     ;
 });
 it(
     'gui with test ',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
@@ -70,7 +70,7 @@ it(
 );
 it(
     'gui without test ',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
