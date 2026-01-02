@@ -1,4 +1,7 @@
 <?php
+/*
+ * Copyright (c) 2024-2026 filefabrik.com
+ */
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
 

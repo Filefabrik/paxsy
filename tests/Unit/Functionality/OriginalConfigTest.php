@@ -1,10 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+/*
+ * Copyright (c) 2024-2026 filefabrik.com
+ */
+
+
+
+declare(strict_types=1);
 /**
  * PHP version 8.2
  * todo check against config-vars they are not expected
  */
 
-/** @copyright-header * */
+
 
 use Filefabrik\Paxsy\Components\Livewire\Component;
 use Psr\Container\ContainerExceptionInterface;

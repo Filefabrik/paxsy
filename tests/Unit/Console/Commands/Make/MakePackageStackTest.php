@@ -1,8 +1,12 @@
-<?php declare(strict_types=1);
-/**
- * PHP version 8.2
+<?php
+/*
+ * Copyright (c) 2024-2026 filefabrik.com
  */
-/** @copyright-header * */
+
+
+
+declare(strict_types=1);
+
 beforeEach(function() {
     removePackageStack();
 });
@@ -17,7 +21,7 @@ it(
 
         // create
         $this->artisan('paxsy:package-create')
-             ->expectsOutputToContain('<kbd>php artisan vendor:publish --tag=paxsy-config</kbd>')
+             ->expectsOutputToContain('php artisan vendor:publish --tag=paxsy-config')
              ->expectsOutputToContain(
                  'Package Stack "'.currentStackName().'" created successfully in your laravel: "'.base_path(
                      currentStackName(),

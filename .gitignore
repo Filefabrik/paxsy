@@ -25,3 +25,5 @@ docker-compose.yml
 /bootraiser-test/
 /auth.json
 /.tmp/
+/tmp/.phpunit.cache
+/tmp/.phpunit.cache/test-results

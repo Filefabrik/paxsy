@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
-/**
- * PHP version 8.2
+<?php
+/*
+ * Copyright (c) 2024-2026 filefabrik.com
  */
-/** @copyright-header * */
+
+
+
+declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
 
@@ -29,7 +32,7 @@ class MakePackageStack extends Command
             $packageStack->ensureStackDirectoryExists();
 
             // todo would you like to publish configs before. so you can customize some stuff if need
-            $this->line('<kbd>php artisan vendor:publish --tag=paxsy-config</kbd>');
+            $this->line('php artisan vendor:publish --tag=paxsy-config', 'kbd');
 
             $successfully = sprintf('Package Stack "%s" created successfully in your laravel: "%s"!', $stackName, $stackBasePath);
 

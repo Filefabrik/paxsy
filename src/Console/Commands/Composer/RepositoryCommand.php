@@ -1,4 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+/*
+ * Copyright (c) 2024-2026 filefabrik.com
+ */
+
+
+
+declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Composer;
 

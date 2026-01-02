@@ -1,11 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+/*
+ * Copyright (c) 2024-2026 filefabrik.com
+ */
+
+
+
+declare(strict_types=1);
 /**
  * PHP version 8.2
  *
  * @see MakeComponent
  */
 
-/** @copyright-header * */
+
 
 use Filefabrik\Paxsy\Console\Commands\Make\MakeComponent;
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;

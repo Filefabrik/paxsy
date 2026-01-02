@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
-/**
- * PHP version 8.2
+<?php
+/*
+ * Copyright (c) 2024-2026 filefabrik.com
  */
-/** @copyright-header * */
+
+
+
+declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Tests\Support;
 

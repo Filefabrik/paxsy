@@ -1,13 +1,17 @@
-<?php declare(strict_types=1);
-/**
- * PHP version 8.2
+<?php
+/*
+ * Copyright (c) 2024-2026 filefabrik.com
  */
 
-/** @copyright-header * */
+
+
+declare(strict_types=1);
+
+
+
 
 use Filefabrik\Paxsy\Console\Commands\PaxsyCommand;
 
-/** @copyright-header * */
 beforeEach(function() {
     // todo all reset for make:package into function ...
 
