@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Str;
@@ -23,7 +21,7 @@ class StringModifiers
      */
     public static function modifyMakeCommand(string $name): string
     {
-        return (string) Str::of($name)
+        return (string)Str::of($name)
                           ->classBasename()
                           ->kebab()
         ;

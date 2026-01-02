@@ -3,12 +3,7 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Console\Commands\Make\MakeCast;
 use Filefabrik\Paxsy\Console\Commands\Make\MakeChannel;

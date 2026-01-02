@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -54,9 +52,9 @@ class MakeListener extends ListenerMakeCommand
     protected function isInNamespace($name): bool
     {
         return $this->package() && Str::startsWith(
-            $name,
-            $this->package()
-                 ->srcPackageNamespace(),
-        );
+                $name,
+                $this->package()
+                     ->srcPackageNamespace(),
+            );
     }
 }

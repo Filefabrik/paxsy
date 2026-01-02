@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Components\Livewire;
@@ -82,7 +80,8 @@ class ComponentParser extends \Livewire\Features\SupportConsoleCommands\Commands
     {
         $originalPath = parent::generateTestPathFromNamespace($namespace);
 
-        $relativePath = PathsNamespaces::fromNamespaceToPath((string) Pathering::stripPathFromStart(base_path(), $originalPath));
+        $relativePath =
+            PathsNamespaces::fromNamespaceToPath((string)Pathering::stripPathFromStart(base_path(), $originalPath));
 
         return $this->package->intoPackagePath($relativePath);
     }

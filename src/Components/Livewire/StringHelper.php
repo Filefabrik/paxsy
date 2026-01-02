@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Components\Livewire;
@@ -33,8 +31,7 @@ class StringHelper
     {
         return $package->getVendorPackageNames()
                        ->getPackage()
-                       ->toName().'::'.self::componentNameFromSpl($splFileInfo)
-        ;
+                       ->toName().'::'.self::componentNameFromSpl($splFileInfo);
     }
 
     /**

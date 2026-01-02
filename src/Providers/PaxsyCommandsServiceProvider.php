@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Providers;
@@ -27,8 +25,8 @@ class PaxsyCommandsServiceProvider extends ServiceProvider
         // Register our overrides via the "booted" event to ensure that we override
         // the default behavior regardless of which service provider happens to be
         // bootstrapped first (this mostly matters for Livewire).
-        $this->app->booted(function() {
-            Artisan::starting(function(Application $artisan) {
+        $this->app->booted(function () {
+            Artisan::starting(function (Application $artisan) {
                 $this->registerMakeCommandOverrides();
                 $this->registerMigrationCommandOverrides();
 
@@ -49,6 +47,18 @@ class PaxsyCommandsServiceProvider extends ServiceProvider
     }
 
     /**
+     * @return void
+     */
+    protected function registerMigrationCommandOverrides(): void
+    {
+        // Laravel 9
+        $this->app->singleton(
+            OriginalMakeMigrationCommand::class,
+            fn($app) => new MakeMigration($app['migration.creator'], $app['composer']),
+        );
+    }
+
+    /**
      * Own commands without override
      *
      * @param Artisan $artisan
@@ -64,17 +74,5 @@ class PaxsyCommandsServiceProvider extends ServiceProvider
                 $component::resolveCommands($this->app, $artisan);
             }
         }
-    }
-
-    /**
-     * @return void
-     */
-    protected function registerMigrationCommandOverrides(): void
-    {
-        // Laravel 9
-        $this->app->singleton(
-            OriginalMakeMigrationCommand::class,
-            fn($app) => new MakeMigration($app['migration.creator'], $app['composer']),
-        );
     }
 }

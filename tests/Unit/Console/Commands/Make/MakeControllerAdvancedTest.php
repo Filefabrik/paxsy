@@ -3,22 +3,17 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 use Illuminate\Filesystem\Filesystem;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 it(
     'create Controller with --model',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
@@ -34,7 +29,7 @@ it(
             'use '.DefaultPackageNames::namespacyfy('Http\Requests\UpdateTestControllerWithModelAndRequestRequest'),
         ];
 
-        $packageName = defaultTestPackage()
+        $packageName        = defaultTestPackage()
             ->getPackageName()
         ;
         $absoluteModelClass = 'MyTestVendor\TheTestPackage\Models\TestControllerWithModelAndRequest';
@@ -63,13 +58,14 @@ it(
 );
 it(
     'create Controller with Model and Request',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
         $modelClass             = 'TestControllerWithModelAndRequest';
         $command                = 'make:controller';
-        $arguments              = ['name' => 'TestControllerWithModelAndRequest', '--model' => $modelClass, '-R' => true];
+        $arguments              =
+            ['name' => 'TestControllerWithModelAndRequest', '--model' => $modelClass, '-R' => true];
         $expected_relative_path = 'src/Http/Controllers/TestControllerWithModelAndRequest.php';
 
         $expected_substrings = [
@@ -80,7 +76,7 @@ it(
             'use '.DefaultPackageNames::namespacyfy('Http\Requests\UpdateTestControllerWithModelAndRequestRequest'),
         ];
 
-        $packageName = defaultTestPackage()
+        $packageName        = defaultTestPackage()
             ->getPackageName()
         ;
         $absoluteModelClass = 'MyTestVendor\TheTestPackage\Models\\'.$modelClass;
@@ -109,7 +105,7 @@ it(
 );
 it(
     'create extended Controller',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
         $defaultPackage = defaultTestPackage();

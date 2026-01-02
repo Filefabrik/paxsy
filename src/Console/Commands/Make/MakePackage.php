@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -61,7 +59,7 @@ class MakePackage extends Command
                 'stageReplaceableVars',
             ] as $method
         ) {
-            if (! $this->{$method}()) {
+            if (!$this->{$method}()) {
                 return self::FAILURE;
             }
         }
@@ -90,7 +88,7 @@ class MakePackage extends Command
     protected function stageArguments(): ?true
     {
         [$vendor, $package, $selectedStubsSet] = $this->inputArguments();
-        if (! $vendor || ! $package || ! $selectedStubsSet) {
+        if (!$vendor || !$package || !$selectedStubsSet) {
             $this->error(
                 sprintf(
                     'missing a part vendor:"%s" or package:"%s" or stubs:"%s"',
@@ -108,6 +106,11 @@ class MakePackage extends Command
         $this->stageVars['selectedStubsSet'] = $selectedStubsSet;
 
         return true;
+    }
+
+    protected function inputArguments(): array
+    {
+        return array_map(fn($str) => $this->argument($str), ['vendor', 'package', 'stubs']);
     }
 
     /**
@@ -148,6 +151,24 @@ class MakePackage extends Command
         return true;
     }
 
+    /**
+     * Auto-Create the Directory
+     *
+     * @return void
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    protected function createStackNotExists(): void
+    {
+        $packageStack = StackApp::get();
+
+        if (!$packageStack->exists()) {
+            $this->info('Stack does not exist!');
+            $packageStack->ensureStackDirectoryExists();
+            $this->info(sprintf('And was created under:"%s"', $packageStack->getStackName()));
+        }
+    }
+
     protected function stageStubsConfig(): FromConfig
     {
         /**
@@ -160,7 +181,7 @@ class MakePackage extends Command
     {
         $stubs = $this->stageVars['stubsConfig']->stubs();
 
-        if (! $stubs) {
+        if (!$stubs) {
             $message = sprintf(
                 'Missing Stubs in /config/paxsy.php on selected stubs: "%s" in: %s',
                 $this->stageVars['stubsConfig']->getSelectedStubs(),
@@ -181,7 +202,7 @@ class MakePackage extends Command
     {
         $stubsDirectory = $this->stageVars['stubsConfig']->directory();
 
-        if (! $stubsDirectory) {
+        if (!$stubsDirectory) {
             $message = sprintf(
                 'Missing Stub-Directory in /config/paxsy.php %s',
                 $this->stageVars['stubsConfig']->directoryLocator(),
@@ -205,28 +226,5 @@ class MakePackage extends Command
         )
                                                            ->renderVariables()
         ;
-    }
-
-    /**
-     * Auto-Create the Directory
-     *
-     * @return void
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    protected function createStackNotExists(): void
-    {
-        $packageStack = StackApp::get();
-
-        if (! $packageStack->exists()) {
-            $this->info('Stack does not exist!');
-            $packageStack->ensureStackDirectoryExists();
-            $this->info(sprintf('And was created under:"%s"', $packageStack->getStackName()));
-        }
-    }
-
-    protected function inputArguments(): array
-    {
-        return array_map(fn($str) => $this->argument($str), ['vendor', 'package', 'stubs']);
     }
 }

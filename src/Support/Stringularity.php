@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support;
@@ -30,8 +28,8 @@ class Stringularity
             throw new UnexpectedValueException('Name and ClassName name cannot be null. Set name or/and className.');
         }
 
-        ! $this->name ?: $this->name           = Str::kebab($this->removeUnwanted($this->name));
-        ! $this->className ?: $this->className = Str::studly($this->removeUnwanted($this->className));
+        !$this->name ?: $this->name = Str::kebab($this->removeUnwanted($this->name));
+        !$this->className ?: $this->className = Str::studly($this->removeUnwanted($this->className));
     }
 
     /**
@@ -61,9 +59,9 @@ class Stringularity
      *
      * @return string
      */
-    public function toName(): string
+    public function toSingularName(): string
     {
-        return $this->name ?? Str::kebab($this->className);
+        return Str::singular($this->toName());
     }
 
     /**
@@ -71,9 +69,9 @@ class Stringularity
      *
      * @return string
      */
-    public function toSingularName(): string
+    public function toName(): string
     {
-        return Str::singular($this->toName());
+        return $this->name ?? Str::kebab($this->className);
     }
 
     /**

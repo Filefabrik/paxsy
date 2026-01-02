@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Tests\Support;
@@ -19,11 +17,6 @@ abstract class PackageNames
     public static function PackagePath(): string
     {
         return base_path(static::RelativePackagePath());
-    }
-
-    public static function VendorPackageComponentPath($segment): string
-    {
-        return base_path(implode('/', [static::RelativePackagePath(), $segment]));
     }
 
     /**
@@ -42,6 +35,11 @@ abstract class PackageNames
     public static function pathyfy($segments): string
     {
         return implode('/', $segments);
+    }
+
+    public static function VendorPackageComponentPath($segment): string
+    {
+        return base_path(implode('/', [static::RelativePackagePath(), $segment]));
     }
 
     /**

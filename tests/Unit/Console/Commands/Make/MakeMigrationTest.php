@@ -3,23 +3,18 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 use Illuminate\Database\Migrations\MigrationCreator;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 
 it(
     'create Migration Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         // not ensured that this works but should because run at the same second;
         $date = date('Y_m_d_His');
 
@@ -27,7 +22,7 @@ it(
 
         $this->app->singleton(
             'migration.creator',
-            function($app) {
+            function ($app) {
                 return new class ($app['files'], $app->basePath('stubs')) extends MigrationCreator {
                     protected function getDatePrefix()
                     {

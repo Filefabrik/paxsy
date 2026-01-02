@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Stubs;
@@ -28,6 +26,22 @@ readonly class FromConfig
         return $this->getConfigBlock($this->directoryLocator());
     }
 
+    private function getConfigBlock(string $block): null|string|array|bool
+    {
+        return config($block);
+    }
+
+    public function directoryLocator(): ?string
+    {
+        return $this->innerStructure('directory');
+    }
+
+    private function innerStructure(?string $segment = null): string
+    {
+        return rtrim('paxsy.stub_sets.'.$this->selectedStubs, '.').($segment ?
+                '.'.trim($segment, '.') : '');
+    }
+
     public function stubs(): ?array
     {
         return $this->getConfigBlock($this->stubsLocator());
@@ -43,6 +57,11 @@ readonly class FromConfig
         return $this->getConfigBlock($this->replacementMapLocator()) ?? [];
     }
 
+    public function replacementMapLocator(): string
+    {
+        return $this->innerStructure('replacementMap');
+    }
+
     public function getVariablesRenderer(): array
     {
         return $this->getConfigBlock($this->variablesRendererLocator()) ?? [];
@@ -51,26 +70,5 @@ readonly class FromConfig
     public function variablesRendererLocator(): string
     {
         return 'paxsy.VariablesRenderer';
-    }
-
-    private function getConfigBlock(string $block): null|string|array|bool
-    {
-        return config($block);
-    }
-
-    public function directoryLocator(): ?string
-    {
-        return $this->innerStructure('directory');
-    }
-
-    public function replacementMapLocator(): string
-    {
-        return $this->innerStructure('replacementMap');
-    }
-
-    private function innerStructure(?string $segment = null): string
-    {
-        return rtrim('paxsy.stub_sets.'.$this->selectedStubs, '.').($segment ?
-                '.'.trim($segment, '.') : '');
     }
 }

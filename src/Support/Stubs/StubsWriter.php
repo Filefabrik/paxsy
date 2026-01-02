@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Stubs;
@@ -61,6 +59,51 @@ class StubsWriter
     }
 
     /**
+     * @param array $directories
+     *
+     * @return void
+     */
+    public function writeDirectories(array $directories): void
+    {
+        foreach ($directories as $directory) {
+            // todo test, pathname was filled
+            $destination = $this->replaceContent($directory);
+            $createPath  = Pathering::concat($this->packageBasePath, $destination);
+            $this->filesystem
+                ->ensureDirectoryExists($createPath)
+            ;
+        }
+    }
+
+    /**
+     * @param string $contents
+     *
+     * @return string
+     */
+    protected function replaceContent(string $contents): string
+    {
+        return $this->searches() && $this->replaces() ?
+            str_replace($this->searches(), $this->replaces(), $contents) :
+            $contents;
+    }
+
+    /**
+     * @return array
+     */
+    public function searches(): array
+    {
+        return $this->searches ??= array_keys($this->variables);
+    }
+
+    /**
+     * @return array
+     */
+    public function replaces(): array
+    {
+        return $this->replaces ??= array_values($this->variables);
+    }
+
+    /**
      * @param array $files
      *
      * @return void
@@ -106,39 +149,6 @@ class StubsWriter
     }
 
     /**
-     * @param array $directories
-     *
-     * @return void
-     */
-    public function writeDirectories(array $directories): void
-    {
-        foreach ($directories as $directory) {
-            // todo test, pathname was filled
-            $destination = $this->replaceContent($directory);
-            $createPath  = Pathering::concat($this->packageBasePath, $destination);
-            $this->filesystem
-                ->ensureDirectoryExists($createPath)
-            ;
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function searches(): array
-    {
-        return $this->searches ??= array_keys($this->variables);
-    }
-
-    /**
-     * @return array
-     */
-    public function replaces(): array
-    {
-        return $this->replaces ??= array_values($this->variables);
-    }
-
-    /**
      * @param $destination
      *
      * @return string
@@ -147,17 +157,5 @@ class StubsWriter
     {
         // todo make sure it is trimmed
         return Pathering::concat($this->packageBasePath, $destination);
-    }
-
-    /**
-     * @param string $contents
-     *
-     * @return string
-     */
-    protected function replaceContent(string $contents): string
-    {
-        return $this->searches() && $this->replaces() ?
-            str_replace($this->searches(), $this->replaces(), $contents) :
-            $contents;
     }
 }

@@ -3,10 +3,7 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
 
 dataset(
     'make Commands List',

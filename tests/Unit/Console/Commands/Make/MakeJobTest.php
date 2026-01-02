@@ -3,22 +3,17 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 
 it(
     'create Job Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:job';
@@ -39,7 +34,7 @@ it(
 
 it(
     'with php unit',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
@@ -79,7 +74,8 @@ it(
         expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
 
         // test output
-        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Jobs/JannisJobblessJobTest.php');
+        $expected_full_path =
+            DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Jobs/JannisJobblessJobTest.php');
 
         checkComponentFilesAndDirectories($expected_full_path);
     },

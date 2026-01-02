@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support;
@@ -71,32 +69,6 @@ class VendorPackageNames
     }
 
     /**
-     * Path-Segment From config('stack_name','app-modules')
-     * may be deprecated normally the Package should have the locations
-     *
-     * @param string $packageStackName Relative to Laravel Host
-     *
-     * @return static
-     */
-    public function setStackName(string $packageStackName): static
-    {
-        // todo validate name
-        $this->stack_name = Pathering::trim($packageStackName);
-
-        return $this;
-    }
-
-    /**
-     * Path-Segment From config('stack_name','app-modules')
-     *
-     * @return string
-     */
-    public function getStackName(): string
-    {
-        return $this->stack_name ?? throw new UnexpectedValueException('Missing stack_name');
-    }
-
-    /**
      * Full Path to name package_name
      *
      * @return string
@@ -116,6 +88,32 @@ class VendorPackageNames
     public function relPackageDir(): string
     {
         return Pathering::concat($this->getStackName(), $this->package->toName());
+    }
+
+    /**
+     * Path-Segment From config('stack_name','app-modules')
+     *
+     * @return string
+     */
+    public function getStackName(): string
+    {
+        return $this->stack_name ?? throw new UnexpectedValueException('Missing stack_name');
+    }
+
+    /**
+     * Path-Segment From config('stack_name','app-modules')
+     * may be deprecated normally the Package should have the locations
+     *
+     * @param string $packageStackName Relative to Laravel Host
+     *
+     * @return static
+     */
+    public function setStackName(string $packageStackName): static
+    {
+        // todo validate name
+        $this->stack_name = Pathering::trim($packageStackName);
+
+        return $this;
     }
 
     /**

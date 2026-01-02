@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support;
@@ -112,17 +110,6 @@ class Package
     }
 
     /**
-     * Where the Vendor Package Namespace started
-     *
-     * @return string|null namespaces are trimmed
-     */
-    public function srcPackageNamespace(): ?string
-    {
-        // package search should be read in initially
-        return $this->tmp_vendorPackageNamespace ??= Namespacering::trim($this->vendorPackageNames->toNamespace());
-    }
-
-    /**
      * name:    MyCompanyVendor\TheTestPackage\Policies\TestPolicy
      * return:  Policies\TestPolicy
      *
@@ -151,6 +138,17 @@ class Package
     }
 
     /**
+     * Where the Vendor Package Namespace started
+     *
+     * @return string|null namespaces are trimmed
+     */
+    public function srcPackageNamespace(): ?string
+    {
+        // package search should be read in initially
+        return $this->tmp_vendorPackageNamespace ??= Namespacering::trim($this->vendorPackageNames->toNamespace());
+    }
+
+    /**
      * Todo can be customized from ready the package composer.json ...think not need
      *
      * @return string /my-package/src
@@ -159,19 +157,6 @@ class Package
     {
         // mainly for all Packages, the typical src directory segment in /my-package/src
         return 'src';
-    }
-
-    /**
-     * Full Class Namespace to a Component inside the VendorPackage
-     * MyVendor\\ThePackageName\\LaravelComponent
-     *
-     * @param string $namespace
-     *
-     * @return string
-     */
-    public function joinPackageNamespace(...$namespace): string
-    {
-        return Namespacering::concat($this->srcPackageNamespace(), ...$namespace);
     }
 
     /**
@@ -190,5 +175,18 @@ class Package
                  ->getPackage()
                  ->toClass().'ServiceProvider',
         );
+    }
+
+    /**
+     * Full Class Namespace to a Component inside the VendorPackage
+     * MyVendor\\ThePackageName\\LaravelComponent
+     *
+     * @param string $namespace
+     *
+     * @return string
+     */
+    public function joinPackageNamespace(...$namespace): string
+    {
+        return Namespacering::concat($this->srcPackageNamespace(), ...$namespace);
     }
 }

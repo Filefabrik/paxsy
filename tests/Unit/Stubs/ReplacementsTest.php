@@ -3,33 +3,28 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Support\Stubs\Variables;
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
 it(
     'handle replacements correctly',
-    function() {
+    function () {
         $configPrefix = 'paxsy';
 
         $defaultPackage = defaultTestPackage();
 
         $selectedStubsSet = 'default';
 
-        $replacementMap = config(
+        $replacementMap    = config(
             $configPrefix.'.stub_sets.'.$selectedStubsSet.'.replacementMap',
             [],
         );
         $variablesRenderer = config($configPrefix.'.VariablesRenderer');
 
         // Filling, move somewhere out
-        $vars = (new Variables())->setReplacementMaps($replacementMap)
+        $vars            = (new Variables())->setReplacementMaps($replacementMap)
                                             ->setRendererClasses($variablesRenderer)
                                             ->addVariables('package', $defaultPackage)
         ;

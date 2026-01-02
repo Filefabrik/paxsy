@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Stubs;
@@ -70,6 +68,13 @@ class Variables
         return $this->rendererClasses[$name] ?? throw new UnexpectedValueException('Renderer was not Registered');
     }
 
+    public function setRendererClasses(array $rendererClasses): static
+    {
+        $this->rendererClasses = $rendererClasses;
+
+        return $this;
+    }
+
     /**
      * From Config
      *
@@ -80,13 +85,6 @@ class Variables
     public function setReplacementMaps(array $replacementMap): static
     {
         $this->replacementMap = $replacementMap;
-
-        return $this;
-    }
-
-    public function setRendererClasses(array $rendererClasses): static
-    {
-        $this->rendererClasses = $rendererClasses;
 
         return $this;
     }

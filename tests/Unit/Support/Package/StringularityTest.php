@@ -3,18 +3,13 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Support\Stringularity;
 
 it(
     'missing vendor and package name',
-    function() {
+    function () {
         new Stringularity();
     },
 )->throws(UnexpectedValueException::class, 'Name and ClassName name cannot be null. Set name or/and className.');
@@ -22,7 +17,7 @@ it(
 // Shaking 4 variants they must be resulting the same.
 it(
     'calc Class-String from name',
-    function() {
+    function () {
         $s = new Stringularity('my name ');
 
         expect($s->toName())
@@ -35,7 +30,7 @@ it(
 
 it(
     'calc Class-String from Class-String',
-    function() {
+    function () {
         $s = new Stringularity(' MyName ');
 
         expect($s->toName())
@@ -48,7 +43,7 @@ it(
 
 it(
     'calc Name-String from string',
-    function() {
+    function () {
         $s = new Stringularity(className: 'my name ');
 
         expect($s->toName())
@@ -61,7 +56,7 @@ it(
 
 it(
     'calc Name-String from Class',
-    function() {
+    function () {
         $s = new Stringularity(className: 'MyName ');
 
         expect($s->toName())

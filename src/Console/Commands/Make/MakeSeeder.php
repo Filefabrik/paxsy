@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -29,13 +27,13 @@ class MakeSeeder extends SeederMakeCommand
         return parent::getPath($name);
     }
 
-    protected function rootNamespace(): string
-    {
-        return $this->package() ? $this->seederNamespace() : parent::rootNamespace();
-    }
-
     protected function seederNamespace(): string
     {
         return $this->toPackageNamespace('Database', 'Seeders');
+    }
+
+    protected function rootNamespace(): string
+    {
+        return $this->package() ? $this->seederNamespace() : parent::rootNamespace();
     }
 }

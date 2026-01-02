@@ -3,16 +3,14 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 it(
     'Create the default app-packages directory',
-    function() {
+    function () {
         $target = base_path(currentStackName());
         expect($target)
             ->not()

@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Admin;
@@ -35,7 +33,7 @@ class Inputs
             label   : 'Paxsy Menu',
             options : $menuOptions,
             scroll  : 10,
-            validate: function(string $name) use ($menuOptions) {
+            validate: function (string $name) use ($menuOptions) {
                 return in_array($name, $menuOptions) || ($menuOptions[$name] ?? null) ? null :
                     'Menu Item "'.$name.'" does not exist';
             },
@@ -171,7 +169,7 @@ class Inputs
                 ->filter(fn($title) => str_contains(Str::lower($title), Str::lower($value)))
                 ->all(),
             scroll  : 10,
-            validate: function(string $name) use ($pa) {
+            validate: function (string $name) use ($pa) {
                 return in_array($name, $pa) ? null : 'Package "'.$name.'" does not exist';
             },
             hint    : 'Select an existing Package and select a make command that will be called against your package',
@@ -202,7 +200,7 @@ class Inputs
                 ->filter(fn($title) => str_contains(Str::lower($title), Str::lower($value)))
                 ->all(),
             scroll  : 10,
-            validate: function(string $name) use ($commandList) {
+            validate: function (string $name) use ($commandList) {
                 return in_array($name, $commandList) ? null : 'make command  "'.$name.'" does not exist';
             },
             hint    : $hint,

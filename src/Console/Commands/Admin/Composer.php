@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Admin;
@@ -23,22 +21,6 @@ class Composer
     protected static ?string $laravelHostComposerPath = null;
 
     /**
-     * @return string
-     */
-    public static function getLaravelHostComposerPath(): string
-    {
-        return self::$laravelHostComposerPath ??= app()->basePath();
-    }
-
-    /**
-     * @return \Filefabrik\Paxsy\Support\Composer\Composer
-     */
-    public static function getLaravelHostComposer(): \Filefabrik\Paxsy\Support\Composer\Composer
-    {
-        return new \Filefabrik\Paxsy\Support\Composer\Composer(self::getLaravelHostComposerPath());
-    }
-
-    /**
      * Check a vendor/package is in the laravel host composer.json
      *
      * @param string $vendor_package_name
@@ -53,5 +35,21 @@ class Composer
         $hostComposer->__destruct();
 
         return $exists;
+    }
+
+    /**
+     * @return \Filefabrik\Paxsy\Support\Composer\Composer
+     */
+    public static function getLaravelHostComposer(): \Filefabrik\Paxsy\Support\Composer\Composer
+    {
+        return new \Filefabrik\Paxsy\Support\Composer\Composer(self::getLaravelHostComposerPath());
+    }
+
+    /**
+     * @return string
+     */
+    public static function getLaravelHostComposerPath(): string
+    {
+        return self::$laravelHostComposerPath ??= app()->basePath();
     }
 }

@@ -3,23 +3,18 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 
 // todo not testable in package without laravel context
 it(
     'Call original make:cast',
-    function() {
+    function () {
         $this->artisan('make:cast', ['--help' => true, 'name' => 'myTestCast'])
              ->assertExitCode(0)
         ;
@@ -27,7 +22,7 @@ it(
 );
 it(
     'create Cast Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:cast';

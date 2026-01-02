@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -38,7 +36,6 @@ class MakeTest extends TestMakeCommand
     protected function rootNamespace(): string
     {
         return $this->package()
-                    ?->joinPackageNamespace('Tests') ?? parent::rootNamespace()
-        ;
+                    ?->joinPackageNamespace('Tests') ?? parent::rootNamespace();
     }
 }

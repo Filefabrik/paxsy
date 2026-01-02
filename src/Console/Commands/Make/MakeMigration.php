@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -30,7 +28,7 @@ class MakeMigration extends MigrateMakeCommand
             $filesystem = $this->getLaravel()
                                ->make(Filesystem::class)
             ;
-            if (! $filesystem->isDirectory($module_directory)) {
+            if (!$filesystem->isDirectory($module_directory)) {
                 $filesystem->makeDirectory($module_directory, 0755, true);
             }
         }

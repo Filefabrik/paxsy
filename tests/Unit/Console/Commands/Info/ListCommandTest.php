@@ -3,21 +3,16 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Console\Commands\Info\ListCommand;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 it(
     'signature and description',
-    function() {
+    function () {
         $dummy = new class () extends ListCommand {
             public function getSignature()
             {
@@ -34,7 +29,7 @@ it(
 );
 it(
     'Paxsy List Test',
-    function() {
+    function () {
         rerouteStubsDirectory();
         $this->artisan(ListCommand::class)
              ->expectsOutput('You have 0 packages installed.')

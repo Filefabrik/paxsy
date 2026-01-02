@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Helper;
@@ -66,14 +64,6 @@ class OverrideCommands
     ];
 
     /**
-     * @return array<string,class-string<GeneratorCommand>> |string[]
-     */
-    public static function commands(): array
-    {
-        return self::$overrideCommands;
-    }
-
-    /**
      * On Bord Commands they are explizit in paxsy
      *
      * @return array
@@ -81,5 +71,13 @@ class OverrideCommands
     public static function pureMakeCommands(): array
     {
         return array_keys(self::commands());
+    }
+
+    /**
+     * @return array<string,class-string<GeneratorCommand>> |string[]
+     */
+    public static function commands(): array
+    {
+        return self::$overrideCommands;
     }
 }

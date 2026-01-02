@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -36,78 +34,6 @@ class MakeController extends ControllerMakeCommand
     }
 
     /**
-     * Build the class with the given name.
-     *
-     * Remove the base controller import if we are already in the base namespace.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function buildClass($name)
-    {
-        if (! $this->package()) {
-            return parent::buildClass($name);
-        }
-        // todo if --requests do it into solved in future but not by model
-        // todo in Model handle the --all option without creating controller.
-        // That should modify the --all option model
-
-        $replace = [];
-
-        if ($this->option('parent')) {
-            $replace = $this->buildParentReplacements();
-        }
-
-        if ($this->option('model')) {
-            // during options there is a --model flag,
-            // the option is a select option
-            // so the model is want but there is no input for the model name or selectables
-            $replace = $this->buildModelReplacements_package($replace);
-        }
-
-        if ($this->option('creatable')) {
-            $replace['abort(404);'] = '//';
-        }
-
-        return $this->classReplacements($replace, $name);
-    }
-
-    protected function classReplacements(array $replace, string $name)
-    {
-        $packageNamespace = $this->package()
-                                           ->srcPackageNamespace()
-        ;
-        $rootAppNamespace           = $this->rootNamespace();
-        $rootAppControllerNamespace = 'App\Http\Controllers';
-
-        $baseControllerExists = file_exists($this->getPath("{$packageNamespace}Http\Controllers\Controller"));
-
-        if ($baseControllerExists) {
-            $replace["use {$rootAppControllerNamespace}\Controller;\n"] = "use {$packageNamespace}\Http\Controllers\Controller;\n";
-        } else {
-            $replace[' extends Controller']                                    = '';
-            $replace["use {$rootAppNamespace}\Http\Controllers\Controller;\n"] = '';
-        }
-
-        return str_replace(
-            array_keys($replace),
-            array_values($replace),
-            // has to be the parent class
-            $this->replaceControllerStub($name),
-        );
-    }
-
-    protected function replaceControllerStub(string $name): string
-    {
-        $stub = $this->files->get($this->getStub());
-
-        return $this->replaceNamespace($stub, $name)
-                    ->replaceClass($stub, $name)
-        ;
-    }
-
-    /**
      * @param $replace
      *
      * @return array
@@ -131,32 +57,34 @@ class MakeController extends ControllerMakeCommand
         return $this->mergeReplacements($replace, $modelClass);
     }
 
-    protected function mergeReplacements(array $replace, string $modelClass)
+    /**
+     * @param $model
+     *
+     * @return string
+     */
+    protected function parseModel($model): string
     {
-        $cbn   = class_basename($modelClass);
-        $cbLcf = lcfirst($cbn);
+        return $this->package() ? $this->parseModel_package($model) : parent::parseModel($model);
+    }
 
-        // keep sync with ControllerMakeCommand
-        return array_merge(
-            $replace,
-            [
-                'DummyFullModelClass'   => $modelClass,
-                '{{ namespacedModel }}' => $modelClass,
-                '{{namespacedModel}}'   => $modelClass,
-                'DummyModelClass'       => $cbn,
-                '{{ model }}'           => $cbn,
-                '{{model}}'             => $cbn,
-                'DummyModelVariable'    => $cbLcf,
-                '{{ modelVariable }}'   => $cbLcf,
-                '{{modelVariable}}'     => $cbLcf,
-            ],
-        );
+    /**
+     * @param $model
+     *
+     * @return string
+     */
+    protected function parseModel_package($model): string
+    {
+        if (preg_match('([^A-Za-z0-9_/\\\\])', $model)) {
+            throw new InvalidArgumentException('Model name contains invalid characters.');
+        }
+
+        return $this->qualifyModel($model);
     }
 
     protected function makeModelIfNeed(string $modelClass, string $relativeModel): void
     {
         if (
-            ! class_exists($modelClass) && confirm(
+            !class_exists($modelClass) && confirm(
                 "A {$modelClass} model does not exist. Do you want to generate it?",
                 true,
             )
@@ -229,27 +157,98 @@ class MakeController extends ControllerMakeCommand
         );
     }
 
-    /**
-     * @param $model
-     *
-     * @return string
-     */
-    protected function parseModel($model): string
+    protected function mergeReplacements(array $replace, string $modelClass)
     {
-        return $this->package() ? $this->parseModel_package($model) : parent::parseModel($model);
+        $cbn   = class_basename($modelClass);
+        $cbLcf = lcfirst($cbn);
+
+        // keep sync with ControllerMakeCommand
+        return array_merge(
+            $replace,
+            [
+                'DummyFullModelClass'   => $modelClass,
+                '{{ namespacedModel }}' => $modelClass,
+                '{{namespacedModel}}'   => $modelClass,
+                'DummyModelClass'       => $cbn,
+                '{{ model }}'           => $cbn,
+                '{{model}}'             => $cbn,
+                'DummyModelVariable'    => $cbLcf,
+                '{{ modelVariable }}'   => $cbLcf,
+                '{{modelVariable}}'     => $cbLcf,
+            ],
+        );
     }
 
     /**
-     * @param $model
+     * Build the class with the given name.
+     *
+     * Remove the base controller import if we are already in the base namespace.
+     *
+     * @param string $name
      *
      * @return string
      */
-    protected function parseModel_package($model): string
+    protected function buildClass($name)
     {
-        if (preg_match('([^A-Za-z0-9_/\\\\])', $model)) {
-            throw new InvalidArgumentException('Model name contains invalid characters.');
+        if (!$this->package()) {
+            return parent::buildClass($name);
+        }
+        // todo if --requests do it into solved in future but not by model
+        // todo in Model handle the --all option without creating controller.
+        // That should modify the --all option model
+
+        $replace = [];
+
+        if ($this->option('parent')) {
+            $replace = $this->buildParentReplacements();
         }
 
-        return $this->qualifyModel($model);
+        if ($this->option('model')) {
+            // during options there is a --model flag,
+            // the option is a select option
+            // so the model is want but there is no input for the model name or selectables
+            $replace = $this->buildModelReplacements_package($replace);
+        }
+
+        if ($this->option('creatable')) {
+            $replace['abort(404);'] = '//';
+        }
+
+        return $this->classReplacements($replace, $name);
+    }
+
+    protected function classReplacements(array $replace, string $name)
+    {
+        $packageNamespace           = $this->package()
+                                           ->srcPackageNamespace()
+        ;
+        $rootAppNamespace           = $this->rootNamespace();
+        $rootAppControllerNamespace = 'App\Http\Controllers';
+
+        $baseControllerExists = file_exists($this->getPath("{$packageNamespace}Http\Controllers\Controller"));
+
+        if ($baseControllerExists) {
+            $replace["use {$rootAppControllerNamespace}\Controller;\n"] =
+                "use {$packageNamespace}\Http\Controllers\Controller;\n";
+        } else {
+            $replace[' extends Controller']                                    = '';
+            $replace["use {$rootAppNamespace}\Http\Controllers\Controller;\n"] = '';
+        }
+
+        return str_replace(
+            array_keys($replace),
+            array_values($replace),
+            // has to be the parent class
+            $this->replaceControllerStub($name),
+        );
+    }
+
+    protected function replaceControllerStub(string $name): string
+    {
+        $stub = $this->files->get($this->getStub());
+
+        return $this->replaceNamespace($stub, $name)
+                    ->replaceClass($stub, $name)
+        ;
     }
 }

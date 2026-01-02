@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -30,9 +28,19 @@ class MakeComponent extends ComponentMakeCommand
         }
     }
 
+    protected function bladeTag(): string
+    {
+        return sprintf(
+            '<x-%s-%s />',
+            $this->package()
+                 ->getName(),
+            $this->getView(),
+        );
+    }
+
     protected function buildClass($name): string
     {
-        if (! $this->package() || $this->option('inline')) {
+        if (!$this->package() || $this->option('inline')) {
             return parent::buildClass($name);
         }
 
@@ -53,16 +61,6 @@ class MakeComponent extends ComponentMakeCommand
             ['DummyView', '{{ view }}'],
             $viewPart,
             $alienStub,
-        );
-    }
-
-    protected function bladeTag(): string
-    {
-        return sprintf(
-            '<x-%s-%s />',
-            $this->package()
-                 ->getName(),
-            $this->getView(),
         );
     }
 

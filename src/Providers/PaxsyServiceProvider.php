@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Providers;
@@ -48,6 +46,15 @@ class PaxsyServiceProvider extends ServiceProvider
         );
     }
 
+    protected function packageStackCreator(): Stack
+    {
+        return new Stack(
+            packageStackName: Paxsy::currentStackName(),
+            application     : $this->app,
+            filesystem      : new Filesystem(),
+        );
+    }
+
     /**
      * Whole Boot-Process
      *
@@ -68,7 +75,7 @@ class PaxsyServiceProvider extends ServiceProvider
      */
     protected function bootPackageCommands(): void
     {
-        if (! $this->app->runningInConsole()) {
+        if (!$this->app->runningInConsole()) {
             // @codeCoverageIgnoreStart
             return;
             // @codeCoverageIgnoreEnd
@@ -77,14 +84,5 @@ class PaxsyServiceProvider extends ServiceProvider
         PaxsyComposerBootService::boot($this->app);
 
         $this->commands(PaxsyCommands::publicCommands());
-    }
-
-    protected function packageStackCreator(): Stack
-    {
-        return new Stack(
-            packageStackName: Paxsy::currentStackName(),
-            application     : $this->app,
-            filesystem      : new Filesystem(),
-        );
     }
 }

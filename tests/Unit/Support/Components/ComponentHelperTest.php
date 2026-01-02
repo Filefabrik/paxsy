@@ -3,19 +3,14 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Components\Livewire\Component;
 use Filefabrik\Paxsy\Support\Components\ComponentHelper;
 
 it(
     'make commands',
-    function() {
+    function () {
         $components = [
             // core
             \Filefabrik\Paxsy\Components\LaravelRoute\Component::class,

@@ -3,16 +3,11 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Console\Commands\PaxsyCommand;
 
-beforeEach(function() {
+beforeEach(function () {
     // todo all reset for make:package into function ...
 
     currentStackName();
@@ -22,13 +17,13 @@ beforeEach(function() {
 
 it(
     'Paxsy command',
-    function() {
+    function () {
         expect(class_exists(PaxsyCommand::class))->toBeTrue('Paxsy Admin Command exists');
     },
 );
 it(
     'handle package with no packages',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
 
@@ -40,7 +35,7 @@ it(
 );
 it(
     'task create package missing vendor',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
 
@@ -53,7 +48,7 @@ it(
 );
 it(
     'task create package missing package',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
 
@@ -68,7 +63,7 @@ it(
 
 it(
     'list vendor package',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
 
@@ -81,7 +76,7 @@ it(
 );
 it(
     'create Vendor Package',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
 
@@ -105,7 +100,7 @@ it(
 
 it(
     'enable package',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
         makePackageByArtisanCommand($this);
@@ -117,7 +112,7 @@ it(
 );
 it(
     'jump into but quit',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
         makePackageByArtisanCommand($this);
@@ -133,7 +128,7 @@ it(
 );
 it(
     'handle selected task and quit',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
         makePackageByArtisanCommand($this);
@@ -152,7 +147,7 @@ it(
 );
 it(
     'simply composer update',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
         makePackageByArtisanCommand($this);
@@ -165,7 +160,7 @@ it(
 );
 it(
     'composer remove repository vendor package',
-    function() {
+    function () {
         // prevent from composer update
         useShellDisabled();
         makePackageByArtisanCommand($this);
@@ -181,7 +176,7 @@ it(
 
 it(
     'handle selected task with quit',
-    function() {
+    function () {
         useShellDisabled();
         makePackageByArtisanCommand($this);
         //	$defaultPackage = defaultTestPackage();
@@ -193,7 +188,7 @@ it(
 );
 it(
     'input vendor without ui',
-    function() {
+    function () {
         useShellDisabled();
 
         config()->set('paxsy.ui_vendor_select', '');
@@ -207,7 +202,7 @@ it(
 );
 it(
     'input vendor without ui and vendor not set',
-    function() {
+    function () {
         useShellDisabled();
 
         config()->set('paxsy.ui_vendor_select');
@@ -224,7 +219,7 @@ it(
 );
 it(
     'multiple stubs sets',
-    function() {
+    function () {
         $defStubsSet = config('paxsy.stub_sets.default');
 
         config()->set(

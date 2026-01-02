@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Composer;
@@ -53,11 +51,20 @@ class Composer
     }
 
     /**
-     * @return JsonFile
+     * @throws ParsingException
      */
-    public function getComposerFile(): JsonFile
+    public function vendorPackageInRequire(string $vendor_package_name): bool
     {
-        return $this->composer_file ??= new JsonFile(Factory::getComposerFile());
+        return (bool)(($this->getRequire() ?? [])[$vendor_package_name] ?? null);
+    }
+
+    /**
+     * @return array|null
+     * @throws ParsingException
+     */
+    private function getRequire(): ?array
+    {
+        return $this->getDefinition()['require'] ?? null;
     }
 
     /**
@@ -73,28 +80,19 @@ class Composer
      * @return array|null
      * @throws ParsingException
      */
-    private function getRequire(): ?array
-    {
-        return $this->getDefinition()['require'] ?? null;
-    }
-
-    /**
-     * @throws ParsingException
-     */
-    public function vendorPackageInRequire(string $vendor_package_name): bool
-    {
-        return (bool) (($this->getRequire() ?? [])[$vendor_package_name] ?? null);
-    }
-
-    /**
-     * @return array|null
-     * @throws ParsingException
-     */
     private function loadDefinition(): ?array
     {
         return $this->getComposerFile()
                     ->read()
         ;
+    }
+
+    /**
+     * @return JsonFile
+     */
+    public function getComposerFile(): JsonFile
+    {
+        return $this->composer_file ??= new JsonFile(Factory::getComposerFile());
     }
 
     public function __destruct()

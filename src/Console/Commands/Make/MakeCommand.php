@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -36,7 +34,7 @@ class MakeCommand extends ConsoleMakeCommand
                 "app:{$cli_name}",
             ];
 
-            $stub = (string) str_replace($find, "{$package->getName()}:{$cli_name}", $stub);
+            $stub = (string)str_replace($find, "{$package->getName()}:{$cli_name}", $stub);
         }
 
         return $stub;

@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -31,7 +29,7 @@ trait TraitPackagizer
         $package   = $this->package();
 
         if (
-            $package && ! str_starts_with(
+            $package && !str_starts_with(
                 $rootNamespace,
                 $package->srcPackageNamespace(),
             )

@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Components\Livewire;
@@ -43,7 +41,7 @@ if (class_exists(MakeCommand::class)) {
         protected function parentHandle(): void
         {
             $name = $this->lineClassNameValid();
-            if (! $name || ! $this->lineReservedClassName($name)) {
+            if (!$name || !$this->lineReservedClassName($name)) {
                 return;
             }
 
@@ -87,7 +85,7 @@ if (class_exists(MakeCommand::class)) {
             $this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
             $class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
 
-            if (! $inline) {
+            if (!$inline) {
                 $view && $this->line("<options=bold;fg=green>VIEW:</>  {$this->parser->relativeViewPath()}");
             }
 
@@ -98,7 +96,7 @@ if (class_exists(MakeCommand::class)) {
 
         protected function lineClassNameValid()
         {
-            if (! $this->isClassNameValid($name = $this->parser->className())) {
+            if (!$this->isClassNameValid($name = $this->parser->className())) {
                 $this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
                 $this->line("<fg=red;options=bold>Class is invalid:</> {$name}");
 
@@ -110,7 +108,7 @@ if (class_exists(MakeCommand::class)) {
 
         protected function lineWelcome()
         {
-            if ($this->isFirstTimeMakingAComponent() && ! app()->runningUnitTests()) {
+            if ($this->isFirstTimeMakingAComponent() && !app()->runningUnitTests()) {
                 // @codeCoverageIgnoreStart
                 $this->writeWelcomeMessage();
                 // @codeCoverageIgnoreEnd
@@ -165,14 +163,14 @@ if (class_exists(MakeCommand::class)) {
         public function isFirstTimeMakingAComponent(): bool
         {
             $package = $this->package();
-            if (! $package) {
+            if (!$package) {
                 return parent::isFirstTimeMakingAComponent();
             }
             // todo take livewire config for namespace in paxsy config or stack config
             //$namespace = str(config('livewire.class_namespace'))->replaceFirst(app()->getNamespace(), '');
             $packagePath = $package->intoPackagePath('src/Livewire');
 
-            return ! File::isDirectory($packagePath);
+            return !File::isDirectory($packagePath);
         }
     }
 }

@@ -3,22 +3,17 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
     clearLaravelFiles();
 });
 it(
     'create without package',
-    function() {
+    function () {
         $command         = 'make:factory';
         $createArguments = ['name' => 'MyTestFactoryInLaravel'];
         // laravel appends Factory
@@ -42,7 +37,7 @@ it(
 );
 it(
     'create Factory Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         $command                = 'make:factory';
         $arguments              = ['name' => 'MyTestFactory'];
@@ -63,7 +58,7 @@ it(
 );
 it(
     'Factory interactions no Params',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
@@ -102,7 +97,7 @@ it(
 );
 it(
     'create Factory Component via command in Default-Vendor-Package Model Exists',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         $command                = 'make:factory';
         $arguments              = ['name' => 'MyTestFactory'];
@@ -126,7 +121,7 @@ it(
 // laravel does not offer model creation or selecting an already existing Model.
 it(
     'ask for model creation',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         $command         = 'make:factory';
         $createArguments = ['name' => 'MyTestFactoryInPackage'];

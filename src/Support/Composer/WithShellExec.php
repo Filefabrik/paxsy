@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Composer;
@@ -20,7 +18,7 @@ class WithShellExec extends AbstractWith implements WithInterface
                        ->directory(),
             '_startTransaction',
         ];
-        $this->endTransaction = [
+        $this->endTransaction   = [
             'cd '.$this->getLaravelHostComposer()
                        ->getOriginalWorkingDir(),
             '_endTransaction',
@@ -57,15 +55,6 @@ class WithShellExec extends AbstractWith implements WithInterface
         }
     }
 
-    public function lastTransactionToConsole(Command $command): void
-    {
-        foreach ($this->lastTransaction() as $result) {
-            $output = $result['command'];
-
-            $command->line($output);
-        }
-    }
-
     /**
      * @param string      $command
      * @param string|null $prefix
@@ -75,6 +64,15 @@ class WithShellExec extends AbstractWith implements WithInterface
     protected function executeCommand(string $command, ?string $prefix = null): void
     {
         $this->addResult(['command' => $command, 'result' => shell_exec($command), 'prefix' => $prefix]);
+    }
+
+    public function lastTransactionToConsole(Command $command): void
+    {
+        foreach ($this->lastTransaction() as $result) {
+            $output = $result['command'];
+
+            $command->line($output);
+        }
     }
 
     /**
@@ -99,6 +97,13 @@ class WithShellExec extends AbstractWith implements WithInterface
         [$vendor_package_name, $flags] = $this->extractFlags($params, 1);
 
         return "composer require $vendor_package_name".$this->renderFlags($flags);
+    }
+
+    private function extractFlags($params, $flagsIndex)
+    {
+        $params[$flagsIndex] ??= null;
+
+        return $params;
     }
 
     /**
@@ -166,12 +171,5 @@ class WithShellExec extends AbstractWith implements WithInterface
         [$key, $flags] = $this->extractFlags($params, 1);
 
         return "composer config repositories.paxsy-$key --unset".$this->renderFlags($flags);
-    }
-
-    private function extractFlags($params, $flagsIndex)
-    {
-        $params[$flagsIndex] ??= null;
-
-        return $params;
     }
 }

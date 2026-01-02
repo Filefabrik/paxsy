@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Finders;
@@ -37,23 +35,6 @@ readonly class StackComposers
     }
 
     /**
-     * Searching for composer.json in a directory ...utility
-     *
-     * @param string $stackBasePath
-     *
-     * @return Finder
-     */
-    public static function find(string $stackBasePath): Finder
-    {
-        return Finder::create()
-                     ->files()
-                     ->depth('1')
-                     ->name('composer.json')
-                     ->in($stackBasePath)
-        ;
-    }
-
-    /**
      * !!Most Important Method!!
      * Load each found composer.json and make it usable for the whole software
      *
@@ -78,5 +59,22 @@ readonly class StackComposers
         }
 
         return new Collection($packages);
+    }
+
+    /**
+     * Searching for composer.json in a directory ...utility
+     *
+     * @param string $stackBasePath
+     *
+     * @return Finder
+     */
+    public static function find(string $stackBasePath): Finder
+    {
+        return Finder::create()
+                     ->files()
+                     ->depth('1')
+                     ->name('composer.json')
+                     ->in($stackBasePath)
+        ;
     }
 }

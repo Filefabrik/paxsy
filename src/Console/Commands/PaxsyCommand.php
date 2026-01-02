@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands;
@@ -28,15 +26,12 @@ class PaxsyCommand extends Command
 {
     use TraitInputs;
 
+    public const QUIT = 'q';
+    public const int STOP_DEEPER = 23;
     /**
      * @var string
      */
     protected $signature = 'paxsy';
-
-    public const QUIT = 'q';
-
-    public const int STOP_DEEPER = 23;
-
     /**
      * @var string
      */
@@ -50,34 +45,6 @@ class PaxsyCommand extends Command
     public function __construct(private readonly Stack $stack)
     {
         parent::__construct();
-    }
-
-    /**
-     * @return int
-     */
-    public function handle(): int
-    {
-        return $this->recursiveMainMenu();
-    }
-
-    /**
-     * Keeps the main Menu open
-     *
-     * @return int
-     */
-    private function recursiveMainMenu(): int
-    {
-        $method = Inputs::suggestMainMenu(Menus::selectableMenu(Menus::$mainMenu));
-
-        if ($method === self::QUIT) {
-            return self::SUCCESS;
-        }
-        $executionResult = $this->{'task_'.$method}();
-        if ($executionResult !== self::QUIT && $executionResult !== self::FAILURE) {
-            $this->recursiveMainMenu();
-        }
-
-        return $executionResult === self::FAILURE ? self::FAILURE : self::SUCCESS;
     }
 
     /**
@@ -137,63 +104,61 @@ class PaxsyCommand extends Command
     }
 
     /**
-     * @return int|string
+     * @return VendorPackageNames|null
      */
-    protected function task_list_packages(): int|string
+    private function inputVendorPackage(): ?VendorPackageNames
     {
-        return $this->call('paxsy:list');
+        // todo allow q
+        $vendor = InputVendorName::handle($this, $this->stack);
+
+        if (!$vendor) {
+            return null;
+        }
+        $this->line('2. enter the package-name');
+        $packageName = Inputs::packageName($vendor->toClass());
+        if (!$packageName) {
+            return null;
+        }
+
+        // your company in composer.json "name": "$vendor/$package",
+
+        // todo check the package-name already exists
+
+        $vendorPackageNames = new VendorPackageNames(
+            vendor : $vendor,
+            package: new Stringularity($packageName),
+        );
+
+        // relative segment from laravel host application Most important stack_name setting
+        return $vendorPackageNames->setStackName(Paxsy::currentStackName());
     }
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    protected function task_handle_package(): int|string
-    {
-        $this->line('Handle a Package');
-        $vendor_package_name = Inputs::suggestExistingPackages();
-
-        if ($vendor_package_name === PaxsyCommand::QUIT) {
-            return PaxsyCommand::QUIT;
-        }
-        // Is empty. No packages were found
-
-        if (!$vendor_package_name) {
-            $this->error('There are no packages inside '.$this->stack->getStackName());
-
-            return self::FAILURE;
-        }
-        $this->line('Jumped into Package: '.$vendor_package_name, 'info');
-
-        return $this->in_package_tasks($vendor_package_name);
-    }
-
-    /**
-     * The Package is selected, make commands
-     *
-     * @param $vendor_package_name
-     *
      * @return int
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
-    protected function in_package_tasks($vendor_package_name): int
+    public function handle(): int
     {
-        $res = $this->nest_in_package($vendor_package_name);
-
-        $res !== self::SUCCESS ?: $this->askPackageAgainTask($vendor_package_name);
-
-        return $res === self::QUIT ? self::SUCCESS : $res;
+        return $this->recursiveMainMenu();
     }
 
     /**
-     * Try Composer update from console
+     * Keeps the main Menu open
      *
      * @return int
      */
-    protected function task_composer_update(): int
+    private function recursiveMainMenu(): int
     {
-        return $this->call('paxsy:composer-update');
+        $method = Inputs::suggestMainMenu(Menus::selectableMenu(Menus::$mainMenu));
+
+        if ($method === self::QUIT) {
+            return self::SUCCESS;
+        }
+        $executionResult = $this->{'task_'.$method}();
+        if ($executionResult !== self::QUIT && $executionResult !== self::FAILURE) {
+            $this->recursiveMainMenu();
+        }
+
+        return $executionResult === self::FAILURE ? self::FAILURE : self::SUCCESS;
     }
 
     /**
@@ -214,24 +179,6 @@ class PaxsyCommand extends Command
     }
 
     /**
-     * @param string|null $vendor_package_name
-     *
-     * @return int
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws Exception
-     */
-    protected function task_composer_remove_repository_vendor_package(?string $vendor_package_name = null): int
-    {
-        $vendorPackageNames = $this->selectedPackage($vendor_package_name);
-
-        $this->task_composer_remove_repository($vendorPackageNames->vendorPackageName());
-        $this->task_composer_remove_vendor_package($vendorPackageNames->vendorPackageName());
-
-        return self::SUCCESS;
-    }
-
-    /**
      * @throws Exception
      */
     protected function task_composer_add_repository(?string $vendor_package_name = null): int
@@ -239,18 +186,6 @@ class PaxsyCommand extends Command
         return $this->call(
             'paxsy:repository',
             [VendorPackageCommand::VendorPackageIdent => $vendor_package_name],
-        );
-    }
-
-    /**
-     * @throws Exception
-     * @todo update composer after this command
-     */
-    protected function task_composer_remove_repository(?string $vendor_package_name = null): int
-    {
-        return $this->call(
-            'paxsy:repository',
-            [VendorPackageCommand::VendorPackageIdent => $vendor_package_name, '--remove' => true],
         );
     }
 
@@ -268,16 +203,21 @@ class PaxsyCommand extends Command
     }
 
     /**
-     * @param string|null $vendor_package_name
+     * The Package is selected, make commands
+     *
+     * @param $vendor_package_name
      *
      * @return int
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    protected function task_composer_remove_vendor_package(?string $vendor_package_name = null): int
+    protected function in_package_tasks($vendor_package_name): int
     {
-        return $this->call(
-            'paxsy:vendor-package',
-            [VendorPackageCommand::VendorPackageIdent => $vendor_package_name, '--remove' => true],
-        );
+        $res = $this->nest_in_package($vendor_package_name);
+
+        $res !== self::SUCCESS ?: $this->askPackageAgainTask($vendor_package_name);
+
+        return $res === self::QUIT ? self::SUCCESS : $res;
     }
 
     /**
@@ -322,32 +262,87 @@ class PaxsyCommand extends Command
     }
 
     /**
-     * @return VendorPackageNames|null
+     * @return int|string
      */
-    private function inputVendorPackage(): ?VendorPackageNames
+    protected function task_list_packages(): int|string
     {
-        // todo allow q
-        $vendor = InputVendorName::handle($this, $this->stack);
+        return $this->call('paxsy:list');
+    }
 
-        if (!$vendor) {
-            return null;
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    protected function task_handle_package(): int|string
+    {
+        $this->line('Handle a Package');
+        $vendor_package_name = Inputs::suggestExistingPackages();
+
+        if ($vendor_package_name === PaxsyCommand::QUIT) {
+            return PaxsyCommand::QUIT;
         }
-        $this->line('2. enter the package-name');
-        $packageName = Inputs::packageName($vendor->toClass());
-        if (!$packageName) {
-            return null;
+        // Is empty. No packages were found
+
+        if (!$vendor_package_name) {
+            $this->error('There are no packages inside '.$this->stack->getStackName());
+
+            return self::FAILURE;
         }
+        $this->line('Jumped into Package: '.$vendor_package_name, 'info');
 
-        // your company in composer.json "name": "$vendor/$package",
+        return $this->in_package_tasks($vendor_package_name);
+    }
 
-        // todo check the package-name already exists
+    /**
+     * Try Composer update from console
+     *
+     * @return int
+     */
+    protected function task_composer_update(): int
+    {
+        return $this->call('paxsy:composer-update');
+    }
 
-        $vendorPackageNames = new VendorPackageNames(
-            vendor : $vendor,
-            package: new Stringularity($packageName),
+    /**
+     * @param string|null $vendor_package_name
+     *
+     * @return int
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws Exception
+     */
+    protected function task_composer_remove_repository_vendor_package(?string $vendor_package_name = null): int
+    {
+        $vendorPackageNames = $this->selectedPackage($vendor_package_name);
+
+        $this->task_composer_remove_repository($vendorPackageNames->vendorPackageName());
+        $this->task_composer_remove_vendor_package($vendorPackageNames->vendorPackageName());
+
+        return self::SUCCESS;
+    }
+
+    /**
+     * @throws Exception
+     * @todo update composer after this command
+     */
+    protected function task_composer_remove_repository(?string $vendor_package_name = null): int
+    {
+        return $this->call(
+            'paxsy:repository',
+            [VendorPackageCommand::VendorPackageIdent => $vendor_package_name, '--remove' => true],
         );
+    }
 
-        // relative segment from laravel host application Most important stack_name setting
-        return $vendorPackageNames->setStackName(Paxsy::currentStackName());
+    /**
+     * @param string|null $vendor_package_name
+     *
+     * @return int
+     */
+    protected function task_composer_remove_vendor_package(?string $vendor_package_name = null): int
+    {
+        return $this->call(
+            'paxsy:vendor-package',
+            [VendorPackageCommand::VendorPackageIdent => $vendor_package_name, '--remove' => true],
+        );
     }
 }

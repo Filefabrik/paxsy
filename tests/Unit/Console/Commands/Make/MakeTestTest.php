@@ -3,27 +3,22 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
     clearLaravelFiles();
 });
-afterEach(function() {
+afterEach(function () {
     clearLaravelFiles();
 });
 // Todo Feature or Unit Test since 11?
 // todo Check is Pest Or is PHPUnit
 it(
     'without package Unit Unit',
-    function() {
+    function () {
         $arguments = ['name' => 'PHPUnit_Unit_Laravel', '--phpunit' => true, '--unit' => true];
         $command   = 'make:test';
         $this->artisan(
@@ -41,7 +36,7 @@ it(
 );
 it(
     'without package Pest Feature',
-    function() {
+    function () {
         $arguments = ['name' => 'MyPESTFeatureTestingIntoLaravel', '--phpunit' => false, '--unit' => false];
         $command   = 'make:test';
         $this->artisan(
@@ -59,7 +54,7 @@ it(
 );
 it(
     'create Test PHPUnit UNIT Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:test';
@@ -82,7 +77,7 @@ it(
 
 it(
     'create Test PHPUnit FEATURE Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:test';
@@ -106,7 +101,7 @@ it(
 
 it(
     'create Test Pest UNIT Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:test';
@@ -127,7 +122,7 @@ it(
 
 it(
     'create Test Pest FEATURE Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:test';

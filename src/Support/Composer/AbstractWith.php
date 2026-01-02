@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Composer;
@@ -15,33 +13,26 @@ namespace Filefabrik\Paxsy\Support\Composer;
  */
 abstract class AbstractWith
 {
-    abstract protected function executeCommand(string $command, ?string $prefix = null);
-
-    /**
-     * @var Composer|null
-     */
-    private ?Composer $laravelHostComposer = null;
-
     protected array $startTransaction = [];
-
     protected array $endTransaction = [];
-
     /**
      * @var array
      */
     protected array $commandExpressions = [];
-
+    /**
+     * @var Transactions
+     */
+    protected array $transactions = [];
+    /**
+     * @var Composer|null
+     */
+    private ?Composer $laravelHostComposer = null;
     /**
      * @var Transactions
      */
     private array $results = [];
 
     private bool $singleMode = true;
-
-    /**
-     * @var Transactions
-     */
-    protected array $transactions = [];
 
     public function add(string $expression, mixed $flags = null): static
     {
@@ -68,29 +59,18 @@ abstract class AbstractWith
         return $flags ? ' '.ltrim($flags, ' ') : '';
     }
 
-    protected function startTransaction(): void
-    {
-        if ($this->startTransaction) {
-            static::executeCommand(...$this->startTransaction);
-        }
-    }
-
-    protected function endTransaction(): void
-    {
-        if ($this->endTransaction) {
-            static::executeCommand(...$this->endTransaction);
-        }
-    }
-
     /**
-     * @param Transaction $result
-     *
-     * @return void
+     * @return $this
      */
-    protected function addResult(array $result): void
+    public function clear(): static
     {
-        $this->results[] = $result;
+        $this->commandExpressions = [];
+        $this->results            = [];
+
+        return $this;
     }
+
+    abstract public function execute(): static;
 
     public function batchMode(): static
     {
@@ -109,23 +89,6 @@ abstract class AbstractWith
     public function isSingle(): bool
     {
         return $this->singleMode === true;
-    }
-
-    /**
-     * @return Transactions
-     */
-    public function getTransactions(): array
-    {
-        return $this->transactions;
-    }
-
-    /**
-     * @return Composer
-     */
-    protected function getLaravelHostComposer(): Composer
-    {
-        return $this->laravelHostComposer ??= \Filefabrik\Paxsy\Console\Commands\Admin\Composer::getLaravelHostComposer(
-        );
     }
 
     /**
@@ -157,15 +120,45 @@ abstract class AbstractWith
     }
 
     /**
-     * @return $this
+     * @return Transactions
      */
-    public function clear(): static
+    public function getTransactions(): array
     {
-        $this->commandExpressions = [];
-        $this->results            = [];
-
-        return $this;
+        return $this->transactions;
     }
 
-    abstract public function execute(): static;
+    protected function startTransaction(): void
+    {
+        if ($this->startTransaction) {
+            static::executeCommand(...$this->startTransaction);
+        }
+    }
+
+    abstract protected function executeCommand(string $command, ?string $prefix = null);
+
+    protected function endTransaction(): void
+    {
+        if ($this->endTransaction) {
+            static::executeCommand(...$this->endTransaction);
+        }
+    }
+
+    /**
+     * @param Transaction $result
+     *
+     * @return void
+     */
+    protected function addResult(array $result): void
+    {
+        $this->results[] = $result;
+    }
+
+    /**
+     * @return Composer
+     */
+    protected function getLaravelHostComposer(): Composer
+    {
+        return $this->laravelHostComposer ??= \Filefabrik\Paxsy\Console\Commands\Admin\Composer::getLaravelHostComposer(
+        );
+    }
 }

@@ -3,19 +3,14 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Components\Livewire\ComponentParser;
 use Filefabrik\Paxsy\Support\Package;
 
 it(
     'component parser package not set',
-    function() {
+    function () {
         $defaultPackage = defaultTestPackage();
         $package        = new Package($defaultPackage->getPackageName(), $defaultPackage);
 

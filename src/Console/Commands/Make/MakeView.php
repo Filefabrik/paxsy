@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -29,6 +27,39 @@ class MakeView extends ViewMakeCommand
     }
 
     /**
+     * Create the matching test case if requested.
+     *
+     * @param string $path
+     */
+    protected function handleTestCreation($path): bool
+    {
+        if (!$package = $this->package()) {
+            return parent::handleTestCreation($path);
+        }
+        if (!$this->option('test') && !$this->option('pest') && !$this->option('phpunit')) {
+            return false;
+        }
+
+        $ns  = $package->joinPackageNamespace($this->testNamespace());
+        $tcn = $this->testClassName();
+        $vtn = $this->testViewName();
+
+        $contents = preg_replace(
+            ['/\{{ namespace \}}/', '/\{{ class \}}/', '/\{{ name \}}/'],
+            [$ns, $tcn, $vtn],
+            File::get($this->getTestStub()),
+        );
+        $testDir  = dirname($this->getTestPath());
+        File::ensureDirectoryExists($testDir, 0755, true);
+
+        $result = File::put($path = $this->getTestPath(), $contents);
+
+        $this->components->info(sprintf('%s [%s] created successfully.', 'Test', $path));
+
+        return $result !== false;
+    }
+
+    /**
      * Get the destination test case path.
      *
      * @return string
@@ -42,40 +73,6 @@ class MakeView extends ViewMakeCommand
                            ->replaceFirst('Tests/Feature', 'tests/Feature')
                            ->append('Test.php')
                            ->value(),
-                    ) ?? parent::getTestPath()
-        ;
-    }
-
-    /**
-     * Create the matching test case if requested.
-     *
-     * @param string $path
-     */
-    protected function handleTestCreation($path): bool
-    {
-        if (! $package = $this->package()) {
-            return parent::handleTestCreation($path);
-        }
-        if (! $this->option('test') && ! $this->option('pest') && ! $this->option('phpunit')) {
-            return false;
-        }
-
-        $ns  = $package->joinPackageNamespace($this->testNamespace());
-        $tcn = $this->testClassName();
-        $vtn = $this->testViewName();
-
-        $contents = preg_replace(
-            ['/\{{ namespace \}}/', '/\{{ class \}}/', '/\{{ name \}}/'],
-            [$ns, $tcn, $vtn],
-            File::get($this->getTestStub()),
-        );
-        $testDir = dirname($this->getTestPath());
-        File::ensureDirectoryExists($testDir, 0755, true);
-
-        $result = File::put($path = $this->getTestPath(), $contents);
-
-        $this->components->info(sprintf('%s [%s] created successfully.', 'Test', $path));
-
-        return $result !== false;
+                    ) ?? parent::getTestPath();
     }
 }

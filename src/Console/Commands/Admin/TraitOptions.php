@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Admin;
@@ -36,6 +34,76 @@ trait TraitOptions
         $this->optionsBody();
 
         parent::interact($input, $output);
+    }
+
+    /**
+     * for internal components ask interact direct if not delegated from parent
+     *
+     * @return void
+     */
+    protected function optionsBody(): void
+    {
+        if (config('paxsy.gui_interactions') && $this->package() && $opts = $this->provideOptions()) {
+            // call once per make command
+            // show for what the option is
+            $selected = multiselect('Options for '.class_basename($this).'?', $opts, [], scroll: 15);
+
+            $options = $this->getDefinition()
+                            ->getOptions()
+            ;
+            $this->configureOptionValues($selected, $options);
+        }
+    }
+
+    /**
+     * for menu
+     * todo test all options
+     * todo options they are called from a call before disable in next call
+     *
+     * @return array
+     */
+    protected function provideOptions(): array
+    {
+        // in config/paxsy.php ignores option loop create controller -> with model -> with controller
+
+        $mustIgnore = [...(array)config('paxsy.ignore_option', []), ...SolvedOptions::solvedAsOption()];
+
+        $opts = [];
+        foreach (
+            $this->getDefinition()
+                 ->getOptions() as $option
+        ) {
+            // todo if short option
+            $name = $option->getName();
+            if (!in_array($name, $mustIgnore)) {
+                $opts[$option->getName()] = '--'.$option->getName().' '.$option->getDescription();
+            }
+        }
+
+        return $opts;
+    }
+
+    protected function configureOptionValues($selected, $options): void
+    {
+        // todo, chained options make:controller -> make:model, the make model must not create a controller
+
+        foreach ($selected as $option => $value) {
+            $useKey      = (is_string($option)) ? $option : $value;
+            $acceptValue = $options[$useKey]->acceptValue();
+            $this->configureOptionValue($option, $value, $useKey, $acceptValue);
+        }
+    }
+
+    protected function configureOptionValue($option, $value, $useKey, $acceptValue): void
+    {
+        if ($acceptValue) {
+            // todo ugly
+            $setValue = (is_int($option) && $useKey === 'model') ? '__handleByInputMask__' : $value;
+        } else {
+            // set what was given via console command
+            $setValue = true;
+        }
+        $this->input->setOption($useKey, $setValue);
     }
 
     /**
@@ -72,75 +140,5 @@ trait TraitOptions
             );
             $this->input->setOption($name, $model);
         }
-    }
-
-    /**
-     * for internal components ask interact direct if not delegated from parent
-     *
-     * @return void
-     */
-    protected function optionsBody(): void
-    {
-        if (config('paxsy.gui_interactions') && $this->package() && $opts = $this->provideOptions()) {
-            // call once per make command
-            // show for what the option is
-            $selected = multiselect('Options for '.class_basename($this).'?', $opts, [], scroll: 15);
-
-            $options = $this->getDefinition()
-                            ->getOptions()
-            ;
-            $this->configureOptionValues($selected, $options);
-        }
-    }
-
-    protected function configureOptionValues($selected, $options): void
-    {
-        // todo, chained options make:controller -> make:model, the make model must not create a controller
-
-        foreach ($selected as $option => $value) {
-            $useKey      = (is_string($option)) ? $option : $value;
-            $acceptValue = $options[$useKey]->acceptValue();
-            $this->configureOptionValue($option, $value, $useKey, $acceptValue);
-        }
-    }
-
-    protected function configureOptionValue($option, $value, $useKey, $acceptValue): void
-    {
-        if ($acceptValue) {
-            // todo ugly
-            $setValue = (is_int($option) && $useKey === 'model') ? '__handleByInputMask__' : $value;
-        } else {
-            // set what was given via console command
-            $setValue = true;
-        }
-        $this->input->setOption($useKey, $setValue);
-    }
-
-    /**
-     * for menu
-     * todo test all options
-     * todo options they are called from a call before disable in next call
-     *
-     * @return array
-     */
-    protected function provideOptions(): array
-    {
-        // in config/paxsy.php ignores option loop create controller -> with model -> with controller
-
-        $mustIgnore = [...(array) config('paxsy.ignore_option', []), ...SolvedOptions::solvedAsOption()];
-
-        $opts = [];
-        foreach (
-            $this->getDefinition()
-                 ->getOptions() as $option
-        ) {
-            // todo if short option
-            $name = $option->getName();
-            if (! in_array($name, $mustIgnore)) {
-                $opts[$option->getName()] = '--'.$option->getName().' '.$option->getDescription();
-            }
-        }
-
-        return $opts;
     }
 }

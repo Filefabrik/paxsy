@@ -1,7 +1,7 @@
 {
-  "type": "path",
-  "url": "{{RepositoryUrl}}",
-  "options": {
-    "symlink": true
-  }
+    "type": "path",
+    "url": "{{RepositoryUrl}}",
+    "options": {
+        "symlink": true
+    }
 }

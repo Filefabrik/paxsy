@@ -3,26 +3,21 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Console\Commands\Admin\TraitInputs;
 use Filefabrik\Paxsy\Support\Stack;
 use Filefabrik\Paxsy\Support\VendorPackageNames;
 use Illuminate\Filesystem\Filesystem;
 
-beforeEach(function() {
+beforeEach(function () {
     currentStackName();
     removePackageStack();
     rerouteStubsDirectory();
 });
 it(
     'selected package null',
-    function() {
+    function () {
         $cls = new class () {
             use TraitInputs;
 
@@ -37,7 +32,7 @@ it(
 
 it(
     'valid package',
-    function() {
+    function () {
         $this->artisan('paxsy:package', ['vendor' => 'test vendor', 'package' => 'pgk testing', 'stubs' => 'default']);
         $cls = new class () {
             use TraitInputs;

@@ -3,22 +3,17 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 
 it(
     'Gui interactions Options correctly',
-    function(string $selected) {
+    function (string $selected) {
         makePackageByArtisanCommand($this);
 
         withGuiInteractions();
@@ -47,7 +42,7 @@ it(
 
 it(
     'Gui interactions with Parent and Model',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         withGuiInteractions();
@@ -99,7 +94,7 @@ it(
 
 it(
     'create Controller Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         withGuiInteractions();
@@ -141,7 +136,7 @@ it(
 
 it(
     'with Pest',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         withGuiInteractions();

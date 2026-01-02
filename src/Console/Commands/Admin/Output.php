@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Admin;
@@ -35,7 +33,7 @@ class Output
     {
         return StackApp::get()
                        ->packages()
-                       ->map(function(Package $package) {
+                       ->map(function (Package $package) {
                            return [
                                'name' => $package->getName(),
                                'path' => $package->getComposerName(),
@@ -56,7 +54,7 @@ class Output
     {
         return StackApp::get()
                        ->packages()
-                       ->mapWithKeys(function(Package $package) {
+                       ->mapWithKeys(function (Package $package) {
                            return [$package->getComposerName() => $package->getComposerName()];
                        })
                        ->toArray()
@@ -91,7 +89,7 @@ class Output
     {
         $packageStack = StackApp::get();
         $table        = $packageStack->packages()
-                                     ->map(function(Package $package) {
+                                     ->map(function (Package $package) {
                                          $loadableStyle  = self::stylePackageNamespaceLoadable($package);
                                          $inRequireStyle = self::vendorPackageInRequire($package);
 

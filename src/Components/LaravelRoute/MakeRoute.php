@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Components\LaravelRoute;
@@ -35,7 +33,7 @@ class MakeRoute extends GeneratorCommand
      */
     public function handle(): int|bool
     {
-        if (! $this->stagePackage()) {
+        if (!$this->stagePackage()) {
             return self::FAILURE;
         }
 
@@ -43,7 +41,7 @@ class MakeRoute extends GeneratorCommand
         // todo already exist
         $path = $this->intoPackagePath('/routes/web.php');
 
-        if (file_exists($path) && ! $this->option('force')) {
+        if (file_exists($path) && !$this->option('force')) {
             $this->error('Route "'.$path.'" already exists!');
             $this->info('Set the -f flag to force create the route file again.');
 
@@ -57,10 +55,10 @@ class MakeRoute extends GeneratorCommand
 
     protected function stagePackage()
     {
-        if (! $this->package()) {
+        if (!$this->package()) {
             $packageName = Inputs::suggestPackageName($this->name);
 
-            if (! $packageName) {
+            if (!$packageName) {
                 $this->error('No packages found!');
 
                 return false;

@@ -3,22 +3,17 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 
 it(
     'create Cast Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:mail';
@@ -39,7 +34,7 @@ it(
 );
 it(
     'with php unit',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 

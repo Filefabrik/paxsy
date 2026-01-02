@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -24,11 +22,11 @@ trait TraitCreatesMatchingTest
      */
     protected function handleTestCreation($path): bool
     {
-        if (! $package = $this->package()) {
+        if (!$package = $this->package()) {
             return parent::handleTestCreation($path);
         }
 
-        if (! $this->option('test') && ! $this->option('pest') && ! $this->option('phpunit')) {
+        if (!$this->option('test') && !$this->option('pest') && !$this->option('phpunit')) {
             return false;
         }
 
@@ -42,13 +40,13 @@ trait TraitCreatesMatchingTest
         ;
 
         return $this->call(
-            'make:test',
-            [
-                'name' => $generatedTestName,
-                //'--package' => $package->getName(),
-                '--pest'    => $this->option('pest'),
-                '--phpunit' => $this->option('phpunit'),
-            ],
-        ) == 0;
+                'make:test',
+                [
+                    'name'      => $generatedTestName,
+                    //'--package' => $package->getName(),
+                    '--pest'    => $this->option('pest'),
+                    '--phpunit' => $this->option('phpunit'),
+                ],
+            ) == 0;
     }
 }

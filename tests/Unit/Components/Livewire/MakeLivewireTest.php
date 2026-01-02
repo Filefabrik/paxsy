@@ -3,22 +3,17 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 use Filefabrik\Paxsy\Tests\Support\LivewireComponentNames;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 it(
     'original command is working create without paxsy --package flag',
-    function() {
+    function () {
         $command = 'livewire:make';
 
         $this->artisan(
@@ -34,7 +29,7 @@ it(
 );
 it(
     'create Paxsy Livewire Component',
-    function() {
+    function () {
         // Todo at first, livewire has to be installed into testbench-core/laravel
         $defaultPackage = defaultTestPackage();
 
@@ -54,9 +49,11 @@ it(
             'src/'.LivewireComponentNames::default_location.'/'.'MyLvCompo'.'.php',
         );
 
-        $expected_view_path = DefaultPackageNames::VendorPackageComponentPath(LivewireComponentNames::defaultResourceDir());
+        $expected_view_path =
+            DefaultPackageNames::VendorPackageComponentPath(LivewireComponentNames::defaultResourceDir());
 
-        $livewireComponentNamespace = DefaultPackageNames::namespacyfy(LivewireComponentNames::default_namespace_prefix);
+        $livewireComponentNamespace =
+            DefaultPackageNames::namespacyfy(LivewireComponentNames::default_namespace_prefix);
         /**
          * Testing Class File-Content!
          */
@@ -83,7 +80,7 @@ it(
 
 it(
     'invalid class name',
-    function() {
+    function () {
         $defaultPackage = defaultTestPackage();
 
         makePackageByArtisanCommand($this);
@@ -105,7 +102,7 @@ it(
 
 it(
     'reserved class name',
-    function() {
+    function () {
         $defaultPackage = defaultTestPackage();
 
         makePackageByArtisanCommand($this);
@@ -127,7 +124,7 @@ it(
 // todo expectation
 it(
     'create with test',
-    function() {
+    function () {
         $defaultPackage = defaultTestPackage();
 
         makePackageByArtisanCommand($this);
@@ -144,7 +141,7 @@ it(
 // todo expectation
 it(
     'create same livewire component again',
-    function() {
+    function () {
         $defaultPackage = defaultTestPackage();
 
         makePackageByArtisanCommand($this);

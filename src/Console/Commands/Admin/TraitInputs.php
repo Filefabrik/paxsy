@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Admin;
@@ -25,7 +23,7 @@ trait TraitInputs
     protected function selectedPackage(?string $vendor_package_name = null): ?VendorPackageNames
     {
         $vendor_package_name = $this->selectPackageIfNeed($vendor_package_name);
-        if (! $vendor_package_name) {
+        if (!$vendor_package_name) {
             return null;
         }
 

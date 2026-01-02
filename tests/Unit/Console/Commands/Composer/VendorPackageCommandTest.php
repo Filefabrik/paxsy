@@ -3,19 +3,14 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Console\Commands\Composer\VendorPackageCommand;
 
 it(
     'signature',
-    function() {
-        $dummy = new class () extends VendorPackageCommand {
+    function () {
+        $dummy    = new class () extends VendorPackageCommand {
             public function getSignature()
             {
                 return $this->signature;
@@ -32,7 +27,7 @@ it(
 );
 it(
     'Check has Flag Flags',
-    function() {
+    function () {
         $this->artisan('paxsy:vendor-package', ['--help' => true])
              ->expectsOutputToContain('--flags')
              ->assertExitCode(0)
@@ -41,7 +36,7 @@ it(
 );
 it(
     'Check has Flag Remove',
-    function() {
+    function () {
         $this->artisan('paxsy:vendor-package', ['--help' => true])
              ->expectsOutputToContain('--remove')
              ->assertExitCode(0)
@@ -51,7 +46,7 @@ it(
 // todo check content of response
 it(
     'Handle against with Disabled',
-    function() {
+    function () {
         useShellDisabled();
         $this->artisan(
             'paxsy:vendor-package',
@@ -64,7 +59,7 @@ it(
 // todo check content of response
 it(
     'Handle against with Disabled --remove',
-    function() {
+    function () {
         useShellDisabled();
         $this->artisan(
             'paxsy:vendor-package',

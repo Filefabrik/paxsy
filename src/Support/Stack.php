@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support;
@@ -39,26 +37,6 @@ class Stack
     }
 
     /**
-     * Todo Replace with dir-segment and base_path() laravel
-     *
-     * @return string
-     */
-    public function getStackName(): string
-    {
-        return $this->packageStackName;
-    }
-
-    /**
-     * Full Server-Path where the Stack is located
-     *
-     * @return string
-     */
-    public function getStackBasePath(): string
-    {
-        return $this->application->basePath($this->getStackName());
-    }
-
-    /**
      * Todo ..only on install the Packages-Software or/and create a new package-create (app-modules or/and app-my-vendor-namespace) creating the directory for the create
      */
     public function ensureStackDirectoryExists(): bool
@@ -78,6 +56,26 @@ class Stack
     }
 
     /**
+     * Full Server-Path where the Stack is located
+     *
+     * @return string
+     */
+    public function getStackBasePath(): string
+    {
+        return $this->application->basePath($this->getStackName());
+    }
+
+    /**
+     * Todo Replace with dir-segment and base_path() laravel
+     *
+     * @return string
+     */
+    public function getStackName(): string
+    {
+        return $this->packageStackName;
+    }
+
+    /**
      * Getting a Package Definition from an already load Registry
      *
      * @param string $name
@@ -92,13 +90,6 @@ class Stack
         return $this->packages()
                     ->get($name)
         ;
-    }
-
-    public function reset(): static
-    {
-        $this->packages = null;
-
-        return $this;
     }
 
     /**
@@ -118,14 +109,11 @@ class Stack
         return new Collection();
     }
 
-    /**
-     * @return Collection<string,Package>
-     */
-    public function reload(): Collection
+    public function reset(): static
     {
-        $this->reset();
+        $this->packages = null;
 
-        return $this->loadPackages();
+        return $this;
     }
 
     /**
@@ -136,12 +124,22 @@ class Stack
     protected function loadPackages(): Collection
     {
         // todo ensure base path exists during a creation / installing process
-        if (! $this->exists()) {
+        if (!$this->exists()) {
             return new Collection();
         }
 
         // magic
         return StackComposers::findPackages($this);
+    }
+
+    /**
+     * @return Collection<string,Package>
+     */
+    public function reload(): Collection
+    {
+        $this->reset();
+
+        return $this->loadPackages();
     }
 
     /**
@@ -157,7 +155,7 @@ class Stack
         $vendors = [];
         /** @var Package $item */
         foreach ($this->packages() as $item) {
-            $class = $item->getVendorPackageNames()
+            $class           = $item->getVendorPackageNames()
                                     ->getVendor()
                                     ->toClass()
             ;

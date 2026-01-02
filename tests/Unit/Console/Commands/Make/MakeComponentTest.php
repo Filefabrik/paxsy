@@ -3,27 +3,24 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
+
 /**
  * PHP version 8.2
  *
  * @see MakeComponent
  */
 
-
-
 use Filefabrik\Paxsy\Console\Commands\Make\MakeComponent;
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 
 it(
     'create View-Component Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         $defaultPackage         = defaultTestPackage();
         $command                = 'make:component';
@@ -47,7 +44,7 @@ it(
 );
 it(
     'with inline ',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         $command                = 'make:component';
         $arguments              = ['name' => 'TestInlineComponent'];
@@ -89,7 +86,7 @@ it(
 
 it(
     'gui with test ',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
@@ -133,7 +130,8 @@ it(
         expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
 
         // test output
-        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/View/Components/FlightComponentTest.php');
+        $expected_full_path =
+            DefaultPackageNames::VendorPackageComponentPath('tests/Feature/View/Components/FlightComponentTest.php');
 
         checkComponentFilesAndDirectories($expected_full_path);
     },

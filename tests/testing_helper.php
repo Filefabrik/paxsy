@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 use Composer\Autoload\ClassLoader;
@@ -66,7 +64,7 @@ function ensureDirectoryExists(string $dir): void
 
 function clearLaravelDirectories(array|string $dirs)
 {
-    foreach ((array) $dirs as $dir) {
+    foreach ((array)$dirs as $dir) {
         $fs = new Filesystem();
         $fs->deleteDirectory($dir, true);
     }
@@ -167,7 +165,7 @@ function checkComponentFilesAndDirectories($full_path): void
 function forcePaxsyConfig($withTestingStackName = true): void
 {
     config()->set('paxsy', require dirname(__DIR__).'/config/paxsy.php');
-    ! $withTestingStackName ?: config()->set('paxsy.stack_name', 'app-paxsy-testing');
+    !$withTestingStackName ?: config()->set('paxsy.stack_name', 'app-paxsy-testing');
 }
 
 /**

@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands;
@@ -30,20 +28,6 @@ trait TraitPackageSupport
      */
     private null|bool|Package $ownPackage = null;
 
-    /**
-     * Getting the VendorPackage which is selected for the current Console Command
-     *
-     * @return Package|null
-     */
-    protected function package(): ?Package
-    {
-        // load once in a class instance
-        $this->ownPackage ??= $this->getPackageByOption();
-
-        // working with laravel default commands
-        return $this->ownPackage ?: null;
-    }
-
     protected function resetPackage(): static
     {
         $this->ownPackage = null;
@@ -58,11 +42,18 @@ trait TraitPackageSupport
         ;
     }
 
-    protected function intoPackagePath(string $pathSegment): string
+    /**
+     * Getting the VendorPackage which is selected for the current Console Command
+     *
+     * @return Package|null
+     */
+    protected function package(): ?Package
     {
-        return $this->package()
-                    ->intoPackagePath($pathSegment)
-        ;
+        // load once in a class instance
+        $this->ownPackage ??= $this->getPackageByOption();
+
+        // working with laravel default commands
+        return $this->ownPackage ?: null;
     }
 
     private function getPackageByOption(): false|Package
@@ -70,11 +61,17 @@ trait TraitPackageSupport
         if ($name = $this->option('package')) {
             return StackApp::get()
                            ->package($name) ??
-                throw new InvalidOptionException(sprintf('The "%s" package does not exist.', $name))
-            ;
+                throw new InvalidOptionException(sprintf('The "%s" package does not exist.', $name));
         }
 
         return false;
+    }
+
+    protected function intoPackagePath(string $pathSegment): string
+    {
+        return $this->package()
+                    ->intoPackagePath($pathSegment)
+        ;
     }
 
     protected function toVendorPackageDirectory(string $laravelComponentAppPath): string
@@ -84,12 +81,12 @@ trait TraitPackageSupport
         // all to relative
         $replacements = [
             $this->getLaravel()
-                 ->path() => $package->intoRelativePackagePath($package->getSrcDirName()),
+                 ->path()            => $package->intoRelativePackagePath($package->getSrcDirName()),
             // todo tests has to be his own mechanism
             $this->getLaravel()
                  ->basePath('tests') => $package->intoRelativePackagePath('tests'),
             $this->getLaravel()
-                 ->databasePath() => $package->intoRelativePackagePath('database'),
+                 ->databasePath()    => $package->intoRelativePackagePath('database'),
         ];
 
         // Normalize all our paths for compatibility's sake

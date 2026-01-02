@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Admin;
@@ -35,18 +33,18 @@ readonly class InputVendorName
     protected function handleVendorName(): ?Stringularity
     {
         $vendorName = null;
-        if (! config('paxsy.ui_vendor_select')) {
+        if (!config('paxsy.ui_vendor_select')) {
             $vendorName = $this->staticVendorName();
         }
-        if (! $vendorName) {
+        if (!$vendorName) {
             $this->command->info('1. enter the vendor-name');
             $vendorName = Inputs::suggestComposerVendors(
                 $this->stack,
-                (string) config('paxsy.ui_default_vendor'),
+                (string)config('paxsy.ui_default_vendor'),
             );
         }
 
-        if (! $vendorName) {
+        if (!$vendorName) {
             $this->command->error('Could not handle your vendor-name');
 
             return null;
@@ -60,7 +58,7 @@ readonly class InputVendorName
      */
     private function staticVendorName(): ?string
     {
-        if (! $defaultVendorName = (string) config('paxsy.ui_default_vendor')) {
+        if (!$defaultVendorName = (string)config('paxsy.ui_default_vendor')) {
             $this->command->error('You have to Configure the /config/app-paxsy.php#ui_default_vendor');
 
             return null;

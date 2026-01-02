@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Support;
@@ -24,7 +22,7 @@ class SolvedOptions
      */
     public static function addSolvedComponent(...$solves): void
     {
-        foreach ((array) $solves as $solved) {
+        foreach ((array)$solves as $solved) {
             self::$solved[$solved] = true;
         }
     }
@@ -44,7 +42,7 @@ class SolvedOptions
 
     public static function hasSolvedOptions(): bool
     {
-        return (bool) self::$solved;
+        return (bool)self::$solved;
     }
 
     public static function reset(): void

@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Stubs;
@@ -16,34 +14,6 @@ use Filefabrik\Paxsy\Support\VendorPackageNames;
  */
 class RendererPackage implements VariablesRendererInterface
 {
-    /**
-     * @param string             $segmentExpression
-     * @param VendorPackageNames $moduleConfig
-     *
-     * @return ?string
-     */
-    public static function get(string $segmentExpression, VendorPackageNames $moduleConfig): ?string
-    {
-        return match ($segmentExpression) {
-            'relPackageDir' => $moduleConfig->relPackageDir(),
-            'packagePath'   => $moduleConfig->packageBasePath(),
-            'composerName'  => $moduleConfig->toComposerName(),
-            'vendor.class'  => $moduleConfig->getVendor()
-                                               ->toClass(),
-            'package.class' => $moduleConfig->getPackage()
-                                               ->toClass(),
-            'package.singular' => $moduleConfig->getPackage()
-                                               ->toSingularName(),
-            'package.plural' => $moduleConfig->getPackage()
-                                               ->toPluralName(),
-            'package.name' => $moduleConfig->getPackage()
-                                               ->toName(),
-            // todo handle null because wanted and not found.
-            // todo log error
-            default => null,
-        };
-    }
-
     /**
      * @param array                   $variablesMap
      * @param VendorPackageNames|null $objects
@@ -60,5 +30,33 @@ class RendererPackage implements VariablesRendererInterface
         }
 
         return $vars;
+    }
+
+    /**
+     * @param string             $segmentExpression
+     * @param VendorPackageNames $moduleConfig
+     *
+     * @return ?string
+     */
+    public static function get(string $segmentExpression, VendorPackageNames $moduleConfig): ?string
+    {
+        return match ($segmentExpression) {
+            'relPackageDir'    => $moduleConfig->relPackageDir(),
+            'packagePath'      => $moduleConfig->packageBasePath(),
+            'composerName'     => $moduleConfig->toComposerName(),
+            'vendor.class'     => $moduleConfig->getVendor()
+                                               ->toClass(),
+            'package.class'    => $moduleConfig->getPackage()
+                                               ->toClass(),
+            'package.singular' => $moduleConfig->getPackage()
+                                               ->toSingularName(),
+            'package.plural'   => $moduleConfig->getPackage()
+                                               ->toPluralName(),
+            'package.name'     => $moduleConfig->getPackage()
+                                               ->toName(),
+            // todo handle null because wanted and not found.
+            // todo log error
+            default            => null,
+        };
     }
 }

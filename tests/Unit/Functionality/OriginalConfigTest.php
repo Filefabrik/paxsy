@@ -3,15 +3,12 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
+
 /**
  * PHP version 8.2
  * todo check against config-vars they are not expected
  */
-
-
 
 use Filefabrik\Paxsy\Components\Livewire\Component;
 use Psr\Container\ContainerExceptionInterface;
@@ -35,15 +32,15 @@ function makeOriginalConfig(): void
 }
 
 beforeEach(
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
+/**
+ * @throws ContainerExceptionInterface
+ * @throws NotFoundExceptionInterface
+ */
     fn() => makeOriginalConfig(),
 );
 it(
     'config that we will be delivered all segments',
-    function() {
+    function () {
         expect(config('paxsy.stub_sets.default'))
             ->toBeArray()
             ->and(config('paxsy.stub_sets.default.stubs'))
@@ -58,7 +55,7 @@ it(
 
 it(
     'modules stubsDirectory default where to store into the packs',
-    function() {
+    function () {
         forcePaxsyConfig(false);
         expect(config('paxsy.stack_name'))->toBe('app-paxsy');
     },
@@ -66,7 +63,7 @@ it(
 
 it(
     'stub sets default',
-    function() {
+    function () {
         [$key, $stubDepartment] = func_get_args();
 
         expect(config('paxsy.stub_sets.default.'.$key))->toBe($stubDepartment);
@@ -88,29 +85,29 @@ it(
     [
         'replacementMap',
         [/* With RendererPackage */
-            'package' => // The Keys can only exist one time in all replacementVariables, otherwise they will override
+         'package' => // The Keys can only exist one time in all replacementVariables, otherwise they will override
              [
-                'StubRelPackageDir' => 'relPackageDir',
-                // absolute directory to the package
-                'StubPackagePath'         => 'packagePath',
-                'StubVendorNamespace'     => 'vendor.class',
-                'StubPackageNamespace'    => 'package.class',
-                'StubPackageNameSingular' => 'package.singular',
-                'StubPackageNamePlural'   => 'package.plural',
-                'StubPackageName'         => 'package.name',
-                'StubComposerName'        => 'composerName',
+                 'StubRelPackageDir'       => 'relPackageDir',
+                 // absolute directory to the package
+                 'StubPackagePath'         => 'packagePath',
+                 'StubVendorNamespace'     => 'vendor.class',
+                 'StubPackageNamespace'    => 'package.class',
+                 'StubPackageNameSingular' => 'package.singular',
+                 'StubPackageNamePlural'   => 'package.plural',
+                 'StubPackageName'         => 'package.name',
+                 'StubComposerName'        => 'composerName',
              ],
-            // simple text-Parser
-            'text' => [
-                'StubTestCaseBase'     => 'TestCase',
-                '#StubTestUseTestCase' => 'use PHPUnit\TestCase;',
-            ],
+         // simple text-Parser
+         'text'    => [
+             'StubTestCaseBase'     => 'TestCase',
+             '#StubTestUseTestCase' => 'use PHPUnit\TestCase;',
+         ],
         ],
     ],
 ]);
 it(
     'stubs maps default. Files the must mapped correctly',
-    function() {
+    function () {
         [$outputPath, $inStubsFilename] = func_get_args();
 
         $defaultMap = config('paxsy.stub_sets.default.stubs.files');
@@ -125,20 +122,20 @@ it(
 
 it(
     'original stub directories',
-    function() {
+    function () {
         // getting the original without patching the stubs-path
 
         [$replaceKey, $replaceVarDepartment] = func_get_args();
-        $inCfg                               = config('paxsy.stub_sets.default.'.$replaceKey);
+        $inCfg = config('paxsy.stub_sets.default.'.$replaceKey);
         expect($inCfg)->toBe($replaceVarDepartment);
     },
 )->with([['directory', 'vendor/filefabrik/paxsy/stubs']]);
 
 it(
     'stub replacementMap default',
-    function() {
+    function () {
         [$replaceKey, $replaceVarDepartment] = func_get_args();
-        $inCfg                               = config('paxsy.stub_sets.default.replacementMap.package.'.$replaceKey);
+        $inCfg = config('paxsy.stub_sets.default.replacementMap.package.'.$replaceKey);
         expect($inCfg)->toBe($replaceVarDepartment);
     },
 )->with(
@@ -159,7 +156,7 @@ it(
 
 it(
     'components array default filled correctly',
-    function() {
+    function () {
         $componentsCfg = config('paxsy.components');
         expect($componentsCfg)
             ->toBeArray()

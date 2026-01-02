@@ -3,12 +3,7 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Console\Commands\Composer\RepositoryCommand;
 use Filefabrik\Paxsy\Console\Commands\Composer\VendorPackageCommand;
@@ -17,13 +12,13 @@ use Filefabrik\Paxsy\Tests\Support\CommandReflectorTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-beforeEach(function() {
+beforeEach(function () {
     currentStackName();
     useShellDisabled();
 });
 it(
     'Shell execution disabled',
-    function() {
+    function () {
         $this->artisan(
             'paxsy:repository',
             [VendorPackageCommand::VendorPackageIdent => 'testing-vendor/the-package'],
@@ -34,7 +29,7 @@ it(
 );
 it(
     'Shell execution disabled --remove',
-    function() {
+    function () {
         $this->artisan(
             'paxsy:repository',
             [VendorPackageCommand::VendorPackageIdent => 'testing-vendor/the-package', '--remove' => true],
@@ -45,7 +40,7 @@ it(
 );
 it(
     'signature options arguments',
-    function() {
+    function () {
         $dummy = new class () extends RepositoryCommand {
             use CommandReflectorTrait;
         };
@@ -80,7 +75,7 @@ it(
 );
 it(
     'Assert has Flags Remove',
-    function() {
+    function () {
         $this->artisan('paxsy:repository', ['--help' => true])
              ->expectsOutputToContain('--remove')
              ->expectsOutputToContain('--flag')

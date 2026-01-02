@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Support\Composer;
@@ -85,7 +83,7 @@ class Extractor
         // todo package-name is where located the package (Vendor-Module or Simple-package)
 
         return Collection::make($autoloadPsr4)
-                         ->mapWithKeys(function($src, $namespace) {
+                         ->mapWithKeys(function ($src, $namespace) {
                              $path      = Pathering::trim($src);
                              $namespace = PathsNamespaces::trim($namespace);
 

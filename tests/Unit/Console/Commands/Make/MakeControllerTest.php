@@ -3,23 +3,18 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 use Illuminate\Filesystem\Filesystem;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 
 it(
     'create Controller Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:controller';
@@ -59,12 +54,15 @@ it(
 // todo remove model from /app/Models/TestModels
 it(
     'without package but with model',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $modelClass = 'TestingControllerModels';
         (new Filesystem())->delete(
-            [base_path('app/Models/TestingControllerModels.php'), base_path('app/Http/Controllers/TestController2.php')],
+            [
+                base_path('app/Models/TestingControllerModels.php'),
+                base_path('app/Http/Controllers/TestController2.php'),
+            ],
         );
         $command   = 'make:controller';
         $arguments = ['name' => 'TestController2', '--model' => $modelClass];
@@ -84,7 +82,7 @@ it(
 );
 it(
     'without buggy model name',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         $packageName = defaultTestPackage()
             ->getPackageName()
@@ -103,7 +101,7 @@ it(
 
 it(
     'create Controller with Model',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         $modelClass             = 'TestModels';
         $command                = 'make:controller';
@@ -117,7 +115,7 @@ it(
             'use Illuminate\Http\Request;',
         ];
 
-        $packageName = defaultTestPackage()
+        $packageName        = defaultTestPackage()
             ->getPackageName()
         ;
         $absoluteModelClass = 'MyTestVendor\TheTestPackage\Models\TestModels';
@@ -141,11 +139,12 @@ it(
 
 it(
     'create Controller with Model and Request',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         $modelClass             = 'TestModels';
         $command                = 'make:controller';
-        $arguments              = ['name' => 'TestControllerWithModelAndRequest', '--model' => $modelClass, '-R' => true];
+        $arguments              =
+            ['name' => 'TestControllerWithModelAndRequest', '--model' => $modelClass, '-R' => true];
         $expected_relative_path = 'src/Http/Controllers/TestControllerWithModelAndRequest.php';
 
         $expected_substrings = [
@@ -154,7 +153,7 @@ it(
 
         ];
 
-        $packageName = defaultTestPackage()
+        $packageName        = defaultTestPackage()
             ->getPackageName()
         ;
         $absoluteModelClass = 'MyTestVendor\TheTestPackage\Models\TestModels';

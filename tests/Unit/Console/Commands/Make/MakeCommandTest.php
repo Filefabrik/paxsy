@@ -3,22 +3,17 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
-
-
-
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function() {
+beforeEach(function () {
     removePackageStack();
 });
 
 it(
     'create Command Component via command in Default-Vendor-Package',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:command';
@@ -41,7 +36,7 @@ it(
 );
 it(
     'command with test',
-    function() {
+    function () {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
@@ -81,7 +76,8 @@ it(
         expect(file_get_contents($expected_full_path))->toContain(...$expected_substrings);
 
         // test output
-        $expected_full_path = DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Console/Commands/FlightCommandTest.php');
+        $expected_full_path =
+            DefaultPackageNames::VendorPackageComponentPath('tests/Feature/Console/Commands/FlightCommandTest.php');
 
         checkComponentFilesAndDirectories($expected_full_path);
     },

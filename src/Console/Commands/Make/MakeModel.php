@@ -3,8 +3,6 @@
  * Copyright (c) 2024-2026 filefabrik.com
  */
 
-
-
 declare(strict_types=1);
 
 namespace Filefabrik\Paxsy\Console\Commands\Make;
@@ -21,8 +19,7 @@ class MakeModel extends ModelMakeCommand
     protected function getDefaultNamespace($rootNamespace): string
     {
         $rootNamespace = $this->package()
-                              ?->srcPackageNamespace() ?? $rootNamespace
-        ;
+                              ?->srcPackageNamespace() ?? $rootNamespace;
 
         return Namespacering::concat($rootNamespace, 'Models');
     }
