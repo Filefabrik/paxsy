@@ -89,17 +89,17 @@ class Output
     {
         $packageStack = StackApp::get();
         $table        = $packageStack->packages()
-            ->map(function(Package $package) {
-                $loadableStyle  = self::stylePackageNamespaceLoadable($package);
-                $inRequireStyle = self::vendorPackageInRequire($package);
+                                     ->map(function (Package $package) {
+                                         $loadableStyle  = self::stylePackageNamespaceLoadable($package);
+                                         $inRequireStyle = self::vendorPackageInRequire($package);
 
-                return [
-                    $inRequireStyle.' '.$loadableStyle.' '.'./'.$package->getName(),
-                    $package->getComposerName(),
-                    $package->srcPackageNamespace(),
+                                         return [
+                                             $inRequireStyle.' '.$loadableStyle.' '.'./'.$package->getName(),
+                                             $package->getComposerName(),
+                                             $package->srcPackageNamespace(),
 
-                ];
-            })
+                                         ];
+                                     })
                                      ->toArray()
         ;
         table(
