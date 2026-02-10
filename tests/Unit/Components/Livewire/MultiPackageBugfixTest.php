@@ -8,12 +8,12 @@ declare(strict_types=1);
 use Filefabrik\Paxsy\Console\Commands\Make\MakePackage;
 use Filefabrik\Paxsy\Support\VendorPackageNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 it(
     'new package ',
-    function () {
+    function() {
         $defaultPackage = defaultTestPackage();
 
         makePackageByArtisanCommand($this);

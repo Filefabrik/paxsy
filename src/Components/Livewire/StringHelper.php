@@ -29,8 +29,7 @@ class StringHelper
      */
     public static function toLivewireComponentName(SplFileInfo $splFileInfo, Package $package): string
     {
-        return $package->getVendorPackageNames()
-                       ->getPackage()
+        return $package->getVendorPackageNames()->package
                        ->toName().'::'.self::componentNameFromSpl($splFileInfo);
     }
 

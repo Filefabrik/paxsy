@@ -7,12 +7,12 @@ declare(strict_types=1);
 
 use Filefabrik\Paxsy\Console\Commands\Composer\DumpAutoloadCommand;
 
-beforeEach(function () {
+beforeEach(function() {
     useShellDisabled();
 });
 it(
     'signature',
-    function () {
+    function() {
         $dummy = new class () extends DumpAutoloadCommand {
             public function getSignature()
             {
@@ -25,7 +25,7 @@ it(
 );
 it(
     'handle dummy command',
-    function () {
+    function() {
         $this->artisan('paxsy:dump-autoload')
              ->assertExitCode(0)
         ;

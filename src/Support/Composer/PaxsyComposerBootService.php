@@ -21,7 +21,7 @@ class PaxsyComposerBootService
     {
         $composer_execution_mode = config('paxsy.composer_execution');
 
-        $composerExecutor = (new self())->getClass($composer_execution_mode);
+        $composerExecutor = new self()->getClass($composer_execution_mode);
 
         ($app ?? app())->singleton(WithInterface::class, fn() => new $composerExecutor());
     }

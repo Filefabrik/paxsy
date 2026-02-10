@@ -7,12 +7,12 @@ declare(strict_types=1);
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 it(
     'policy without package',
-    function () {
+    function() {
         clearLaravelDirectories([app_path('/Policies')]);
 
         $this->artisan('make:policy')
@@ -24,7 +24,7 @@ it(
 
 it(
     'policy without policy name',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
@@ -64,7 +64,7 @@ it(
 );
 it(
     'policy with model interaction',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 

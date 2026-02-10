@@ -32,12 +32,20 @@ class VendorPackageNames
     /**
      * @var Stringularity
      */
-    private Stringularity $vendor;
+    public Stringularity $vendor {
+        get {
+            return $this->vendor;
+        }
+    }
 
     /**
      * @var Stringularity
      */
-    private Stringularity $package;
+    public Stringularity $package {
+        get {
+            return $this->package;
+        }
+    }
 
     /**
      * During write/create a vendor/package it can be a string.
@@ -151,19 +159,9 @@ class VendorPackageNames
      */
     public function getVendorName(): string
     {
-        return $this->getVendor()
+        return $this->vendor
                     ->toName()
         ;
-    }
-
-    /**
-     * The Vendor Names
-     *
-     * @return Stringularity
-     */
-    public function getVendor(): Stringularity
-    {
-        return $this->vendor;
     }
 
     /**
@@ -171,18 +169,9 @@ class VendorPackageNames
      */
     public function getPackageName(): string
     {
-        return $this->getPackage()
+        return $this->package
                     ->toName()
         ;
     }
 
-    /**
-     * The Software-Package Names
-     *
-     * @return Stringularity
-     */
-    public function getPackage(): Stringularity
-    {
-        return $this->package;
-    }
 }

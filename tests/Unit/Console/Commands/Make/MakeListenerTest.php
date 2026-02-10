@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 
 it(
     'create Job Component via command in Default-Vendor-Package',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:listener';
@@ -33,7 +33,7 @@ it(
 );
 it(
     'create Listener with event',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $command                = 'make:listener';
@@ -53,7 +53,7 @@ it(
 );
 it(
     'with php unit',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 

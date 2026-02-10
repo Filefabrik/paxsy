@@ -26,7 +26,7 @@ class PaxsyCommand extends Command
 {
     use TraitInputs;
 
-    public const QUIT = 'q';
+    public const string QUIT = 'q';
     public const int STOP_DEEPER = 23;
     /**
      * @var string
@@ -227,8 +227,7 @@ class PaxsyCommand extends Command
      */
     protected function nest_in_package(string $vendor_package_name): int|string
     {
-        $package_name = VendorPackageNames::fromVendorPackage($vendor_package_name)
-                                          ->getPackage()
+        $package_name = VendorPackageNames::fromVendorPackage($vendor_package_name)->package
                                           ->toName()
         ;
         $label        = sprintf('Choose the "make" command for your "%s" package?', $vendor_package_name);

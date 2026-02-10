@@ -155,8 +155,7 @@ class Stack
         $vendors = [];
         /** @var Package $item */
         foreach ($this->packages() as $item) {
-            $class           = $item->getVendorPackageNames()
-                                    ->getVendor()
+            $class           = $item->getVendorPackageNames()->vendor
                                     ->toClass()
             ;
             $vendors[$class] = $class;

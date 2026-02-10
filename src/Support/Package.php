@@ -171,8 +171,7 @@ class Package
     {
         return $this->joinPackageNamespace(
             'Providers',
-            $this->getVendorPackageNames()
-                 ->getPackage()
+            $this->getVendorPackageNames()->package
                  ->toClass().'ServiceProvider',
         );
     }

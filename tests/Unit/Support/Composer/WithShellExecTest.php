@@ -9,7 +9,7 @@ use Filefabrik\Paxsy\Components\ComposerRepository\Repository;
 use Filefabrik\Paxsy\Support\Composer\WithInterface;
 use Filefabrik\Paxsy\Support\Composer\WithShellExec;
 
-afterAll(function () {
+afterAll(function() {
     $i = new WithShellExec();
 
     $i->batchMode();
@@ -18,7 +18,7 @@ afterAll(function () {
 });
 it(
     'presence',
-    function () {
+    function() {
         expect(class_exists(WithShellExec::class))
             ->toBeTrue()
             ->and(new WithShellExec())
@@ -30,7 +30,7 @@ it(
 
 it(
     'switch to batch mode',
-    function () {
+    function() {
         $i = new WithShellExec();
         expect($i->isSingle())->toBeTrue();
         $i->batchMode();
@@ -40,7 +40,7 @@ it(
 
 it(
     'add repository',
-    function () {
+    function() {
         $i = new WithShellExec();
 
         $i->batchMode();
@@ -51,7 +51,7 @@ it(
 );
 it(
     'add repository execute',
-    function () {
+    function() {
         $i = new WithShellExec();
 
         $i->batchMode();
@@ -64,7 +64,7 @@ it(
 
 it(
     'remove repository',
-    function () {
+    function() {
         $i = new WithShellExec();
 
         $i->batchMode();
@@ -76,7 +76,7 @@ it(
 
 it(
     'add vendor package',
-    function () {
+    function() {
         $i = new WithShellExec();
 
         $i->batchMode();
@@ -88,7 +88,7 @@ it(
 
 it(
     'remove vendor package',
-    function () {
+    function() {
         $i = new WithShellExec();
 
         $i->batchMode();
@@ -97,7 +97,7 @@ it(
         expect($i->getCommandExpressions()[0])->toBe('composer remove my/key');
     },
 );
-it('render Flags', function () {
+it('render Flags', function() {
     $i = new WithShellExec();
 
     $i->batchMode();

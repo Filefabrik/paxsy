@@ -44,15 +44,15 @@ class RendererPackage implements VariablesRendererInterface
             'relPackageDir'    => $moduleConfig->relPackageDir(),
             'packagePath'      => $moduleConfig->packageBasePath(),
             'composerName'     => $moduleConfig->toComposerName(),
-            'vendor.class'     => $moduleConfig->getVendor()
+            'vendor.class'     => $moduleConfig->vendor
                                                ->toClass(),
-            'package.class'    => $moduleConfig->getPackage()
+            'package.class'    => $moduleConfig->package
                                                ->toClass(),
-            'package.singular' => $moduleConfig->getPackage()
+            'package.singular' => $moduleConfig->package
                                                ->toSingularName(),
-            'package.plural'   => $moduleConfig->getPackage()
+            'package.plural'   => $moduleConfig->package
                                                ->toPluralName(),
-            'package.name'     => $moduleConfig->getPackage()
+            'package.name'     => $moduleConfig->package
                                                ->toName(),
             // todo handle null because wanted and not found.
             // todo log error

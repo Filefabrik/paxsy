@@ -8,12 +8,12 @@ declare(strict_types=1);
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 use Filefabrik\Paxsy\Tests\Support\LivewireComponentNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 it(
     'original command is working create without paxsy --package flag',
-    function () {
+    function() {
         $command = 'livewire:make';
 
         $this->artisan(
@@ -29,7 +29,7 @@ it(
 );
 it(
     'create Paxsy Livewire Component',
-    function () {
+    function() {
         // Todo at first, livewire has to be installed into testbench-core/laravel
         $defaultPackage = defaultTestPackage();
 
@@ -80,7 +80,7 @@ it(
 
 it(
     'invalid class name',
-    function () {
+    function() {
         $defaultPackage = defaultTestPackage();
 
         makePackageByArtisanCommand($this);
@@ -102,7 +102,7 @@ it(
 
 it(
     'reserved class name',
-    function () {
+    function() {
         $defaultPackage = defaultTestPackage();
 
         makePackageByArtisanCommand($this);
@@ -124,7 +124,7 @@ it(
 // todo expectation
 it(
     'create with test',
-    function () {
+    function() {
         $defaultPackage = defaultTestPackage();
 
         makePackageByArtisanCommand($this);
@@ -141,7 +141,7 @@ it(
 // todo expectation
 it(
     'create same livewire component again',
-    function () {
+    function() {
         $defaultPackage = defaultTestPackage();
 
         makePackageByArtisanCommand($this);

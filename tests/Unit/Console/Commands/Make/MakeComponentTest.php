@@ -14,13 +14,13 @@ declare(strict_types=1);
 use Filefabrik\Paxsy\Console\Commands\Make\MakeComponent;
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 
 it(
     'create View-Component Component via command in Default-Vendor-Package',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         $defaultPackage         = defaultTestPackage();
         $command                = 'make:component';
@@ -44,7 +44,7 @@ it(
 );
 it(
     'with inline ',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         $command                = 'make:component';
         $arguments              = ['name' => 'TestInlineComponent'];
@@ -86,7 +86,7 @@ it(
 
 it(
     'gui with test ',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 

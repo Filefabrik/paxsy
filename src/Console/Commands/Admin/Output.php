@@ -33,12 +33,12 @@ class Output
     {
         return StackApp::get()
                        ->packages()
-                       ->map(function (Package $package) {
-                           return [
-                               'name' => $package->getName(),
-                               'path' => $package->getComposerName(),
-                           ];
-                       })
+            ->map(function(Package $package) {
+                return [
+                    'name' => $package->getName(),
+                    'path' => $package->getComposerName(),
+                ];
+            })
                        ->toArray()
         ;
     }
@@ -54,9 +54,9 @@ class Output
     {
         return StackApp::get()
                        ->packages()
-                       ->mapWithKeys(function (Package $package) {
-                           return [$package->getComposerName() => $package->getComposerName()];
-                       })
+            ->mapWithKeys(function(Package $package) {
+                return [$package->getComposerName() => $package->getComposerName()];
+            })
                        ->toArray()
         ;
     }
@@ -89,17 +89,17 @@ class Output
     {
         $packageStack = StackApp::get();
         $table        = $packageStack->packages()
-                                     ->map(function (Package $package) {
-                                         $loadableStyle  = self::stylePackageNamespaceLoadable($package);
-                                         $inRequireStyle = self::vendorPackageInRequire($package);
+            ->map(function(Package $package) {
+                $loadableStyle  = self::stylePackageNamespaceLoadable($package);
+                $inRequireStyle = self::vendorPackageInRequire($package);
 
-                                         return [
-                                             $inRequireStyle.' '.$loadableStyle.' '.'./'.$package->getName(),
-                                             $package->getComposerName(),
-                                             $package->srcPackageNamespace(),
+                return [
+                    $inRequireStyle.' '.$loadableStyle.' '.'./'.$package->getName(),
+                    $package->getComposerName(),
+                    $package->srcPackageNamespace(),
 
-                                         ];
-                                     })
+                ];
+            })
                                      ->toArray()
         ;
         table(

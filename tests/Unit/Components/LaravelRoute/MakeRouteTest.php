@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 
 it(
     'Call original make:route',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         $this->artisan('make:route', ['--help' => true])
              ->assertExitCode(0)
@@ -22,7 +22,7 @@ it(
 );
 it(
     'No package',
-    function () {
+    function() {
         $command = 'make:route';
 
         $this->artisan(
@@ -40,7 +40,7 @@ it(
 );
 it(
     'Select existing Package by suggestion',
-    function () {
+    function() {
         $command = 'make:route';
         makePackageByArtisanCommand($this);
         $this->artisan(
@@ -59,7 +59,7 @@ it(
 
 it(
     'Make route via command in Default-Vendor-Package',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $command = 'make:route';
@@ -87,7 +87,7 @@ it(
 
 it(
     'Make route twice',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
 
         $command = 'make:route';
@@ -126,7 +126,7 @@ it(
 
 it(
     'Make route twice with flag',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         $expected_relative_path = 'routes/web.php';
 

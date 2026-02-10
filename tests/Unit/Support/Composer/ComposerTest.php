@@ -13,14 +13,14 @@ use Filefabrik\Paxsy\Support\Composer\WithShellExec;
 
 it(
     'check booted default',
-    function () {
+    function() {
         expect($this->app->get(WithInterface::class))->toBeInstanceOf(WithShellExec::class);
     },
 );
 // switching
 it(
     'check booted with disabled',
-    function () {
+    function() {
         config()->set('paxsy.composer_execution', 'disabled');
         // reboot
         PaxsyComposerBootService::boot();
@@ -30,7 +30,7 @@ it(
 // switching
 it(
     'check booted with shell_exec',
-    function () {
+    function() {
         config()->set('paxsy.composer_execution', 'shell_exec');
         // reboot
         PaxsyComposerBootService::boot();
@@ -40,7 +40,7 @@ it(
 
 it(
     'check booted with exception',
-    function () {
+    function() {
         config()->set('paxsy.composer_execution', 'stupid');
         // reboot
         PaxsyComposerBootService::boot();
@@ -49,7 +49,7 @@ it(
 
 it(
     'existence',
-    function () {
+    function() {
         $relComposer = new Composer(__DIR__);
         expect($relComposer->directory())->toBeDirectory();
     },

@@ -20,7 +20,7 @@ use JsonException;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
- * Extracts a vendor/package json file to prepare the important things to handle this package in laravel via the filefabrik/package software
+ * Extracts a vendor/package JSON file to prepare the important things to handle this package in laravel via the filefabrik/package software
  */
 class Extractor
 {
@@ -57,13 +57,13 @@ class Extractor
 
         [$vendorName, $packageName] = CaseConverters::fromVendorPackageName($composer_config['name']);
 
-        $vendorPackageNames = (new VendorPackageNames(
-            new Stringularity($vendorName, $vendorClassName),
-            new Stringularity(
-                $packageName,
-                $packageClassName,
+        $vendorPackageNames = new VendorPackageNames(
+            vendor : new Stringularity($vendorName, $vendorClassName),
+            package: new Stringularity(
+                name     : $packageName,
+                className: $packageClassName,
             ),
-        ))
+        )
             ->setStackName($packageStack->getStackName())
         ;
 
@@ -83,12 +83,9 @@ class Extractor
         // todo package-name is where located the package (Vendor-Module or Simple-package)
 
         return Collection::make($autoloadPsr4)
-                         ->mapWithKeys(function ($src, $namespace) {
-                             $path      = Pathering::trim($src);
-                             $namespace = PathsNamespaces::trim($namespace);
-
-                             return [$path => $namespace];
-                         })
+            ->mapWithKeys(function ($src, $namespace) {
+                return [Pathering::trim($src) => PathsNamespaces::trim($namespace)];
+            })
         ;
     }
 }

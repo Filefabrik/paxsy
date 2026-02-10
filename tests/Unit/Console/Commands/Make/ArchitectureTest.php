@@ -9,7 +9,7 @@ use Filefabrik\Paxsy\Console\Commands\Make\MakeCast;
 
 arch(
     'commands extends original command',
-    function ($command, $extCls) {
+    function($command, $extCls) {
         expect($command)
             ->toExtend($extCls)
         ;
@@ -21,7 +21,7 @@ arch(
  */
 arch(
     'architecture has traits',
-    function ($commandClass) {
+    function($commandClass) {
         expect($commandClass)
             ->traits()
             ->toExtend('\Filefabrik\Paxsy\Console\Commands\Make\TraitPackagizer')
@@ -31,7 +31,7 @@ arch(
 
 arch(
     'has package flags',
-    function ($command) {
+    function($command) {
         $this->artisan($command, ['--help' => true])
              ->expectsOutputToContain('--package')
              ->assertExitCode(0)

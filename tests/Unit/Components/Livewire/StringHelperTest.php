@@ -11,14 +11,14 @@ use Symfony\Component\Finder\SplFileInfo;
 
 it(
     'component name from class name',
-    function ($name, $ex) {
+    function($name, $ex) {
         $res = StringHelper::componentNameFromClassName($name);
         expect($res)->toBe($ex);
     },
 )->with([['MakeLoveWireGreatAgain', 'make-love-wire-great-again']]);
 it(
     'input name to class name',
-    function ($name, $ex) {
+    function($name, $ex) {
         $res = StringHelper::inputNameToClassName($name);
         expect($res)->toBe($ex);
     },
@@ -29,7 +29,7 @@ it(
 ]);
 it(
     'view name',
-    function ($name, $ex) {
+    function($name, $ex) {
         $packageName = 'paxsy-sexy';
         $res         = StringHelper::viewName($packageName, $name);
         expect($res)->toBe($packageName.'::livewire.'.$ex);
@@ -38,7 +38,7 @@ it(
 
 it(
     'blade tag',
-    function ($name, $ex) {
+    function($name, $ex) {
         $packageName = 'paxsy-sexy';
         $res         = StringHelper::bladeTag($packageName, $name);
         expect($res)->toBe('<livewire:'.$packageName.'::'.$ex.'/>');
@@ -47,7 +47,7 @@ it(
 
 it(
     'tag From Input Name',
-    function ($name, $ex) {
+    function($name, $ex) {
         $res = StringHelper::tagFromInputName('paxsy-sexy', $name);
         expect($res)->toBe('<livewire:paxsy-sexy::'.$ex.'/>');
     },
@@ -59,7 +59,7 @@ it(
 
 it(
     'to Livewire Component Name ',
-    closure: function () {
+    closure: function() {
         $dummyFile = new SplFileInfo(
             file            : '/notExists/FastAndFurious.php',
             relativePath    : '',

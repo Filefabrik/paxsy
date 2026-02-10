@@ -40,10 +40,9 @@ class Helper
         // todo make callable by a kind of singleton
         // todo describe internally
 
-        $preparedStubs = (new StubsMap($stubsMap, $stubsDirectory))->getStubs();
+        $preparedStubs = new StubsMap(stubsMap: $stubsMap, stubsDirectory: $stubsDirectory)->getStubs();
 
-        return new StubsWriter(
-        // todo on multi-create use an other getter
+        return new StubsWriter(// todo on multi-create use an other getter
             packageBasePath: $packageBasePath,
             preparedStubs  : $preparedStubs,
             variables      : $variables,

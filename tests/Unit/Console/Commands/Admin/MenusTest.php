@@ -9,7 +9,7 @@ use Filefabrik\Paxsy\Console\Commands\Admin\Menus;
 
 it(
     'Main Menu contains all Items',
-    function ($label, $method) {
+    function($label, $method) {
         $foundFlag = false;
         foreach (Menus::$mainMenu as $item) {
             if ($label === $item['label']) {
@@ -24,7 +24,7 @@ it(
 
 it(
     'Plug correctly',
-    function ($label, $method) {
+    function($label, $method) {
         $res = Menus::selectableMenu(Menus::$mainMenu);
 
         expect($res[$method])->toBe($label);

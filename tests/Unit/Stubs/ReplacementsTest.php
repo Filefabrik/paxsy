@@ -10,7 +10,7 @@ use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 
 it(
     'handle replacements correctly',
-    function () {
+    function() {
         $configPrefix = 'paxsy';
 
         $defaultPackage = defaultTestPackage();

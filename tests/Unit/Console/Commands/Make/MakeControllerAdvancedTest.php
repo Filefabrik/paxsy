@@ -8,12 +8,12 @@ declare(strict_types=1);
 use Filefabrik\Paxsy\Tests\Support\DefaultPackageNames;
 use Illuminate\Filesystem\Filesystem;
 
-beforeEach(function () {
+beforeEach(function() {
     removePackageStack();
 });
 it(
     'create Controller with --model',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
@@ -58,7 +58,7 @@ it(
 );
 it(
     'create Controller with Model and Request',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
 
@@ -105,7 +105,7 @@ it(
 );
 it(
     'create extended Controller',
-    function () {
+    function() {
         makePackageByArtisanCommand($this);
         withGuiInteractions();
         $defaultPackage = defaultTestPackage();
