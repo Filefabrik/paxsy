@@ -83,7 +83,7 @@ class Extractor
         // todo package-name is where located the package (Vendor-Module or Simple-package)
 
         return Collection::make($autoloadPsr4)
-            ->mapWithKeys(function ($src, $namespace) {
+            ->mapWithKeys(function($src, $namespace) {
                 return [Pathering::trim($src) => PathsNamespaces::trim($namespace)];
             })
         ;

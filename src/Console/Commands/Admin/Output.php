@@ -89,7 +89,7 @@ class Output
     {
         $packageStack = StackApp::get();
         $table        = $packageStack->packages()
-                                     ->map(function (Package $package) {
+                                     ->map(function(Package $package) {
                                          $loadableStyle  = self::stylePackageNamespaceLoadable($package);
                                          $inRequireStyle = self::vendorPackageInRequire($package);
 
